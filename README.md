@@ -10,7 +10,9 @@ A Practitioner's Guide to the ATLAS Multimodal Data Lake Framework for AI-Ready 
 Platforms* (research edition) and its trade edition, *Multimodal Data Architecture for
 Intelligent Enterprise*, by Narendra P Nagtode. The book is based on the author's
 doctoral research at Golden Gate University, which introduced the **Multimodal Fusion
-Schema** and the **ATLAS** multimodal lakehouse architecture.
+Schema** and the **ATLAS** multimodal lakehouse architecture. The schema is also described in
+the preprint *The Multimodal Fusion Schema: Extending the Star Schema with an Inference Fact
+Pattern for AI-Native Analytics* (DOI [10.13140/RG.2.2.31611.27681](https://doi.org/10.13140/RG.2.2.31611.27681)).
 
 It is a **research codebase**. It contains everything needed to build the reference
 implementation end to end on AWS, run it, and reproduce the measurements reported in the book:
@@ -158,8 +160,10 @@ queryable from Athena over one shared Glue Data Catalog.
 
 ## Research paper: RQ1 and RQ2
 
-This repo is the reference implementation behind *The Multimodal Fusion Schema: Extending
-the Star Schema with an Inference Fact Pattern for AI-Native Analytics*, which extends
+This repo is the reference implementation behind the preprint *[The Multimodal Fusion Schema: Extending
+the Star Schema with an Inference Fact Pattern for AI-Native Analytics](https://doi.org/10.13140/RG.2.2.31611.27681)*
+(Nagtode, 2026, ResearchGate, DOI [10.13140/RG.2.2.31611.27681](https://doi.org/10.13140/RG.2.2.31611.27681)),
+which extends
 Kimball's star schema with three multimodal fact archetypes — Unstructured Data Fact,
 Unstructured Features Fact, and Inference Fact — built out above (`fact_discharge_note` /
 `fact_radiology_note`, `fact_discharge_note_nlp` / `fact_radiology_note_nlp`, and
