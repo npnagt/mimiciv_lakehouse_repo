@@ -8,7 +8,7 @@ lakehouse, built on the Multimodal Fusion Schema, using the MIMIC-IV hospital da
 This repository accompanies the book *End-to-End Data Architecture for Multimodal Data:
 A Practitioner's Guide to the ATLAS Multimodal Data Lake Framework for AI-Ready Enterprise
 Platforms* (research edition) and its trade edition, *Multimodal Data Architecture for
-Intelligent Enterprise*, by Narendra Prabhakarrao Nagtode. The book is based on the author's
+Intelligent Enterprise*, by Narendra P Nagtode. The book is based on the author's
 doctoral research at Golden Gate University, which introduced the **Multimodal Fusion
 Schema** and the **ATLAS** multimodal lakehouse architecture.
 
