@@ -1,0 +1,309 @@
+{
+  "generated_utc": "20260930T110826Z",
+  "mode": "explain",
+  "database": "mimic4_db_business_full",
+  "total": 30,
+  "passed": 30,
+  "results": [
+    {
+      "id": "W01",
+      "title": "Admission registration -> volume / case-mix by type, location, quarter",
+      "query_execution_id": "7432c2ab-7bd0-45ad-bf94-0766d40f6521",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 457,
+      "total_ms": 671,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W02",
+      "title": "ED triage / disposition -> ED-to-inpatient conversion, ED LOS, boarding",
+      "query_execution_id": "977f85a5-e45d-411a-94f7-f8f1aac25efb",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 395,
+      "total_ms": 590,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W03",
+      "title": "Discharge processing -> 30-day readmission, days-since-prior, prior DRG",
+      "query_execution_id": "7b61f873-a53c-49e4-af72-7a5073d084a6",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 630,
+      "total_ms": 813,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W04",
+      "title": "Encounter close-out -> in-hospital mortality, time-to-death by service",
+      "query_execution_id": "c35f67b9-04f9-487e-b374-3e80b23f2b93",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 542,
+      "total_ms": 746,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W05",
+      "title": "Patient identity management -> longitudinal patient-360",
+      "query_execution_id": "9efb3527-2d8d-4dbe-947f-4c51746101d5",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 500,
+      "total_ms": 684,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W06",
+      "title": "Diagnosis coding -> disease cohort (sepsis / CHF / AKI) -> LOS, mortality, readmit",
+      "query_execution_id": "1a4327f8-fa6e-4ca4-b0fd-c4f50cab7989",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 860,
+      "total_ms": 1029,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W07",
+      "title": "DRG assignment -> severity / mortality weight vs. observed outcome (case-mix)",
+      "query_execution_id": "a3000a1f-9066-4192-b474-18bc6cc0eb3a",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 535,
+      "total_ms": 702,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W08",
+      "title": "Procedure coding -> ICD-10-PCS utilization -> LOS delta",
+      "query_execution_id": "1866e438-3310-47ff-9244-27c71b457314",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 808,
+      "total_ms": 986,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W09",
+      "title": "Diagnosis coding -> Charlson comorbidity index -> risk-adjusted outcome",
+      "query_execution_id": "976a420d-7add-4b24-8ea7-f9c1abfe0948",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 1667,
+      "total_ms": 1902,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W10",
+      "title": "HCPCS / CPT billing events -> per-admission billed-event cost proxy",
+      "query_execution_id": "d26d2882-c2a0-4479-b4f3-be7f4f16d3c0",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 756,
+      "total_ms": 939,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W11",
+      "title": "Lab testing -> KDIGO AKI (baseline vs. peak creatinine) -> RRT, outcome",
+      "query_execution_id": "f5fcb876-a51f-48f2-abf8-9f3bdf11de13",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 1053,
+      "total_ms": 1241,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W12",
+      "title": "Lab testing -> abnormal-result burden per admission -> LOS, mortality",
+      "query_execution_id": "e6be5f03-8516-4e99-b8bd-49b0d0b247ac",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 810,
+      "total_ms": 1034,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W13",
+      "title": "Lab workflow -> turnaround time -> care-delay analysis",
+      "query_execution_id": "e8af85c2-9dfa-4575-b39e-4a94d515cb75",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 535,
+      "total_ms": 752,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W14",
+      "title": "Microbiology -> positive blood culture -> time-to-antibiotic, concordant therapy, mortality",
+      "query_execution_id": "620d345b-8d54-4b41-b8bd-3cea8f2b9e97",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 928,
+      "total_ms": 1109,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W15",
+      "title": "Microbiology -> antibiogram (organism x susceptibility)",
+      "query_execution_id": "12cfe286-3c31-45be-93c3-50ad0dc13d3b",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 547,
+      "total_ms": 794,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W16",
+      "title": "eMAR -> medication administration volume / delay per admission -> outcome",
+      "query_execution_id": "c67d6db8-8f40-48c9-8b95-0df9794c0bb0",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 952,
+      "total_ms": 1160,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W17",
+      "title": "Pharmacy + eMAR -> high-alert drug exposure (vasopressors, anticoagulants) -> complication proxy",
+      "query_execution_id": "474af987-1a85-42a7-b04f-8949385ca338",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 1222,
+      "total_ms": 1414,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W18",
+      "title": "POE + eMAR -> ordered-not-given reconciliation",
+      "query_execution_id": "878ab148-9c3b-4cae-a38c-4ec3675b2927",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 753,
+      "total_ms": 981,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W19",
+      "title": "Transfers / bed management -> ward-transfer count, bounce-backs -> LOS",
+      "query_execution_id": "6c5de1a2-5390-405f-afab-abef84279695",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 709,
+      "total_ms": 888,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W20",
+      "title": "Clinical service assignment -> MED <-> SURG transitions -> outcome",
+      "query_execution_id": "6189dbe8-7086-4e90-9b8e-adf6b4142b1e",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 589,
+      "total_ms": 818,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W21",
+      "title": "Outpatient measurements (OMR) -> pre-admission vitals / BMI -> admission risk",
+      "query_execution_id": "f1499569-5489-4a61-8832-60abea23d1bf",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 1101,
+      "total_ms": 1352,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W22",
+      "title": "ICU stay management -> LOS, ICU readmission, time-to-ICU",
+      "query_execution_id": "5a935bab-6854-4f5b-bb01-6a6ba6e90702",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 1177,
+      "total_ms": 1357,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W23",
+      "title": "Intake / output charting -> net fluid balance trajectory -> AKI, mortality",
+      "query_execution_id": "8db4d9d5-0103-45c2-b5d8-596e9975052b",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 1144,
+      "total_ms": 1378,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W24",
+      "title": "ICU procedures -> mechanical ventilation duration, VAP proxy -> outcome",
+      "query_execution_id": "ae35162b-fb89-480e-b265-73a6dde6989e",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 1761,
+      "total_ms": 1962,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W25",
+      "title": "Nursing charting -> sedation (RASS) vs. delirium (CAM-ICU) -> outcome",
+      "query_execution_id": "909cd722-3f62-4887-ad8a-71c74bbfe0e7",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 963,
+      "total_ms": 1181,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W26",
+      "title": "Ingredient events -> caloric / protein intake -> LOS",
+      "query_execution_id": "648771cc-6a67-490a-938c-8091a0bfeae2",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 1160,
+      "total_ms": 1369,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W27",
+      "title": "Discharge documentation -> SDOH (tobacco / alcohol / obesity) -> readmission, mortality",
+      "query_execution_id": "099a7a42-78aa-4b6a-9d44-3b177bf3b46b",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 769,
+      "total_ms": 983,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W28",
+      "title": "Radiology reports -> procedure / modality mix per admission -> imaging cost, LOS",
+      "query_execution_id": "a109fe33-960e-4fda-af24-77b9a113302b",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 993,
+      "total_ms": 1170,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W29",
+      "title": "Radiology findings -> ICD-code concordance (report disorders vs. coded dx)",
+      "query_execution_id": "74fda13a-acc6-4a15-96a7-6bc45e0892bf",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 1052,
+      "total_ms": 1290,
+      "scanned_bytes": 0
+    },
+    {
+      "id": "W30",
+      "title": "Radiology INDICATION / IMPRESSION retrieval for a cohort (structured summaries)",
+      "query_execution_id": "42467544-8c31-4564-ae8d-e1302bcdc5fb",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 1492,
+      "total_ms": 1693,
+      "scanned_bytes": 0
+    }
+  ]
+}

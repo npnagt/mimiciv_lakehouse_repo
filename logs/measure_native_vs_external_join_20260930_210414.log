@@ -1,0 +1,831 @@
+P5 native vs external join  ::  200 repeats  ::  mimic4_db_business_full  ::  benchmarks: lab, radiology
+
+======================================================================
+Benchmark: lab  (structured)
+fact_lab_result x dim_lab_item x fact_admission -> abnormal-rate agg
+======================================================================
+NATIVE  (Athena over Iceberg, reuse OFF)  ::  200 repeats:
+  run  1    3934 ms   scanned 4.5 MiB
+  run  2    2266 ms   scanned 4.5 MiB
+  run  3    2273 ms   scanned 4.5 MiB
+  run  4    2291 ms   scanned 4.5 MiB
+  run  5    2774 ms   scanned 4.5 MiB
+  run  6    1936 ms   scanned 4.5 MiB
+  run  7    2640 ms   scanned 4.5 MiB
+  run  8    2642 ms   scanned 4.5 MiB
+  run  9    2043 ms   scanned 4.5 MiB
+  run 10    2962 ms   scanned 4.5 MiB
+  run 11    1922 ms   scanned 4.5 MiB
+  run 12    1925 ms   scanned 4.5 MiB
+  run 13    1917 ms   scanned 4.5 MiB
+  run 14    2001 ms   scanned 4.5 MiB
+  run 15    2624 ms   scanned 4.5 MiB
+  run 16    1924 ms   scanned 4.5 MiB
+  run 17    1925 ms   scanned 4.5 MiB
+  run 18    2266 ms   scanned 4.5 MiB
+  run 19    1962 ms   scanned 4.5 MiB
+  run 20    2256 ms   scanned 4.5 MiB
+  run 21    2623 ms   scanned 4.5 MiB
+  run 22    1937 ms   scanned 4.5 MiB
+  run 23    1903 ms   scanned 4.5 MiB
+  run 24    2971 ms   scanned 4.5 MiB
+  run 25    2286 ms   scanned 4.5 MiB
+  run 26    2645 ms   scanned 4.5 MiB
+  run 27    2528 ms   scanned 4.5 MiB
+  run 28    1933 ms   scanned 4.5 MiB
+  run 29    2313 ms   scanned 4.5 MiB
+  run 30    1910 ms   scanned 4.5 MiB
+  run 31    2254 ms   scanned 4.5 MiB
+  run 32    2615 ms   scanned 4.5 MiB
+  run 33    2621 ms   scanned 4.5 MiB
+  run 34    2267 ms   scanned 4.5 MiB
+  run 35    2263 ms   scanned 4.5 MiB
+  run 36    1979 ms   scanned 4.5 MiB
+  run 37    1901 ms   scanned 4.5 MiB
+  run 38    1948 ms   scanned 4.5 MiB
+  run 39    1937 ms   scanned 4.5 MiB
+  run 40    1981 ms   scanned 4.5 MiB
+  run 41    2621 ms   scanned 4.5 MiB
+  run 42    1917 ms   scanned 4.5 MiB
+  run 43    2601 ms   scanned 4.5 MiB
+  run 44    1553 ms   scanned 4.5 MiB
+  run 45    3364 ms   scanned 4.5 MiB
+  run 46    3007 ms   scanned 4.5 MiB
+  run 47    1958 ms   scanned 4.5 MiB
+  run 48    1937 ms   scanned 4.5 MiB
+  run 49    1921 ms   scanned 4.5 MiB
+  run 50    1920 ms   scanned 4.5 MiB
+  run 51    1976 ms   scanned 4.5 MiB
+  run 52    2275 ms   scanned 4.5 MiB
+  run 53    1932 ms   scanned 4.5 MiB
+  run 54    1943 ms   scanned 4.5 MiB
+  run 55    2635 ms   scanned 4.5 MiB
+  run 56    1932 ms   scanned 4.5 MiB
+  run 57    2983 ms   scanned 4.5 MiB
+  run 58    2188 ms   scanned 4.5 MiB
+  run 59    1922 ms   scanned 4.5 MiB
+  run 60    1925 ms   scanned 4.5 MiB
+  run 61    2635 ms   scanned 4.5 MiB
+  run 62    1915 ms   scanned 4.5 MiB
+  run 63    1941 ms   scanned 4.5 MiB
+  run 64    1915 ms   scanned 4.5 MiB
+  run 65    2274 ms   scanned 4.5 MiB
+  run 66    1914 ms   scanned 4.5 MiB
+  run 67    2988 ms   scanned 4.5 MiB
+  run 68    1918 ms   scanned 4.5 MiB
+  run 69    1922 ms   scanned 4.5 MiB
+  run 70    1936 ms   scanned 4.5 MiB
+  run 71    1927 ms   scanned 4.5 MiB
+  run 72    2322 ms   scanned 4.5 MiB
+  run 73    2292 ms   scanned 4.5 MiB
+  run 74    1892 ms   scanned 4.5 MiB
+  run 75    1918 ms   scanned 4.5 MiB
+  run 76    1937 ms   scanned 4.5 MiB
+  run 77    1930 ms   scanned 4.5 MiB
+  run 78    2988 ms   scanned 4.5 MiB
+  run 79    1952 ms   scanned 4.5 MiB
+  run 80    2643 ms   scanned 4.5 MiB
+  run 81    1934 ms   scanned 4.5 MiB
+  run 82    2287 ms   scanned 4.5 MiB
+  run 83    1965 ms   scanned 4.5 MiB
+  run 84    1919 ms   scanned 4.5 MiB
+  run 85    1930 ms   scanned 4.5 MiB
+  run 86    3422 ms   scanned 4.5 MiB
+  run 87    1939 ms   scanned 4.5 MiB
+  run 88    2994 ms   scanned 4.5 MiB
+  run 89    2647 ms   scanned 4.5 MiB
+  run 90    2076 ms   scanned 4.5 MiB
+  run 91    1937 ms   scanned 4.5 MiB
+  run 92    1916 ms   scanned 4.5 MiB
+  run 93    2273 ms   scanned 4.5 MiB
+  run 94    1913 ms   scanned 4.5 MiB
+  run 95    2179 ms   scanned 4.5 MiB
+  run 96    1917 ms   scanned 4.5 MiB
+  run 97    1915 ms   scanned 4.5 MiB
+  run 98    1913 ms   scanned 4.5 MiB
+  run 99    2272 ms   scanned 4.5 MiB
+  run 100    2264 ms   scanned 4.5 MiB
+  run 101    1906 ms   scanned 4.5 MiB
+  run 102    3326 ms   scanned 4.5 MiB
+  run 103    1939 ms   scanned 4.5 MiB
+  run 104    2198 ms   scanned 4.5 MiB
+  run 105    1971 ms   scanned 4.5 MiB
+  run 106    1921 ms   scanned 4.5 MiB
+  run 107    1918 ms   scanned 4.5 MiB
+  run 108    1907 ms   scanned 4.5 MiB
+  run 109    2974 ms   scanned 4.5 MiB
+  run 110    2640 ms   scanned 4.5 MiB
+  run 111    1920 ms   scanned 4.5 MiB
+  run 112    1932 ms   scanned 4.5 MiB
+  run 113    1951 ms   scanned 4.5 MiB
+  run 114    2619 ms   scanned 4.5 MiB
+  run 115    1904 ms   scanned 4.5 MiB
+  run 116    1910 ms   scanned 4.5 MiB
+  run 117    1905 ms   scanned 4.5 MiB
+  run 118    1908 ms   scanned 4.5 MiB
+  run 119    1938 ms   scanned 4.5 MiB
+  run 120    2268 ms   scanned 4.5 MiB
+  run 121    1563 ms   scanned 4.5 MiB
+  run 122    2257 ms   scanned 4.5 MiB
+  run 123    2366 ms   scanned 4.5 MiB
+  run 124    1911 ms   scanned 4.5 MiB
+  run 125    1920 ms   scanned 4.5 MiB
+  run 126    3000 ms   scanned 4.5 MiB
+  run 127    1922 ms   scanned 4.5 MiB
+  run 128    2524 ms   scanned 4.5 MiB
+  run 129    1933 ms   scanned 4.5 MiB
+  run 130    2997 ms   scanned 4.5 MiB
+  run 131    1917 ms   scanned 4.5 MiB
+  run 132    1926 ms   scanned 4.5 MiB
+  run 133    1916 ms   scanned 4.5 MiB
+  run 134    2271 ms   scanned 4.5 MiB
+  run 135    1910 ms   scanned 4.5 MiB
+  run 136    1919 ms   scanned 4.5 MiB
+  run 137    2182 ms   scanned 4.5 MiB
+  run 138    1917 ms   scanned 4.5 MiB
+  run 139    1916 ms   scanned 4.5 MiB
+  run 140    1923 ms   scanned 4.5 MiB
+  run 141    1931 ms   scanned 4.5 MiB
+  run 142    2276 ms   scanned 4.5 MiB
+  run 143    1910 ms   scanned 4.5 MiB
+  run 144    2978 ms   scanned 4.5 MiB
+  run 145    1921 ms   scanned 4.5 MiB
+  run 146    1926 ms   scanned 4.5 MiB
+  run 147    1952 ms   scanned 4.5 MiB
+  run 148    2273 ms   scanned 4.5 MiB
+  run 149    1920 ms   scanned 4.5 MiB
+  run 150    2275 ms   scanned 4.5 MiB
+  run 151    2264 ms   scanned 4.5 MiB
+  run 152    1909 ms   scanned 4.5 MiB
+  run 153    1931 ms   scanned 4.5 MiB
+  run 154    2278 ms   scanned 4.5 MiB
+  run 155    1929 ms   scanned 4.5 MiB
+  run 156    1927 ms   scanned 4.5 MiB
+  run 157    1919 ms   scanned 4.5 MiB
+  run 158    1926 ms   scanned 4.5 MiB
+  run 159    1925 ms   scanned 4.5 MiB
+  run 160    2982 ms   scanned 4.5 MiB
+  run 161    2183 ms   scanned 4.5 MiB
+  run 162    1922 ms   scanned 4.5 MiB
+  run 163    1923 ms   scanned 4.5 MiB
+  run 164    1564 ms   scanned 4.5 MiB
+  run 165    1950 ms   scanned 4.5 MiB
+  run 166    1936 ms   scanned 4.5 MiB
+  run 167    1980 ms   scanned 4.5 MiB
+  run 168    1917 ms   scanned 4.5 MiB
+  run 169    1915 ms   scanned 4.5 MiB
+  run 170    2616 ms   scanned 4.5 MiB
+  run 171    2092 ms   scanned 4.5 MiB
+  run 172    1915 ms   scanned 4.5 MiB
+  run 173    2257 ms   scanned 4.5 MiB
+  run 174    2270 ms   scanned 4.5 MiB
+  run 175    1917 ms   scanned 4.5 MiB
+  run 176    1639 ms   scanned 4.5 MiB
+  run 177    1926 ms   scanned 4.5 MiB
+  run 178    1914 ms   scanned 4.5 MiB
+  run 179    1989 ms   scanned 4.5 MiB
+  run 180    1934 ms   scanned 4.5 MiB
+  run 181    1930 ms   scanned 4.5 MiB
+  run 182    1929 ms   scanned 4.5 MiB
+  run 183    1581 ms   scanned 4.5 MiB
+  run 184    3715 ms   scanned 4.5 MiB
+  run 185    1956 ms   scanned 4.5 MiB
+  run 186    1930 ms   scanned 4.5 MiB
+  run 187    1904 ms   scanned 4.5 MiB
+  run 188    1919 ms   scanned 4.5 MiB
+  run 189    1910 ms   scanned 4.5 MiB
+  run 190    2284 ms   scanned 4.5 MiB
+  run 191    1921 ms   scanned 4.5 MiB
+  run 192    1935 ms   scanned 4.5 MiB
+  run 193    2640 ms   scanned 4.5 MiB
+  run 194    1919 ms   scanned 4.5 MiB
+  run 195    2275 ms   scanned 4.5 MiB
+  run 196    1958 ms   scanned 4.5 MiB
+  run 197    2284 ms   scanned 4.5 MiB
+  run 198    1956 ms   scanned 4.5 MiB
+  run 199    1916 ms   scanned 4.5 MiB
+  run 200    2214 ms   scanned 4.5 MiB
+
+EXTERNAL stage 1  (Athena UNLOAD -> S3 Parquet -> download):
+  fact_lab_result           1,000,000 rows in 1 file(s)     1878 ms   scanned 2.5 MiB
+  dim_lab_item                1,650 rows in 1 file(s)     1379 ms   scanned 2.4 KiB
+  fact_admission            546,029 rows in 1 file(s)     1443 ms   scanned 2.0 MiB
+
+EXTERNAL stage 2  (DuckDB join/unnest over the exported Parquet):
+  run  1   141.5 ms
+  run  2   134.1 ms
+  run  3   133.6 ms
+  run  4   132.0 ms
+  run  5   131.7 ms
+  run  6   127.6 ms
+  run  7   127.0 ms
+  run  8   129.9 ms
+  run  9   127.5 ms
+  run 10   131.8 ms
+  run 11   131.6 ms
+  run 12   123.7 ms
+  run 13   124.4 ms
+  run 14   122.7 ms
+  run 15   123.9 ms
+  run 16   120.8 ms
+  run 17   121.7 ms
+  run 18   119.5 ms
+  run 19   121.7 ms
+  run 20   120.6 ms
+  run 21   120.9 ms
+  run 22   119.5 ms
+  run 23   120.4 ms
+  run 24   122.5 ms
+  run 25   120.0 ms
+  run 26   119.7 ms
+  run 27   119.5 ms
+  run 28   120.3 ms
+  run 29   122.0 ms
+  run 30   122.9 ms
+  run 31   120.5 ms
+  run 32   119.8 ms
+  run 33   119.4 ms
+  run 34   120.3 ms
+  run 35   120.1 ms
+  run 36   117.0 ms
+  run 37   120.4 ms
+  run 38   122.4 ms
+  run 39   121.2 ms
+  run 40   119.7 ms
+  run 41   122.5 ms
+  run 42   121.3 ms
+  run 43   120.8 ms
+  run 44   120.1 ms
+  run 45   121.2 ms
+  run 46   118.7 ms
+  run 47   119.0 ms
+  run 48   120.3 ms
+  run 49   118.6 ms
+  run 50   121.8 ms
+  run 51   116.6 ms
+  run 52   116.2 ms
+  run 53   118.9 ms
+  run 54   119.7 ms
+  run 55   119.4 ms
+  run 56   118.7 ms
+  run 57   119.1 ms
+  run 58   119.8 ms
+  run 59   123.0 ms
+  run 60   121.0 ms
+  run 61   119.2 ms
+  run 62   121.9 ms
+  run 63   122.0 ms
+  run 64   121.6 ms
+  run 65   120.0 ms
+  run 66   123.8 ms
+  run 67   122.2 ms
+  run 68   120.6 ms
+  run 69   121.5 ms
+  run 70   116.7 ms
+  run 71   124.6 ms
+  run 72   120.4 ms
+  run 73   123.1 ms
+  run 74   122.7 ms
+  run 75   118.6 ms
+  run 76   119.1 ms
+  run 77   120.1 ms
+  run 78   119.1 ms
+  run 79   121.1 ms
+  run 80   121.3 ms
+  run 81   121.3 ms
+  run 82   121.0 ms
+  run 83   120.3 ms
+  run 84   122.4 ms
+  run 85   124.7 ms
+  run 86   129.3 ms
+  run 87   123.0 ms
+  run 88   124.4 ms
+  run 89   125.0 ms
+  run 90   121.1 ms
+  run 91   120.5 ms
+  run 92   117.6 ms
+  run 93   120.8 ms
+  run 94   119.0 ms
+  run 95   120.1 ms
+  run 96   117.2 ms
+  run 97   119.3 ms
+  run 98   120.4 ms
+  run 99   122.6 ms
+  run 100   124.4 ms
+  run 101   120.5 ms
+  run 102   129.4 ms
+  run 103   122.6 ms
+  run 104   122.4 ms
+  run 105   122.7 ms
+  run 106   120.9 ms
+  run 107   120.9 ms
+  run 108   122.8 ms
+  run 109   119.8 ms
+  run 110   122.2 ms
+  run 111   119.6 ms
+  run 112   121.0 ms
+  run 113   121.7 ms
+  run 114   121.2 ms
+  run 115   120.1 ms
+  run 116   120.6 ms
+  run 117   129.7 ms
+  run 118   121.6 ms
+  run 119   119.9 ms
+  run 120   118.6 ms
+  run 121   120.5 ms
+  run 122   120.1 ms
+  run 123   120.0 ms
+  run 124   118.8 ms
+  run 125   120.0 ms
+  run 126   117.9 ms
+  run 127   120.0 ms
+  run 128   118.4 ms
+  run 129   116.6 ms
+  run 130   120.1 ms
+  run 131   119.5 ms
+  run 132   120.7 ms
+  run 133   130.7 ms
+  run 134   120.6 ms
+  run 135   118.9 ms
+  run 136   119.3 ms
+  run 137   119.8 ms
+  run 138   118.1 ms
+  run 139   121.2 ms
+  run 140   118.2 ms
+  run 141   117.6 ms
+  run 142   117.7 ms
+  run 143   121.0 ms
+  run 144   123.8 ms
+  run 145   119.7 ms
+  run 146   119.5 ms
+  run 147   117.5 ms
+  run 148   118.0 ms
+  run 149   122.1 ms
+  run 150   124.3 ms
+  run 151   115.1 ms
+  run 152   118.6 ms
+  run 153   118.6 ms
+  run 154   119.3 ms
+  run 155   116.5 ms
+  run 156   117.7 ms
+  run 157   118.7 ms
+  run 158   117.2 ms
+  run 159   117.8 ms
+  run 160   116.6 ms
+  run 161   118.2 ms
+  run 162   116.2 ms
+  run 163   120.1 ms
+  run 164   116.8 ms
+  run 165   123.5 ms
+  run 166   119.3 ms
+  run 167   117.6 ms
+  run 168   118.2 ms
+  run 169   122.9 ms
+  run 170   118.6 ms
+  run 171   120.6 ms
+  run 172   118.5 ms
+  run 173   122.1 ms
+  run 174   117.2 ms
+  run 175   118.1 ms
+  run 176   116.9 ms
+  run 177   117.9 ms
+  run 178   117.5 ms
+  run 179   116.5 ms
+  run 180   128.7 ms
+  run 181   122.2 ms
+  run 182   118.3 ms
+  run 183   117.6 ms
+  run 184   116.0 ms
+  run 185   116.1 ms
+  run 186   115.8 ms
+  run 187   116.8 ms
+  run 188   117.2 ms
+  run 189   118.1 ms
+  run 190   117.8 ms
+  run 191   118.4 ms
+  run 192   120.2 ms
+  run 193   117.7 ms
+  run 194   117.3 ms
+  run 195   122.4 ms
+  run 196   127.4 ms
+  run 197   122.9 ms
+  run 198   120.3 ms
+  run 199   120.0 ms
+  run 200   121.6 ms
+
+======================================================================
+Benchmark: radiology  (cross-modal (structured + NLP-derived JSON))
+fact_radiology_note_nlp (disorders, JSON UNNEST) x fact_admission -> non-negated disorder mentions by admission type
+======================================================================
+NATIVE  (Athena over Iceberg, reuse OFF)  ::  200 repeats:
+  run  1    1641 ms   scanned 2.2 MiB
+  run  2    1945 ms   scanned 2.2 MiB
+  run  3    1603 ms   scanned 2.2 MiB
+  run  4    1938 ms   scanned 2.2 MiB
+  run  5    1588 ms   scanned 2.2 MiB
+  run  6    1693 ms   scanned 2.2 MiB
+  run  7    1565 ms   scanned 2.2 MiB
+  run  8    3683 ms   scanned 2.2 MiB
+  run  9    3667 ms   scanned 2.2 MiB
+  run 10    1558 ms   scanned 2.2 MiB
+  run 11    1226 ms   scanned 2.2 MiB
+  run 12    1554 ms   scanned 2.2 MiB
+  run 13    1553 ms   scanned 2.2 MiB
+  run 14    1568 ms   scanned 2.2 MiB
+  run 15    1570 ms   scanned 2.2 MiB
+  run 16    1836 ms   scanned 2.2 MiB
+  run 17    1561 ms   scanned 2.2 MiB
+  run 18    2260 ms   scanned 2.2 MiB
+  run 19    1904 ms   scanned 2.2 MiB
+  run 20    1568 ms   scanned 2.2 MiB
+  run 21    1896 ms   scanned 2.2 MiB
+  run 22    2616 ms   scanned 2.2 MiB
+  run 23    1567 ms   scanned 2.2 MiB
+  run 24    1567 ms   scanned 2.2 MiB
+  run 25    1568 ms   scanned 2.2 MiB
+  run 26    1915 ms   scanned 2.2 MiB
+  run 27    1680 ms   scanned 2.2 MiB
+  run 28    1570 ms   scanned 2.2 MiB
+  run 29    1589 ms   scanned 2.2 MiB
+  run 30    4024 ms   scanned 2.2 MiB
+  run 31    1920 ms   scanned 2.2 MiB
+  run 32    1570 ms   scanned 2.2 MiB
+  run 33    1921 ms   scanned 2.2 MiB
+  run 34    1558 ms   scanned 2.2 MiB
+  run 35    3316 ms   scanned 2.2 MiB
+  run 36    1913 ms   scanned 2.2 MiB
+  run 37    1901 ms   scanned 2.2 MiB
+  run 38    1546 ms   scanned 2.2 MiB
+  run 39    3319 ms   scanned 2.2 MiB
+  run 40    1565 ms   scanned 2.2 MiB
+  run 41    2180 ms   scanned 2.2 MiB
+  run 42    1572 ms   scanned 2.2 MiB
+  run 43    1911 ms   scanned 2.2 MiB
+  run 44    2259 ms   scanned 2.2 MiB
+  run 45    2622 ms   scanned 2.2 MiB
+  run 46    1559 ms   scanned 2.2 MiB
+  run 47    1558 ms   scanned 2.2 MiB
+  run 48    1563 ms   scanned 2.2 MiB
+  run 49    1591 ms   scanned 2.2 MiB
+  run 50    1585 ms   scanned 2.2 MiB
+  run 51    1584 ms   scanned 2.2 MiB
+  run 52    1845 ms   scanned 2.2 MiB
+  run 53    1553 ms   scanned 2.2 MiB
+  run 54    1563 ms   scanned 2.2 MiB
+  run 55    2960 ms   scanned 2.2 MiB
+  run 56    1555 ms   scanned 2.2 MiB
+  run 57    1576 ms   scanned 2.2 MiB
+  run 58    1547 ms   scanned 2.2 MiB
+  run 59    1573 ms   scanned 2.2 MiB
+  run 60    2269 ms   scanned 2.2 MiB
+  run 61    2265 ms   scanned 2.2 MiB
+  run 62    1618 ms   scanned 2.2 MiB
+  run 63    1493 ms   scanned 2.2 MiB
+  run 64    1570 ms   scanned 2.2 MiB
+  run 65    2638 ms   scanned 2.2 MiB
+  run 66    1940 ms   scanned 2.2 MiB
+  run 67    1599 ms   scanned 2.2 MiB
+  run 68    1681 ms   scanned 2.2 MiB
+  run 69    1567 ms   scanned 2.2 MiB
+  run 70    1568 ms   scanned 2.2 MiB
+  run 71    2285 ms   scanned 2.2 MiB
+  run 72    1919 ms   scanned 2.2 MiB
+  run 73    1566 ms   scanned 2.2 MiB
+  run 74    1908 ms   scanned 2.2 MiB
+  run 75    3335 ms   scanned 2.2 MiB
+  run 76    1586 ms   scanned 2.2 MiB
+  run 77    1563 ms   scanned 2.2 MiB
+  run 78    2704 ms   scanned 2.2 MiB
+  run 79    1572 ms   scanned 2.2 MiB
+  run 80    1548 ms   scanned 2.2 MiB
+  run 81    2298 ms   scanned 2.2 MiB
+  run 82    1558 ms   scanned 2.2 MiB
+  run 83    3257 ms   scanned 2.2 MiB
+  run 84    1545 ms   scanned 2.2 MiB
+  run 85    1555 ms   scanned 2.2 MiB
+  run 86    1546 ms   scanned 2.2 MiB
+  run 87    2967 ms   scanned 2.2 MiB
+  run 88    1564 ms   scanned 2.2 MiB
+  run 89    1651 ms   scanned 2.2 MiB
+  run 90    1574 ms   scanned 2.2 MiB
+  run 91    2656 ms   scanned 2.2 MiB
+  run 92    1554 ms   scanned 2.2 MiB
+  run 93    1560 ms   scanned 2.2 MiB
+  run 94    1503 ms   scanned 2.2 MiB
+  run 95    1554 ms   scanned 2.2 MiB
+  run 96    2614 ms   scanned 2.2 MiB
+  run 97    2283 ms   scanned 2.2 MiB
+  run 98    1571 ms   scanned 2.2 MiB
+  run 99    1224 ms   scanned 2.2 MiB
+  run 100    1475 ms   scanned 2.2 MiB
+  run 101    1584 ms   scanned 2.2 MiB
+  run 102    1548 ms   scanned 2.2 MiB
+  run 103    1574 ms   scanned 2.2 MiB
+  run 104    1568 ms   scanned 2.2 MiB
+  run 105    1580 ms   scanned 2.2 MiB
+  run 106    1573 ms   scanned 2.2 MiB
+  run 107    1551 ms   scanned 2.2 MiB
+  run 108    1957 ms   scanned 2.2 MiB
+  run 109    1591 ms   scanned 2.2 MiB
+  run 110    1577 ms   scanned 2.2 MiB
+  run 111    1568 ms   scanned 2.2 MiB
+  run 112    1562 ms   scanned 2.2 MiB
+  run 113    1558 ms   scanned 2.2 MiB
+  run 114    1595 ms   scanned 2.2 MiB
+  run 115    2274 ms   scanned 2.2 MiB
+  run 116    3008 ms   scanned 2.2 MiB
+  run 117    1570 ms   scanned 2.2 MiB
+  run 118    1589 ms   scanned 2.2 MiB
+  run 119    1562 ms   scanned 2.2 MiB
+  run 120    1573 ms   scanned 2.2 MiB
+  run 121    1602 ms   scanned 2.2 MiB
+  run 122    1569 ms   scanned 2.2 MiB
+  run 123    1572 ms   scanned 2.2 MiB
+  run 124    3688 ms   scanned 2.2 MiB
+  run 125    1563 ms   scanned 2.2 MiB
+  run 126    1562 ms   scanned 2.2 MiB
+  run 127    1550 ms   scanned 2.2 MiB
+  run 128    3231 ms   scanned 2.2 MiB
+  run 129    2272 ms   scanned 2.2 MiB
+  run 130    2600 ms   scanned 2.2 MiB
+  run 131    1572 ms   scanned 2.2 MiB
+  run 132    1554 ms   scanned 2.2 MiB
+  run 133    3703 ms   scanned 2.2 MiB
+  run 134    2602 ms   scanned 2.2 MiB
+  run 135    2988 ms   scanned 2.2 MiB
+  run 136    1566 ms   scanned 2.2 MiB
+  run 137    1560 ms   scanned 2.2 MiB
+  run 138    1944 ms   scanned 2.2 MiB
+  run 139    1572 ms   scanned 2.2 MiB
+  run 140    2993 ms   scanned 2.2 MiB
+  run 141    1941 ms   scanned 2.2 MiB
+  run 142    3002 ms   scanned 2.2 MiB
+  run 143    1930 ms   scanned 2.2 MiB
+  run 144    1583 ms   scanned 2.2 MiB
+  run 145    1561 ms   scanned 2.2 MiB
+  run 146    1583 ms   scanned 2.2 MiB
+  run 147    1671 ms   scanned 2.2 MiB
+  run 148    1566 ms   scanned 2.2 MiB
+  run 149    1571 ms   scanned 2.2 MiB
+  run 150    1573 ms   scanned 2.2 MiB
+  run 151    1566 ms   scanned 2.2 MiB
+  run 152    1567 ms   scanned 2.2 MiB
+  run 153    1588 ms   scanned 2.2 MiB
+  run 154    1560 ms   scanned 2.2 MiB
+  run 155    1597 ms   scanned 2.2 MiB
+  run 156    1565 ms   scanned 2.2 MiB
+  run 157    1943 ms   scanned 2.2 MiB
+  run 158    1574 ms   scanned 2.2 MiB
+  run 159    1487 ms   scanned 2.2 MiB
+  run 160    1211 ms   scanned 2.2 MiB
+  run 161    2282 ms   scanned 2.2 MiB
+  run 162    2633 ms   scanned 2.2 MiB
+  run 163    1600 ms   scanned 2.2 MiB
+  run 164    1856 ms   scanned 2.2 MiB
+  run 165    1915 ms   scanned 2.2 MiB
+  run 166    1610 ms   scanned 2.2 MiB
+  run 167    1573 ms   scanned 2.2 MiB
+  run 168    1582 ms   scanned 2.2 MiB
+  run 169    1572 ms   scanned 2.2 MiB
+  run 170    1826 ms   scanned 2.2 MiB
+  run 171    1570 ms   scanned 2.2 MiB
+  run 172    1914 ms   scanned 2.2 MiB
+  run 173    1564 ms   scanned 2.2 MiB
+  run 174    2629 ms   scanned 2.2 MiB
+  run 175    1562 ms   scanned 2.2 MiB
+  run 176    1585 ms   scanned 2.2 MiB
+  run 177    1604 ms   scanned 2.2 MiB
+  run 178    1595 ms   scanned 2.2 MiB
+  run 179    2662 ms   scanned 2.2 MiB
+  run 180    1572 ms   scanned 2.2 MiB
+  run 181    1582 ms   scanned 2.2 MiB
+  run 182    1611 ms   scanned 2.2 MiB
+  run 183    1578 ms   scanned 2.2 MiB
+  run 184    1568 ms   scanned 2.2 MiB
+  run 185    1591 ms   scanned 2.2 MiB
+  run 186    2298 ms   scanned 2.2 MiB
+  run 187    1495 ms   scanned 2.2 MiB
+  run 188    1583 ms   scanned 2.2 MiB
+  run 189    1576 ms   scanned 2.2 MiB
+  run 190    2283 ms   scanned 2.2 MiB
+  run 191    2274 ms   scanned 2.2 MiB
+  run 192    1566 ms   scanned 2.2 MiB
+  run 193    1564 ms   scanned 2.2 MiB
+  run 194    1580 ms   scanned 2.2 MiB
+  run 195    1578 ms   scanned 2.2 MiB
+  run 196    1925 ms   scanned 2.2 MiB
+  run 197    1572 ms   scanned 2.2 MiB
+  run 198    3687 ms   scanned 2.2 MiB
+  run 199    1570 ms   scanned 2.2 MiB
+  run 200    1205 ms   scanned 2.2 MiB
+
+EXTERNAL stage 1  (Athena UNLOAD -> S3 Parquet -> download):
+  fact_radiology_note_nlp     2,531 rows in 1 file(s)     2108 ms   scanned 199.1 KiB
+  fact_admission            546,029 rows in 1 file(s)     1891 ms   scanned 2.0 MiB
+
+EXTERNAL stage 2  (DuckDB join/unnest over the exported Parquet):
+  run  1    50.1 ms
+  run  2    46.7 ms
+  run  3    43.3 ms
+  run  4    42.2 ms
+  run  5    43.3 ms
+  run  6    42.1 ms
+  run  7    44.1 ms
+  run  8    45.9 ms
+  run  9    43.9 ms
+  run 10    44.7 ms
+  run 11    44.6 ms
+  run 12    43.2 ms
+  run 13    40.6 ms
+  run 14    40.1 ms
+  run 15    41.0 ms
+  run 16    40.6 ms
+  run 17    41.4 ms
+  run 18    40.9 ms
+  run 19    41.1 ms
+  run 20    38.9 ms
+  run 21    41.4 ms
+  run 22    40.6 ms
+  run 23    40.2 ms
+  run 24    40.2 ms
+  run 25    42.1 ms
+  run 26    43.0 ms
+  run 27    40.8 ms
+  run 28    41.4 ms
+  run 29    41.3 ms
+  run 30    39.6 ms
+  run 31    40.3 ms
+  run 32    39.8 ms
+  run 33    41.1 ms
+  run 34    41.9 ms
+  run 35    41.2 ms
+  run 36    44.1 ms
+  run 37    40.2 ms
+  run 38    41.5 ms
+  run 39    39.7 ms
+  run 40    41.0 ms
+  run 41    39.3 ms
+  run 42    40.2 ms
+  run 43    39.4 ms
+  run 44    40.3 ms
+  run 45    39.7 ms
+  run 46    41.2 ms
+  run 47    42.8 ms
+  run 48    40.9 ms
+  run 49    39.2 ms
+  run 50    38.4 ms
+  run 51    40.6 ms
+  run 52    39.0 ms
+  run 53    39.9 ms
+  run 54    40.9 ms
+  run 55    38.8 ms
+  run 56    41.2 ms
+  run 57    40.1 ms
+  run 58    39.7 ms
+  run 59    40.0 ms
+  run 60    37.4 ms
+  run 61    40.0 ms
+  run 62    37.8 ms
+  run 63    36.1 ms
+  run 64    37.2 ms
+  run 65    40.9 ms
+  run 66    39.9 ms
+  run 67    37.8 ms
+  run 68    37.5 ms
+  run 69    38.6 ms
+  run 70    38.6 ms
+  run 71    39.7 ms
+  run 72    38.8 ms
+  run 73    36.4 ms
+  run 74    38.9 ms
+  run 75    38.7 ms
+  run 76    39.6 ms
+  run 77    39.2 ms
+  run 78    39.0 ms
+  run 79    39.9 ms
+  run 80    37.0 ms
+  run 81    38.7 ms
+  run 82    39.7 ms
+  run 83    39.2 ms
+  run 84    40.0 ms
+  run 85    41.4 ms
+  run 86    40.4 ms
+  run 87    39.6 ms
+  run 88    40.2 ms
+  run 89    39.7 ms
+  run 90    39.8 ms
+  run 91    37.6 ms
+  run 92    38.2 ms
+  run 93    39.3 ms
+  run 94    36.2 ms
+  run 95    39.4 ms
+  run 96    39.7 ms
+  run 97    38.5 ms
+  run 98    38.4 ms
+  run 99    38.8 ms
+  run 100    39.9 ms
+  run 101    38.7 ms
+  run 102    37.3 ms
+  run 103    37.7 ms
+  run 104    38.7 ms
+  run 105    38.6 ms
+  run 106    38.2 ms
+  run 107    38.6 ms
+  run 108    39.8 ms
+  run 109    39.5 ms
+  run 110    39.0 ms
+  run 111    38.8 ms
+  run 112    36.9 ms
+  run 113    39.3 ms
+  run 114    38.2 ms
+  run 115    37.1 ms
+  run 116    38.8 ms
+  run 117    39.5 ms
+  run 118    38.7 ms
+  run 119    38.6 ms
+  run 120    38.6 ms
+  run 121    36.9 ms
+  run 122    37.1 ms
+  run 123    37.1 ms
+  run 124    40.7 ms
+  run 125    39.5 ms
+  run 126    39.0 ms
+  run 127    39.1 ms
+  run 128    38.2 ms
+  run 129    40.0 ms
+  run 130    39.2 ms
+  run 131    37.5 ms
+  run 132    35.1 ms
+  run 133    39.4 ms
+  run 134    37.8 ms
+  run 135    38.0 ms
+  run 136    48.6 ms
+  run 137    38.1 ms
+  run 138    38.5 ms
+  run 139    35.9 ms
+  run 140    39.6 ms
+  run 141    40.8 ms
+  run 142    37.3 ms
+  run 143    38.9 ms
+  run 144    38.8 ms
+  run 145    38.7 ms
+  run 146    37.1 ms
+  run 147    38.1 ms
+  run 148    37.3 ms
+  run 149    37.1 ms
+  run 150    39.2 ms
+  run 151    39.1 ms
+  run 152    37.3 ms
+  run 153    36.2 ms
+  run 154    37.2 ms
+  run 155    36.1 ms
+  run 156    37.3 ms
+  run 157    38.8 ms
+  run 158    37.4 ms
+  run 159    37.7 ms
+  run 160    36.9 ms
+  run 161    38.7 ms
+  run 162    36.9 ms
+  run 163    37.2 ms
+  run 164    37.6 ms
+  run 165    37.2 ms
+  run 166    37.3 ms
+  run 167    38.0 ms
+  run 168    39.2 ms
+  run 169    37.7 ms
+  run 170    35.7 ms
+  run 171    37.3 ms
+  run 172    39.5 ms
+  run 173    36.6 ms
+  run 174    39.1 ms
+  run 175    38.6 ms
+  run 176    39.0 ms
+  run 177    36.0 ms
+  run 178    37.6 ms
+  run 179    37.8 ms
+  run 180    37.3 ms
+  run 181    37.7 ms
+  run 182    37.9 ms
+  run 183    37.8 ms
+  run 184    39.2 ms
+  run 185    37.9 ms
+  run 186    37.5 ms
+  run 187    37.6 ms
+  run 188    37.7 ms
+  run 189    37.3 ms
+  run 190    38.2 ms
+  run 191    37.2 ms
+  run 192    36.1 ms
+  run 193    38.3 ms
+  run 194    39.4 ms
+  run 195    41.6 ms
+  run 196    37.4 ms
+  run 197    39.1 ms
+  run 198    39.2 ms
+  run 199    38.9 ms
+  run 200    38.1 ms
+
+======================================================================
+[lab] NATIVE   1938 ms     798,548 rows/s   EXTERNAL   4820 ms     321,108 rows/s   acceptance: PASS
+[radiology] NATIVE   1582 ms     346,855 rows/s   EXTERNAL   4038 ms     135,833 rows/s   acceptance: PASS
+report: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\p5\full\latest.md

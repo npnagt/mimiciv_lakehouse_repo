@@ -1,0 +1,29 @@
+
+=== defective batch: BLOCKED, main tables unchanged ===
+                      rule    dimension  failed  total  pass_rate  threshold status
+               age present Completeness       6   1569     0.9962       0.99   pass
+                 age 0-120     Validity       3   1569     0.9981       1.00  BLOCK
+     one row per admission   Uniqueness       4   1569     0.9975       1.00  BLOCK
+      known admission type     Validity       0   1569     1.0000       1.00   pass
+ discharge after admission  Consistency       2   1569     0.9987       1.00  BLOCK
+note links to an admission    Integrity       5   1574     0.9968       1.00  BLOCK
+         note text present Completeness       3   1570     0.9981       0.99   pass
+note stored within 30 days   Timeliness       0   1569     1.0000       0.98   pass
+    known tobacco category     Validity       4   1565     0.9974       1.00   warn
+NLP coverage of admissions Completeness       0   1569     1.0000       0.95   pass
+
+=== clean batch: PUBLISHED ===
+                      rule    dimension  failed  total  pass_rate  threshold status
+               age present Completeness       0   1565        1.0       0.99   pass
+                 age 0-120     Validity       0   1565        1.0       1.00   pass
+     one row per admission   Uniqueness       0   1565        1.0       1.00   pass
+      known admission type     Validity       0   1565        1.0       1.00   pass
+ discharge after admission  Consistency       0   1565        1.0       1.00   pass
+note links to an admission    Integrity       0   1565        1.0       1.00   pass
+         note text present Completeness       0   1565        1.0       0.99   pass
+note stored within 30 days   Timeliness       0   1565        1.0       0.98   pass
+    known tobacco category     Validity       0   1565        1.0       1.00   pass
+NLP coverage of admissions Completeness       0   1565        1.0       0.95   pass
+
+admissions in main after both runs: 1565
+rules: 10

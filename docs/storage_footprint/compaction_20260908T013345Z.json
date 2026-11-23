@@ -1,0 +1,617 @@
+{
+  "generated_utc": "2026-09-08T01:36:22.210389+00:00",
+  "gold_database": "mimic4_db_business",
+  "region": "us-east-2",
+  "vacuum": false,
+  "vacuum_max_age": null,
+  "unsupported_format_v3": [
+    "fact_radiology_note_nlp_v"
+  ],
+  "optimize_succeeded": 30,
+  "optimize_failed": [
+    "fact_chart_observation",
+    "fact_datetime_event",
+    "fact_ingredient_event",
+    "fact_input_event",
+    "fact_medication_administration",
+    "fact_microbiology_result",
+    "fact_outpatient_measurement",
+    "fact_output_event",
+    "fact_pharmacy_order",
+    "fact_prescription",
+    "fact_procedure_event",
+    "fact_transfer"
+  ],
+  "total_data_scanned_bytes": 23462685,
+  "total_wall_ms": 153420,
+  "tables": [
+    {
+      "table": "agg_admission_daily",
+      "optimize": {
+        "query_id": "550636ab-9421-4911-9061-a853f00dec4c",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 546,
+        "wall_ms": 3434,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "agg_admission_monthly",
+      "optimize": {
+        "query_id": "03f8c6c1-a11f-4c20-bf61-5b71ba070824",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1396,
+        "wall_ms": 3209,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "agg_icu_fluid_balance_daily",
+      "optimize": {
+        "query_id": "9c82dd1e-8bbe-4f2a-9da7-7bbedb63b0c4",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 757,
+        "wall_ms": 3199,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "dim_caregiver",
+      "optimize": {
+        "query_id": "bab54798-f790-42d1-afcf-5b37461e3f00",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1068,
+        "wall_ms": 3205,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "dim_chart_item",
+      "optimize": {
+        "query_id": "1ff5cff0-f90f-42be-993d-0eead221d270",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 504,
+        "wall_ms": 3207,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "dim_date",
+      "optimize": {
+        "query_id": "6d67bad6-9d06-41aa-af19-b3be6f9e8654",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 453,
+        "wall_ms": 3225,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "dim_diagnosis",
+      "optimize": {
+        "query_id": "62e0a99e-226d-414b-b042-2af7b3e2cb9a",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1919,
+        "wall_ms": 3214,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "dim_hcpcs",
+      "optimize": {
+        "query_id": "fc3bb0cd-86e4-4adf-a30d-7cf128ceaf4b",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 666,
+        "wall_ms": 3206,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "dim_lab_item",
+      "optimize": {
+        "query_id": "8c6163b2-9910-46f6-a7ac-be68c5991a77",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 464,
+        "wall_ms": 3215,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "dim_patient",
+      "optimize": {
+        "query_id": "5f7066d4-109a-4f32-9148-c0b63c6a7563",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1589,
+        "wall_ms": 3231,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "dim_procedure",
+      "optimize": {
+        "query_id": "6b59056a-1517-4f79-9184-6640ea538efd",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 593,
+        "wall_ms": 3203,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "dim_provider",
+      "optimize": {
+        "query_id": "20ca72f1-c253-48e1-9709-e1fe9d3d3033",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 433,
+        "wall_ms": 3203,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "etl_control",
+      "optimize": {
+        "query_id": "fd588832-d10c-481e-8f2d-43b32292b6ba",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1528,
+        "wall_ms": 3203,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_admission",
+      "optimize": {
+        "query_id": "bde0588f-2b70-4069-8595-7972f6804f13",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 662,
+        "wall_ms": 3209,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_chart_observation",
+      "optimize": {
+        "query_id": "4df6b4fa-63e2-41f6-8cfb-9e3b65c49b33",
+        "state": "FAILED",
+        "scanned_bytes": 5805000,
+        "engine_ms": 3668,
+        "wall_ms": 6262,
+        "reason": "ICEBERG_OPTIMIZE_MORE_RUNS_NEEDED: Processed 100 partitions in this round of optimization, but there are more partitions remaining. Please run another OPTIMIZE command to process the remaining partitions in the table.If this persists, consider lowering your optimize_rewrite_min_data_file_size_bytes setting. You may need to manually clean the data at location 's3://mimic4-lakehouse-v3/athena-results/tables/4df6b4fa-63e2-41f6-8cfb-9e3b65c49b33' before retrying. Athena will not delete data in your account.",
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_datetime_event",
+      "optimize": {
+        "query_id": "e453e018-2fd6-4c94-8a07-306659e61960",
+        "state": "FAILED",
+        "scanned_bytes": 1650578,
+        "engine_ms": 2391,
+        "wall_ms": 3217,
+        "reason": "ICEBERG_OPTIMIZE_MORE_RUNS_NEEDED: Processed 100 partitions in this round of optimization, but there are more partitions remaining. Please run another OPTIMIZE command to process the remaining partitions in the table.If this persists, consider lowering your optimize_rewrite_min_data_file_size_bytes setting. You may need to manually clean the data at location 's3://mimic4-lakehouse-v3/athena-results/tables/e453e018-2fd6-4c94-8a07-306659e61960' before retrying. Athena will not delete data in your account.",
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_diagnosis",
+      "optimize": {
+        "query_id": "9cf7ba2e-31b0-420e-8545-834a8d9b73a8",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 524,
+        "wall_ms": 3217,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_drg_assignment",
+      "optimize": {
+        "query_id": "a71ad008-2633-4094-8197-128a388ec662",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1255,
+        "wall_ms": 3206,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_hcpcs_event",
+      "optimize": {
+        "query_id": "9efeda7c-a608-4ff2-b735-531072a4d4d8",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 419,
+        "wall_ms": 3220,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_icu_stay_accumulating",
+      "optimize": {
+        "query_id": "356e54aa-9e4e-424a-a382-7c29dfbfcb65",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1247,
+        "wall_ms": 3210,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_ingredient_event",
+      "optimize": {
+        "query_id": "96840254-00ba-404e-9e49-7e0815fb9b10",
+        "state": "FAILED",
+        "scanned_bytes": 2669222,
+        "engine_ms": 2502,
+        "wall_ms": 3263,
+        "reason": "ICEBERG_OPTIMIZE_MORE_RUNS_NEEDED: Processed 100 partitions in this round of optimization, but there are more partitions remaining. Please run another OPTIMIZE command to process the remaining partitions in the table.If this persists, consider lowering your optimize_rewrite_min_data_file_size_bytes setting. You may need to manually clean the data at location 's3://mimic4-lakehouse-v3/athena-results/tables/96840254-00ba-404e-9e49-7e0815fb9b10' before retrying. Athena will not delete data in your account.",
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_input_event",
+      "optimize": {
+        "query_id": "76bc61c2-5e02-4f5e-b8e4-e4cec09558bf",
+        "state": "FAILED",
+        "scanned_bytes": 3721132,
+        "engine_ms": 2789,
+        "wall_ms": 3213,
+        "reason": "ICEBERG_OPTIMIZE_MORE_RUNS_NEEDED: Processed 100 partitions in this round of optimization, but there are more partitions remaining. Please run another OPTIMIZE command to process the remaining partitions in the table.If this persists, consider lowering your optimize_rewrite_min_data_file_size_bytes setting. You may need to manually clean the data at location 's3://mimic4-lakehouse-v3/athena-results/tables/76bc61c2-5e02-4f5e-b8e4-e4cec09558bf' before retrying. Athena will not delete data in your account.",
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_lab_result",
+      "optimize": {
+        "query_id": "78fe3a6f-a676-4b8e-9c87-75c367f58785",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 550,
+        "wall_ms": 3208,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_medication_administration",
+      "optimize": {
+        "query_id": "4bfe0150-ef45-4ce2-bd96-0ec50c212ec7",
+        "state": "FAILED",
+        "scanned_bytes": 2005050,
+        "engine_ms": 3209,
+        "wall_ms": 6251,
+        "reason": "ICEBERG_OPTIMIZE_MORE_RUNS_NEEDED: Processed 100 partitions in this round of optimization, but there are more partitions remaining. Please run another OPTIMIZE command to process the remaining partitions in the table.If this persists, consider lowering your optimize_rewrite_min_data_file_size_bytes setting. You may need to manually clean the data at location 's3://mimic4-lakehouse-v3/athena-results/tables/4bfe0150-ef45-4ce2-bd96-0ec50c212ec7' before retrying. Athena will not delete data in your account.",
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_medication_administration_mini_detail",
+      "optimize": {
+        "query_id": "940ddaac-fa79-4c19-ba7d-b3187b6b50cb",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 564,
+        "wall_ms": 3199,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_microbiology_result",
+      "optimize": {
+        "query_id": "1e5e7731-2c27-40d2-b202-011d9f677b2d",
+        "state": "FAILED",
+        "scanned_bytes": 819124,
+        "engine_ms": 2341,
+        "wall_ms": 3217,
+        "reason": "ICEBERG_OPTIMIZE_MORE_RUNS_NEEDED: Processed 100 partitions in this round of optimization, but there are more partitions remaining. Please run another OPTIMIZE command to process the remaining partitions in the table.If this persists, consider lowering your optimize_rewrite_min_data_file_size_bytes setting. You may need to manually clean the data at location 's3://mimic4-lakehouse-v3/athena-results/tables/1e5e7731-2c27-40d2-b202-011d9f677b2d' before retrying. Athena will not delete data in your account.",
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_note_nlp",
+      "optimize": {
+        "query_id": "6007ce88-1e51-414e-bbde-598cf4992f85",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 466,
+        "wall_ms": 3206,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_note_nlp_medspacy",
+      "optimize": {
+        "query_id": "633e45fe-e795-4912-9a5b-03637f8254dd",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 695,
+        "wall_ms": 3196,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_outpatient_measurement",
+      "optimize": {
+        "query_id": "d7bd8d18-1afc-4d9f-9509-e401bd8d13ce",
+        "state": "FAILED",
+        "scanned_bytes": 168918,
+        "engine_ms": 3449,
+        "wall_ms": 6247,
+        "reason": "ICEBERG_OPTIMIZE_MORE_RUNS_NEEDED: Processed 100 partitions in this round of optimization, but there are more partitions remaining. Please run another OPTIMIZE command to process the remaining partitions in the table.If this persists, consider lowering your optimize_rewrite_min_data_file_size_bytes setting. You may need to manually clean the data at location 's3://mimic4-lakehouse-v3/athena-results/tables/d7bd8d18-1afc-4d9f-9509-e401bd8d13ce' before retrying. Athena will not delete data in your account.",
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_output_event",
+      "optimize": {
+        "query_id": "473dabde-6daf-43bd-88d1-346ce02bb44d",
+        "state": "FAILED",
+        "scanned_bytes": 1280331,
+        "engine_ms": 2086,
+        "wall_ms": 3196,
+        "reason": "ICEBERG_OPTIMIZE_MORE_RUNS_NEEDED: Processed 100 partitions in this round of optimization, but there are more partitions remaining. Please run another OPTIMIZE command to process the remaining partitions in the table.If this persists, consider lowering your optimize_rewrite_min_data_file_size_bytes setting. You may need to manually clean the data at location 's3://mimic4-lakehouse-v3/athena-results/tables/473dabde-6daf-43bd-88d1-346ce02bb44d' before retrying. Athena will not delete data in your account.",
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_pharmacy_order",
+      "optimize": {
+        "query_id": "7b14dc89-feab-4795-bee2-d3204c1aef01",
+        "state": "FAILED",
+        "scanned_bytes": 2354839,
+        "engine_ms": 2744,
+        "wall_ms": 3222,
+        "reason": "ICEBERG_OPTIMIZE_MORE_RUNS_NEEDED: Processed 100 partitions in this round of optimization, but there are more partitions remaining. Please run another OPTIMIZE command to process the remaining partitions in the table.If this persists, consider lowering your optimize_rewrite_min_data_file_size_bytes setting. You may need to manually clean the data at location 's3://mimic4-lakehouse-v3/athena-results/tables/7b14dc89-feab-4795-bee2-d3204c1aef01' before retrying. Athena will not delete data in your account.",
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_prescription",
+      "optimize": {
+        "query_id": "5b56f433-033a-4b0b-b153-1c3282b52d0c",
+        "state": "FAILED",
+        "scanned_bytes": 2182239,
+        "engine_ms": 3744,
+        "wall_ms": 6366,
+        "reason": "ICEBERG_OPTIMIZE_MORE_RUNS_NEEDED: Processed 100 partitions in this round of optimization, but there are more partitions remaining. Please run another OPTIMIZE command to process the remaining partitions in the table.If this persists, consider lowering your optimize_rewrite_min_data_file_size_bytes setting. You may need to manually clean the data at location 's3://mimic4-lakehouse-v3/athena-results/tables/5b56f433-033a-4b0b-b153-1c3282b52d0c' before retrying. Athena will not delete data in your account.",
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_procedure",
+      "optimize": {
+        "query_id": "142a1742-38a2-491b-b046-f04587594965",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 89468,
+        "engine_ms": 3224,
+        "wall_ms": 6255,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_procedure_event",
+      "optimize": {
+        "query_id": "7ecef9fa-ee14-44fd-9930-8ef88216066a",
+        "state": "FAILED",
+        "scanned_bytes": 574723,
+        "engine_ms": 3050,
+        "wall_ms": 6252,
+        "reason": "ICEBERG_OPTIMIZE_MORE_RUNS_NEEDED: Processed 100 partitions in this round of optimization, but there are more partitions remaining. Please run another OPTIMIZE command to process the remaining partitions in the table.If this persists, consider lowering your optimize_rewrite_min_data_file_size_bytes setting. You may need to manually clean the data at location 's3://mimic4-lakehouse-v3/athena-results/tables/7ecef9fa-ee14-44fd-9930-8ef88216066a' before retrying. Athena will not delete data in your account.",
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_provider_order",
+      "optimize": {
+        "query_id": "ae7f69fc-5e99-481d-b3f3-f46289436176",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 422,
+        "wall_ms": 3210,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_provider_order_mini_detail",
+      "optimize": {
+        "query_id": "24b6e198-4238-436b-b4cb-e581df90934e",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1358,
+        "wall_ms": 3187,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_radiology_note_nlp",
+      "optimize": {
+        "query_id": "dd8c7cb9-0c60-40d4-85a3-47279de36773",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 452,
+        "wall_ms": 3214,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_service_assignment",
+      "optimize": {
+        "query_id": "bbec0f77-ac1e-4652-8c4a-6729707fdc5b",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 544,
+        "wall_ms": 3206,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "fact_transfer",
+      "optimize": {
+        "query_id": "7786535b-43d7-4317-b4fa-511456763ea6",
+        "state": "FAILED",
+        "scanned_bytes": 142061,
+        "engine_ms": 2327,
+        "wall_ms": 3217,
+        "reason": "ICEBERG_OPTIMIZE_MORE_RUNS_NEEDED: Processed 100 partitions in this round of optimization, but there are more partitions remaining. Please run another OPTIMIZE command to process the remaining partitions in the table.If this persists, consider lowering your optimize_rewrite_min_data_file_size_bytes setting. You may need to manually clean the data at location 's3://mimic4-lakehouse-v3/athena-results/tables/7786535b-43d7-4317-b4fa-511456763ea6' before retrying. Athena will not delete data in your account.",
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "obt_admission_features",
+      "optimize": {
+        "query_id": "22e69611-0ced-4ece-b85f-e9d430070388",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 589,
+        "wall_ms": 3203,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "obt_icu_stay_features",
+      "optimize": {
+        "query_id": "c8e1bce4-daef-4ffc-89e3-92db397395d9",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1416,
+        "wall_ms": 3208,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    },
+    {
+      "table": "obt_patient_360",
+      "optimize": {
+        "query_id": "84a692d7-e9f4-412f-82b8-f1daae53fcd4",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 519,
+        "wall_ms": 3189,
+        "reason": null,
+        "rows": []
+      },
+      "vacuum": null,
+      "vacuum_alter": null
+    }
+  ]
+}

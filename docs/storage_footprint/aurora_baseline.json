@@ -1,0 +1,566 @@
+{
+  "source": "AWS RDS Aurora PostgreSQL data warehouse (mimic_datawarehouse_repo)",
+  "measured_utc": "2026-09-22",
+  "dataset": "fulldataset",
+  "database": "mimic4rds_full",
+  "structured": {
+    "physical_mib": 8856.23,
+    "live_mib": 8334.41,
+    "table_count": 67,
+    "content": "staging.stg_* + warehouse.dim_/fact_/agg_* (67 tables)",
+    "redundancy_multiple": 2.0,
+    "redundancy_basis": "two full materializations inside Postgres -- staging.stg_* (full TRUNCATE+reload of every source) + warehouse.* (modeled copy); the shared raw CSV in S3 is a third copy, excluded as it is common to both architectures",
+    "materializations": [
+      "raw CSV.gz in S3 landing (shared with lakehouse)",
+      "staging.stg_* -- full TRUNCATE + reload of every source table",
+      "warehouse.dim_/fact_/agg_* -- modeled copy"
+    ]
+  },
+  "infrastructure": {
+    "physical_mib": 0.0,
+    "content": "landing.* ETL merge scratch (0 tables; expect ~0 between runs)"
+  },
+  "unstructured_nlp": {
+    "physical_mib": 0.0,
+    "content": "not stored in Aurora -- no clinical notes, no NLP-derived tables, no note text"
+  },
+  "pg_database_size_mib": 8866.59,
+  "tables": [
+    {
+      "schema": "warehouse",
+      "table": "fact_input_event",
+      "category": "structured",
+      "row_count": 999887,
+      "total_bytes": 486088704,
+      "live_bytes": 468999248
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_prescription",
+      "category": "structured",
+      "row_count": 999892,
+      "total_bytes": 417521664,
+      "live_bytes": 404597912
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_ingredient_event",
+      "category": "structured",
+      "row_count": 1000020,
+      "total_bytes": 381861888,
+      "live_bytes": 368268816
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_microbiology_result",
+      "category": "structured",
+      "row_count": 1000166,
+      "total_bytes": 353583104,
+      "live_bytes": 340069248
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_procedure_event",
+      "category": "structured",
+      "row_count": 808693,
+      "total_bytes": 341917696,
+      "live_bytes": 329741944
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_pharmacy_order",
+      "category": "structured",
+      "row_count": 999850,
+      "total_bytes": 334217216,
+      "live_bytes": 320376952
+    },
+    {
+      "schema": "staging",
+      "table": "stg_inputevents",
+      "category": "structured",
+      "row_count": 1000139,
+      "total_bytes": 324124672,
+      "live_bytes": 313870160
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_datetime_event",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 307470336,
+      "live_bytes": 297380408
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_medication_administration_mini_detail",
+      "category": "structured",
+      "row_count": 999936,
+      "total_bytes": 295280640,
+      "live_bytes": 284705216
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_output_event",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 291782656,
+      "live_bytes": 279971584
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_medication_administration",
+      "category": "structured",
+      "row_count": 999986,
+      "total_bytes": 288825344,
+      "live_bytes": 276919048
+    },
+    {
+      "schema": "staging",
+      "table": "stg_microbiologyevents",
+      "category": "structured",
+      "row_count": 999668,
+      "total_bytes": 285417472,
+      "live_bytes": 273371331
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_lab_result",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 273620992,
+      "live_bytes": 262439504
+    },
+    {
+      "schema": "staging",
+      "table": "stg_pharmacy",
+      "category": "structured",
+      "row_count": 999953,
+      "total_bytes": 265986048,
+      "live_bytes": 255566100
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_chart_observation",
+      "category": "structured",
+      "row_count": 1008075,
+      "total_bytes": 240279552,
+      "live_bytes": 229415372
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_provider_order",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 239116288,
+      "live_bytes": 228190448
+    },
+    {
+      "schema": "staging",
+      "table": "stg_prescriptions",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 223928320,
+      "live_bytes": 212801069
+    },
+    {
+      "schema": "staging",
+      "table": "stg_procedureevents",
+      "category": "structured",
+      "row_count": 808706,
+      "total_bytes": 213434368,
+      "live_bytes": 206400016
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_transfer",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 212590592,
+      "live_bytes": 202387712
+    },
+    {
+      "schema": "staging",
+      "table": "stg_ingredientevents",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 212008960,
+      "live_bytes": 204640016
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_outpatient_measurement",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 194387968,
+      "live_bytes": 184901936
+    },
+    {
+      "schema": "staging",
+      "table": "stg_emar",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 192774144,
+      "live_bytes": 182556443
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_diagnosis",
+      "category": "structured",
+      "row_count": 999977,
+      "total_bytes": 186499072,
+      "live_bytes": 176196572
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_drg_assignment",
+      "category": "structured",
+      "row_count": 761856,
+      "total_bytes": 183476224,
+      "live_bytes": 175708328
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_admission",
+      "category": "structured",
+      "row_count": 546028,
+      "total_bytes": 174948352,
+      "live_bytes": 167823832
+    },
+    {
+      "schema": "staging",
+      "table": "stg_labevents",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 168624128,
+      "live_bytes": 160175503
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_procedure",
+      "category": "structured",
+      "row_count": 859650,
+      "total_bytes": 164020224,
+      "live_bytes": 156072200
+    },
+    {
+      "schema": "staging",
+      "table": "stg_datetimeevents",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 152010752,
+      "live_bytes": 146350904
+    },
+    {
+      "schema": "staging",
+      "table": "stg_chartevents",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 144097280,
+      "live_bytes": 138606608
+    },
+    {
+      "schema": "staging",
+      "table": "stg_poe",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 141950976,
+      "live_bytes": 132400062
+    },
+    {
+      "schema": "staging",
+      "table": "stg_emar_detail",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 128573440,
+      "live_bytes": 119889899
+    },
+    {
+      "schema": "staging",
+      "table": "stg_outputevents",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 126099456,
+      "live_bytes": 115065536
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_patient",
+      "category": "structured",
+      "row_count": 364627,
+      "total_bytes": 125091840,
+      "live_bytes": 68242954
+    },
+    {
+      "schema": "staging",
+      "table": "stg_admissions",
+      "category": "structured",
+      "row_count": 546028,
+      "total_bytes": 118587392,
+      "live_bytes": 114791008
+    },
+    {
+      "schema": "staging",
+      "table": "stg_transfers",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 112803840,
+      "live_bytes": 105887203
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_service_assignment",
+      "category": "structured",
+      "row_count": 593070,
+      "total_bytes": 112492544,
+      "live_bytes": 107161096
+    },
+    {
+      "schema": "staging",
+      "table": "stg_poe_detail",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 89473024,
+      "live_bytes": 80037532
+    },
+    {
+      "schema": "staging",
+      "table": "stg_drgcodes",
+      "category": "structured",
+      "row_count": 761856,
+      "total_bytes": 87007232,
+      "live_bytes": 81803732
+    },
+    {
+      "schema": "staging",
+      "table": "stg_omr",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 84533248,
+      "live_bytes": 75437623
+    },
+    {
+      "schema": "staging",
+      "table": "stg_procedures_icd",
+      "category": "structured",
+      "row_count": 859655,
+      "total_bytes": 69042176,
+      "live_bytes": 65076072
+    },
+    {
+      "schema": "staging",
+      "table": "stg_diagnoses_icd",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 68329472,
+      "live_bytes": 64057344
+    },
+    {
+      "schema": "warehouse",
+      "table": "agg_admission_daily",
+      "category": "structured",
+      "row_count": 244500,
+      "total_bytes": 56737792,
+      "live_bytes": 36093840
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_diagnosis",
+      "category": "structured",
+      "row_count": 112107,
+      "total_bytes": 50692096,
+      "live_bytes": 27813122
+    },
+    {
+      "schema": "staging",
+      "table": "stg_services",
+      "category": "structured",
+      "row_count": 593071,
+      "total_bytes": 42934272,
+      "live_bytes": 38592997
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_procedure",
+      "category": "structured",
+      "row_count": 86423,
+      "total_bytes": 39624704,
+      "live_bytes": 21597762
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_hcpcs_event",
+      "category": "structured",
+      "row_count": 186074,
+      "total_bytes": 39370752,
+      "live_bytes": 37506832
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_provider_order_mini_detail",
+      "category": "structured",
+      "row_count": 159231,
+      "total_bytes": 35209216,
+      "live_bytes": 33620724
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_hcpcs",
+      "category": "structured",
+      "row_count": 89208,
+      "total_bytes": 32006144,
+      "live_bytes": 17383232
+    },
+    {
+      "schema": "staging",
+      "table": "stg_patients",
+      "category": "structured",
+      "row_count": 364627,
+      "total_bytes": 28262400,
+      "live_bytes": 25256907
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_icu_stay_accumulating",
+      "category": "structured",
+      "row_count": 94458,
+      "total_bytes": 26116096,
+      "live_bytes": 24996072
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_date",
+      "category": "structured",
+      "row_count": 47846,
+      "total_bytes": 20127744,
+      "live_bytes": 10654680
+    },
+    {
+      "schema": "staging",
+      "table": "stg_hcpcsevents",
+      "category": "structured",
+      "row_count": 186074,
+      "total_bytes": 19931136,
+      "live_bytes": 18443896
+    },
+    {
+      "schema": "warehouse",
+      "table": "agg_icu_fluid_balance_daily",
+      "category": "structured",
+      "row_count": 75366,
+      "total_bytes": 17915904,
+      "live_bytes": 11214816
+    },
+    {
+      "schema": "staging",
+      "table": "stg_icustays",
+      "category": "structured",
+      "row_count": 94458,
+      "total_bytes": 16621568,
+      "live_bytes": 16041328
+    },
+    {
+      "schema": "staging",
+      "table": "stg_d_icd_diagnoses",
+      "category": "structured",
+      "row_count": 112107,
+      "total_bytes": 13312000,
+      "live_bytes": 12366773
+    },
+    {
+      "schema": "staging",
+      "table": "stg_d_icd_procedures",
+      "category": "structured",
+      "row_count": 86423,
+      "total_bytes": 10608640,
+      "live_bytes": 9875948
+    },
+    {
+      "schema": "staging",
+      "table": "stg_d_hcpcs",
+      "category": "structured",
+      "row_count": 89208,
+      "total_bytes": 6119424,
+      "live_bytes": 5416227
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_provider",
+      "category": "structured",
+      "row_count": 42244,
+      "total_bytes": 5955584,
+      "live_bytes": 5654456
+    },
+    {
+      "schema": "warehouse",
+      "table": "agg_admission_monthly",
+      "category": "structured",
+      "row_count": 10856,
+      "total_bytes": 2588672,
+      "live_bytes": 1664016
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_caregiver",
+      "category": "structured",
+      "row_count": 17984,
+      "total_bytes": 2572288,
+      "live_bytes": 2445184
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_chart_item",
+      "category": "structured",
+      "row_count": 4095,
+      "total_bytes": 1990656,
+      "live_bytes": 1079186
+    },
+    {
+      "schema": "staging",
+      "table": "stg_provider",
+      "category": "structured",
+      "row_count": 42244,
+      "total_bytes": 1572864,
+      "live_bytes": 1350524
+    },
+    {
+      "schema": "staging",
+      "table": "stg_caregiver",
+      "category": "structured",
+      "row_count": 17984,
+      "total_bytes": 688128,
+      "live_bytes": 608256
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_lab_item",
+      "category": "structured",
+      "row_count": 1650,
+      "total_bytes": 647168,
+      "live_bytes": 372540
+    },
+    {
+      "schema": "staging",
+      "table": "stg_d_items",
+      "category": "structured",
+      "row_count": 4095,
+      "total_bytes": 581632,
+      "live_bytes": 540393
+    },
+    {
+      "schema": "warehouse",
+      "table": "etl_process_log",
+      "category": "structured",
+      "row_count": 390,
+      "total_bytes": 196608,
+      "live_bytes": 174960
+    },
+    {
+      "schema": "staging",
+      "table": "stg_d_labitems",
+      "category": "structured",
+      "row_count": 1650,
+      "total_bytes": 163840,
+      "live_bytes": 147909
+    }
+  ]
+}

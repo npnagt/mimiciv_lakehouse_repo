@@ -1,0 +1,693 @@
+{
+  "generated_utc": "2026-09-22T09:05:18.234982+00:00",
+  "dataset": "fulldataset",
+  "region": "us-east-2",
+  "prices_used": {
+    "glue_dpu_hour": 0.44,
+    "s3_standard_gb_month": 0.023,
+    "s3_put_per_1k": 0.005,
+    "s3_get_per_1k": 0.0004,
+    "athena_per_tb_scanned": 5.0,
+    "cw_logs_ingest_per_gb": 0.5,
+    "cw_logs_storage_gb_month": 0.03,
+    "glue_catalog_per_100k_objects_month": 1.0
+  },
+  "glue_jobs": [
+    {
+      "job": "agg-refresh-agg_admission_daily-full",
+      "glue_version": "4.0",
+      "worker": "4 x G.1X",
+      "command": "glueetl",
+      "runs": 12,
+      "ok": 10,
+      "failed": 2,
+      "exec_seconds": 17504,
+      "dpu_seconds_total": 49753.0,
+      "dpu_seconds_successful": 45237.0,
+      "dpu_seconds_one_clean_run": 2903.0
+    },
+    {
+      "job": "agg-refresh-agg_admission_monthly-full",
+      "glue_version": "4.0",
+      "worker": "4 x G.1X",
+      "command": "glueetl",
+      "runs": 10,
+      "ok": 10,
+      "failed": 0,
+      "exec_seconds": 8788,
+      "dpu_seconds_total": 18894.0,
+      "dpu_seconds_successful": 18894.0,
+      "dpu_seconds_one_clean_run": 272.0
+    },
+    {
+      "job": "agg-refresh-agg_icu_fluid_balance_daily-full",
+      "glue_version": "4.0",
+      "worker": "4 x G.1X",
+      "command": "glueetl",
+      "runs": 13,
+      "ok": 10,
+      "failed": 3,
+      "exec_seconds": 9765,
+      "dpu_seconds_total": 27783.0,
+      "dpu_seconds_successful": 23600.0,
+      "dpu_seconds_one_clean_run": 1677.0
+    },
+    {
+      "job": "agg-refresh-obt_admission_features-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.2X",
+      "command": "glueetl",
+      "runs": 10,
+      "ok": 10,
+      "failed": 0,
+      "exec_seconds": 2535,
+      "dpu_seconds_total": 50764.0,
+      "dpu_seconds_successful": 50764.0,
+      "dpu_seconds_one_clean_run": 3188.0
+    },
+    {
+      "job": "agg-refresh-obt_icu_stay_features-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.2X",
+      "command": "glueetl",
+      "runs": 10,
+      "ok": 10,
+      "failed": 0,
+      "exec_seconds": 1930,
+      "dpu_seconds_total": 38692.0,
+      "dpu_seconds_successful": 38692.0,
+      "dpu_seconds_one_clean_run": 2814.0
+    },
+    {
+      "job": "agg-refresh-obt_patient_360-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.2X",
+      "command": "glueetl",
+      "runs": 10,
+      "ok": 10,
+      "failed": 0,
+      "exec_seconds": 1218,
+      "dpu_seconds_total": 24448.0,
+      "dpu_seconds_successful": 24448.0,
+      "dpu_seconds_one_clean_run": 2150.0
+    },
+    {
+      "job": "dim-date-seed-job-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 762,
+      "dpu_seconds_total": 1529.0,
+      "dpu_seconds_successful": 1529.0,
+      "dpu_seconds_one_clean_run": 106.0
+    },
+    {
+      "job": "dim-load-dim_caregiver-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 866,
+      "dpu_seconds_total": 1739.0,
+      "dpu_seconds_successful": 1739.0,
+      "dpu_seconds_one_clean_run": 115.0
+    },
+    {
+      "job": "dim-load-dim_chart_item-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 833,
+      "dpu_seconds_total": 1671.0,
+      "dpu_seconds_successful": 1671.0,
+      "dpu_seconds_one_clean_run": 132.0
+    },
+    {
+      "job": "dim-load-dim_diagnosis-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 910,
+      "dpu_seconds_total": 1824.0,
+      "dpu_seconds_successful": 1824.0,
+      "dpu_seconds_one_clean_run": 139.0
+    },
+    {
+      "job": "dim-load-dim_hcpcs-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 874,
+      "dpu_seconds_total": 1752.0,
+      "dpu_seconds_successful": 1752.0,
+      "dpu_seconds_one_clean_run": 132.0
+    },
+    {
+      "job": "dim-load-dim_lab_item-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 849,
+      "dpu_seconds_total": 1704.0,
+      "dpu_seconds_successful": 1704.0,
+      "dpu_seconds_one_clean_run": 127.0
+    },
+    {
+      "job": "dim-load-dim_patient-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 945,
+      "dpu_seconds_total": 1894.0,
+      "dpu_seconds_successful": 1894.0,
+      "dpu_seconds_one_clean_run": 140.0
+    },
+    {
+      "job": "dim-load-dim_procedure-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 883,
+      "dpu_seconds_total": 1770.0,
+      "dpu_seconds_successful": 1770.0,
+      "dpu_seconds_one_clean_run": 126.0
+    },
+    {
+      "job": "dim-load-dim_provider-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 806,
+      "dpu_seconds_total": 1622.0,
+      "dpu_seconds_successful": 1622.0,
+      "dpu_seconds_one_clean_run": 121.0
+    },
+    {
+      "job": "fact-load-fact_admission-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 1120,
+      "dpu_seconds_total": 2246.0,
+      "dpu_seconds_successful": 2246.0,
+      "dpu_seconds_one_clean_run": 171.0
+    },
+    {
+      "job": "fact-load-fact_chart_observation-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.2X",
+      "command": "glueetl",
+      "runs": 12,
+      "ok": 11,
+      "failed": 1,
+      "exec_seconds": 38780,
+      "dpu_seconds_total": 775734.0,
+      "dpu_seconds_successful": 621770.0,
+      "dpu_seconds_one_clean_run": 1344.0
+    },
+    {
+      "job": "fact-load-fact_datetime_event-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.2X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 1616,
+      "dpu_seconds_total": 32406.0,
+      "dpu_seconds_successful": 32406.0,
+      "dpu_seconds_one_clean_run": 1352.0
+    },
+    {
+      "job": "fact-load-fact_diagnosis-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 1578,
+      "dpu_seconds_total": 3157.0,
+      "dpu_seconds_successful": 3157.0,
+      "dpu_seconds_one_clean_run": 222.0
+    },
+    {
+      "job": "fact-load-fact_drg_assignment-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 1135,
+      "dpu_seconds_total": 2274.0,
+      "dpu_seconds_successful": 2274.0,
+      "dpu_seconds_one_clean_run": 162.0
+    },
+    {
+      "job": "fact-load-fact_hcpcs_event-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 990,
+      "dpu_seconds_total": 1985.0,
+      "dpu_seconds_successful": 1985.0,
+      "dpu_seconds_one_clean_run": 154.0
+    },
+    {
+      "job": "fact-load-fact_icu_stay_accumulating-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 10,
+      "ok": 10,
+      "failed": 0,
+      "exec_seconds": 874,
+      "dpu_seconds_total": 1753.0,
+      "dpu_seconds_successful": 1753.0,
+      "dpu_seconds_one_clean_run": 150.0
+    },
+    {
+      "job": "fact-load-fact_ingredient_event-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.2X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 2723,
+      "dpu_seconds_total": 54528.0,
+      "dpu_seconds_successful": 54528.0,
+      "dpu_seconds_one_clean_run": 1402.0
+    },
+    {
+      "job": "fact-load-fact_input_event-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.2X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 3085,
+      "dpu_seconds_total": 61806.0,
+      "dpu_seconds_successful": 61806.0,
+      "dpu_seconds_one_clean_run": 1470.0
+    },
+    {
+      "job": "fact-load-fact_lab_result-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.2X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 20997,
+      "dpu_seconds_total": 420082.0,
+      "dpu_seconds_successful": 420082.0,
+      "dpu_seconds_one_clean_run": 1536.0
+    },
+    {
+      "job": "fact-load-fact_medication_administration-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.2X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 5238,
+      "dpu_seconds_total": 104868.0,
+      "dpu_seconds_successful": 104868.0,
+      "dpu_seconds_one_clean_run": 1406.0
+    },
+    {
+      "job": "fact-load-fact_medication_administration_mini_detail-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.2X",
+      "command": "glueetl",
+      "runs": 12,
+      "ok": 12,
+      "failed": 0,
+      "exec_seconds": 17965,
+      "dpu_seconds_total": 359420.0,
+      "dpu_seconds_successful": 359420.0,
+      "dpu_seconds_one_clean_run": 1514.0
+    },
+    {
+      "job": "fact-load-fact_microbiology_result-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 2326,
+      "dpu_seconds_total": 4659.0,
+      "dpu_seconds_successful": 4659.0,
+      "dpu_seconds_one_clean_run": 217.0
+    },
+    {
+      "job": "fact-load-fact_outpatient_measurement-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 1652,
+      "dpu_seconds_total": 3308.0,
+      "dpu_seconds_successful": 3308.0,
+      "dpu_seconds_one_clean_run": 189.0
+    },
+    {
+      "job": "fact-load-fact_output_event-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.2X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 1170,
+      "dpu_seconds_total": 23508.0,
+      "dpu_seconds_successful": 23508.0,
+      "dpu_seconds_one_clean_run": 1282.0
+    },
+    {
+      "job": "fact-load-fact_pharmacy_order-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 7045,
+      "dpu_seconds_total": 14096.0,
+      "dpu_seconds_successful": 14096.0,
+      "dpu_seconds_one_clean_run": 258.0
+    },
+    {
+      "job": "fact-load-fact_prescription-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.2X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 4522,
+      "dpu_seconds_total": 90516.0,
+      "dpu_seconds_successful": 90516.0,
+      "dpu_seconds_one_clean_run": 1480.0
+    },
+    {
+      "job": "fact-load-fact_procedure-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 1041,
+      "dpu_seconds_total": 2089.0,
+      "dpu_seconds_successful": 2089.0,
+      "dpu_seconds_one_clean_run": 157.0
+    },
+    {
+      "job": "fact-load-fact_procedure_event-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.2X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 899,
+      "dpu_seconds_total": 18104.0,
+      "dpu_seconds_successful": 18104.0,
+      "dpu_seconds_one_clean_run": 1340.0
+    },
+    {
+      "job": "fact-load-fact_provider_order-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.2X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 5893,
+      "dpu_seconds_total": 117968.0,
+      "dpu_seconds_successful": 117968.0,
+      "dpu_seconds_one_clean_run": 1298.0
+    },
+    {
+      "job": "fact-load-fact_provider_order_mini_detail-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.2X",
+      "command": "glueetl",
+      "runs": 13,
+      "ok": 12,
+      "failed": 1,
+      "exec_seconds": 1280,
+      "dpu_seconds_total": 25708.0,
+      "dpu_seconds_successful": 24854.0,
+      "dpu_seconds_one_clean_run": 1286.0
+    },
+    {
+      "job": "fact-load-fact_service_assignment-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 986,
+      "dpu_seconds_total": 1978.0,
+      "dpu_seconds_successful": 1978.0,
+      "dpu_seconds_one_clean_run": 155.0
+    },
+    {
+      "job": "fact-load-fact_transfer-full",
+      "glue_version": "4.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 11,
+      "ok": 11,
+      "failed": 0,
+      "exec_seconds": 1341,
+      "dpu_seconds_total": 2688.0,
+      "dpu_seconds_successful": 2688.0,
+      "dpu_seconds_one_clean_run": 193.0
+    },
+    {
+      "job": "medspacy-nlp-job-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.1X",
+      "command": "glueetl",
+      "runs": 16,
+      "ok": 9,
+      "failed": 5,
+      "exec_seconds": 45064,
+      "dpu_seconds_total": 307549.0,
+      "dpu_seconds_successful": 200803.0,
+      "dpu_seconds_one_clean_run": 1123.0
+    },
+    {
+      "job": "notes-ingest-job-full",
+      "glue_version": "4.0",
+      "worker": "5 x G.2X",
+      "command": "glueetl",
+      "runs": 10,
+      "ok": 10,
+      "failed": 0,
+      "exec_seconds": 2937,
+      "dpu_seconds_total": 29414.0,
+      "dpu_seconds_successful": 29414.0,
+      "dpu_seconds_one_clean_run": 2850.0
+    },
+    {
+      "job": "radiology-nlp-job-full",
+      "glue_version": "4.0",
+      "worker": "10 x G.1X",
+      "command": "glueetl",
+      "runs": 16,
+      "ok": 10,
+      "failed": 3,
+      "exec_seconds": 28803,
+      "dpu_seconds_total": 148144.0,
+      "dpu_seconds_successful": 112321.0,
+      "dpu_seconds_one_clean_run": 597.0
+    },
+    {
+      "job": "radiology-nlp-variant-job-full",
+      "glue_version": "6.0",
+      "worker": "2 x G.1X",
+      "command": "glueetl",
+      "runs": 7,
+      "ok": 7,
+      "failed": 0,
+      "exec_seconds": 1079,
+      "dpu_seconds_total": 2162.0,
+      "dpu_seconds_successful": 2162.0,
+      "dpu_seconds_one_clean_run": 289.0
+    }
+  ],
+  "glue_crawlers": [
+    {
+      "crawler": "mimic4-data-v3-2-crawler-full",
+      "runs": 15,
+      "last_runtime_seconds": 41.721,
+      "median_runtime_seconds": 39.945,
+      "tables_in_catalog": 0,
+      "total_elapsed_seconds": 596.4
+    }
+  ],
+  "cloudwatch_log_groups": [
+    {
+      "log_group": "/aws-glue/jobs/error",
+      "stored_bytes": 4728801593
+    },
+    {
+      "log_group": "/aws-glue/jobs/logs-v2",
+      "stored_bytes": 197254219
+    },
+    {
+      "log_group": "/aws-glue/sessions/error",
+      "stored_bytes": 2299644
+    },
+    {
+      "log_group": "/aws-glue/jobs/output",
+      "stored_bytes": 617022
+    },
+    {
+      "log_group": "/aws-glue/crawlers",
+      "stored_bytes": 21986
+    },
+    {
+      "log_group": "/aws-glue/python-jobs/output",
+      "stored_bytes": 20530
+    },
+    {
+      "log_group": "/aws-glue/python-jobs/error",
+      "stored_bytes": 4252
+    }
+  ],
+  "glue_data_catalog": [
+    {
+      "database": "mimic4_db_business_full",
+      "tables": 43
+    },
+    {
+      "database": "mimic4_db_raw_full",
+      "tables": 34
+    }
+  ],
+  "iam_roles": [
+    "MimicGlueCrawlerRole-full",
+    "MimicGlueDimDateSeedRole-full",
+    "MimicGlueDimLoadRole-full",
+    "MimicGlueFactLoadRole-full",
+    "MimicGlueAggRefreshRole-full",
+    "MimicGlueNotesIngestRole-full",
+    "MimicGlueMedspacyNlpRole-full",
+    "MimicGlueRadiologyNlpRole-full"
+  ],
+  "s3_buckets": [
+    "mimic4-datalake-v3-2-full",
+    "mimic4-lakehouse-v3-2-full",
+    "mimic4-glue-scripts-v3-2-bucket",
+    "mimic4-nlp-v3-2-full"
+  ],
+  "athena": {
+    "queries": 17001,
+    "total_scanned_bytes": 137193959486,
+    "total_engine_ms": 24464956
+  },
+  "storage_footprint_ref": "docs/storage_footprint/full/latest.json",
+  "consumption": {
+    "glue_job_count": 42,
+    "glue_run_count": 469,
+    "glue_dpu_seconds_total": 2837989.0,
+    "glue_dpu_seconds_successful": 2531903.0,
+    "glue_dpu_seconds_one_clean_pipeline": 37739.0,
+    "glue_dpu_hours_total": 788.33,
+    "glue_dpu_hours_successful": 703.306,
+    "crawler_runs": 15,
+    "crawler_elapsed_seconds": 596.4,
+    "cloudwatch_log_bytes": 4929019246,
+    "glue_catalog_objects": 77,
+    "athena_scanned_bytes": 137193959486,
+    "s3_physical_bytes": 18113251246,
+    "s3_raw_bytes": 15763592751,
+    "s3_gold_objects": 74059,
+    "s3_gold_live_bytes": 1401794162
+  },
+  "cost_estimate_usd": {
+    "one_time_build_and_debug": {
+      "glue_etl_all_runs": 346.8653,
+      "athena_all_queries": 0.686,
+      "cloudwatch_log_ingestion": 2.4645,
+      "total": 350.0158
+    },
+    "one_clean_pipeline_run": {
+      "glue_etl_min_successful_run_per_job": 4.6125,
+      "glue_etl_all_successful_runs": 309.4548,
+      "glue_crawler_one_run": 0.1467,
+      "total_min": 4.7592
+    },
+    "steady_state_monthly": {
+      "s3_storage_as_deployed": 0.4166,
+      "s3_storage_after_orphan_cleanup": 0.3948,
+      "cloudwatch_log_storage": 0.1479,
+      "glue_data_catalog": 0.0,
+      "total_as_deployed": 0.5645,
+      "total_after_cleanup": 0.5427
+    },
+    "annual_cost_estimate": {
+      "load_cost_usd": 4.7592,
+      "annual_steady_state_usd_as_deployed": 6.774,
+      "annual_steady_state_usd_after_cleanup": 6.5124,
+      "first_year_total_usd_as_deployed": 11.5332,
+      "first_year_total_usd_after_cleanup": 11.2716,
+      "notes": [
+        "load_cost_usd = one_clean_pipeline_run.total_min (one successful Glue ETL run per job + one crawler run) -- the cost to populate an empty environment once.",
+        "annual_steady_state = 12 x steady_state_monthly -- assumes no further pipeline runs during the year (build once, query many); add load_cost_usd again per additional full reload during the year."
+      ]
+    },
+    "notes": [
+      "Glue Data Catalog: 77 objects < 1,000,000 free tier -> $0/month.",
+      "IAM roles (8), Lake Formation, SSE-S3 encryption: no charge.",
+      "CloudWatch /aws-glue/jobs/* groups are account-wide, shared with the 5 warehouse Glue jobs -- attributed in full here as an upper bound.",
+      "Athena figure is ALL query history in the region (compaction + measurement + NLP dev); a steady-state month scans ~0 ($files reads are metadata, not data).",
+      "S3 'after cleanup' = raw bucket + Gold live snapshot, i.e. once a Spark remove_orphan_files pass removes the superseded pre-compaction files."
+    ]
+  }
+}

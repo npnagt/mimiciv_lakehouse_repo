@@ -1,0 +1,40 @@
+P5 native vs external join  ::  12 repeats  ::  mimic4_db_business_full
+
+NATIVE  (Athena over Iceberg, reuse OFF):
+  run  1    3373 ms   scanned 9.1 MiB
+  run  2    4093 ms   scanned 9.1 MiB
+  run  3    3032 ms   scanned 9.1 MiB
+  run  4    2718 ms   scanned 9.1 MiB
+  run  5    2996 ms   scanned 9.1 MiB
+  run  6    4097 ms   scanned 9.1 MiB
+  run  7    5231 ms   scanned 9.1 MiB
+  run  8    2389 ms   scanned 9.1 MiB
+  run  9    3485 ms   scanned 9.1 MiB
+  run 10    4086 ms   scanned 9.1 MiB
+  run 11    2685 ms   scanned 9.1 MiB
+  run 12    2691 ms   scanned 9.1 MiB
+
+EXTERNAL stage 1  (Athena UNLOAD -> S3 Parquet -> download):
+  fact_lab_result           1,000,000 rows in 26 file(s)     6032 ms   scanned 7.2 MiB
+  dim_lab_item                1,650 rows in 1 file(s)     1041 ms   scanned 5.8 KiB
+  fact_admission            546,029 rows in 1 file(s)     2978 ms   scanned 1.9 MiB
+
+EXTERNAL stage 2  (DuckDB join over the exported Parquet):
+  run  1    86.4 ms
+  run  2    78.7 ms
+  run  3    79.5 ms
+  run  4    80.9 ms
+  run  5    78.4 ms
+  run  6    77.9 ms
+  run  7    75.2 ms
+  run  8    78.8 ms
+  run  9    78.0 ms
+  run 10    73.9 ms
+  run 11    79.0 ms
+  run 12    69.8 ms
+
+============================================================
+NATIVE  :   3032 ms      510,422 rows/s   $0.00004
+EXTERNAL: export  10051 ms + join  78.4 ms =  10129 ms      152,791 rows/s   $0.00004
+  (DuckDB join alone: 78.4 ms -- the extract hop is 99% of external time)
+report: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\p5\full\latest.md

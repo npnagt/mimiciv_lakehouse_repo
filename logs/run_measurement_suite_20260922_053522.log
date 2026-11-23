@@ -1,0 +1,1816 @@
+[preflight] no full-dataset Glue job is currently running on either side -- proceeding.
+
+====================================================================================================
+$ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe measure_storage_footprint.py --dataset fulldataset   (cwd=C:\MIMICIV\gitmimic\mimic_lakehouse_repo)
+log: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\logs\measure_storage_footprint_20260922_053540.log
+====================================================================================================
+[1/4] S3 inventory: mimic4-datalake-v3-2-full
+      35 objects
+[2/4] S3 inventory: mimic4-lakehouse-v3-2-full
+      98,180 objects
+[3/4] Athena live-snapshot: 43 tables via "$files"
+      Aurora baseline: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\storage_footprint\aurora_baseline.json
+[4/4] wrote storage_footprint_20260922T093828Z.json, latest.json, storage_footprint_20260922T093828Z.md, latest.md to C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\storage_footprint\full
+total lakehouse physical  : 16.87 GiB
+  structured (RDS-equiv)  : 11.26 GiB physical  / 11.16 GiB live   (66.7693%)
+  unstructured / NLP      : 5.61 GiB physical  (33.2295%)  -- no warehouse equivalent
+    note text .csv.gz     : 1.79 GiB
+    NLP Gold tables       : 329.27 MiB phys / 68.53 MiB live
+gold physical / live      : 1.66 GiB / 1.31 GiB  (1.27x)
+AI-inference layer        : 329.27 MiB physical  (19.3627% of gold)
+P3 comparable (structured): 11.16 GiB live
+DW vs LH (processed str.) : warehouse 8.65 GiB phys / 8.14 GiB live  vs  lakehouse 1.34 GiB phys / 1.24 GiB live
+redundancy ratio (str.)   : warehouse 2.0x  |  lakehouse 1.08x as-deployed, 1.0x compacted
+report                    : C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\storage_footprint\full\latest.md
+-- measure_storage_footprint: OK in 168s --
+
+====================================================================================================
+$ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe measure_native_vs_external_join.py --dataset fulldataset   (cwd=C:\MIMICIV\gitmimic\mimic_lakehouse_repo)
+log: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\logs\measure_native_vs_external_join_20260922_053828.log
+====================================================================================================
+P5 native vs external join  ::  200 repeats  ::  mimic4_db_business_full  ::  benchmarks: lab, radiology
+
+======================================================================
+Benchmark: lab  (structured)
+fact_lab_result x dim_lab_item x fact_admission -> abnormal-rate agg
+======================================================================
+NATIVE  (Athena over Iceberg, reuse OFF)  ::  200 repeats:
+  run  1    3691 ms   scanned 9.1 MiB
+  run  2    2766 ms   scanned 9.1 MiB
+  run  3    5417 ms   scanned 9.1 MiB
+  run  4    3033 ms   scanned 9.1 MiB
+  run  5    3067 ms   scanned 9.1 MiB
+  run  6    3026 ms   scanned 9.1 MiB
+  run  7    3029 ms   scanned 9.1 MiB
+  run  8    2697 ms   scanned 9.1 MiB
+  run  9    2711 ms   scanned 9.1 MiB
+  run 10    4794 ms   scanned 9.1 MiB
+  run 11    2721 ms   scanned 9.1 MiB
+  run 12    3003 ms   scanned 9.1 MiB
+  run 13    3024 ms   scanned 9.1 MiB
+  run 14    3703 ms   scanned 9.1 MiB
+  run 15    2658 ms   scanned 9.1 MiB
+  run 16    3411 ms   scanned 9.1 MiB
+  run 17    3382 ms   scanned 9.1 MiB
+  run 18    3718 ms   scanned 9.1 MiB
+  run 19    2674 ms   scanned 9.1 MiB
+  run 20    3019 ms   scanned 9.1 MiB
+  run 21    4890 ms   scanned 9.1 MiB
+  run 22    2670 ms   scanned 9.1 MiB
+  run 23    3025 ms   scanned 9.1 MiB
+  run 24    3078 ms   scanned 9.1 MiB
+  run 25    2662 ms   scanned 9.1 MiB
+  run 26    3373 ms   scanned 9.1 MiB
+  run 27    3101 ms   scanned 9.1 MiB
+  run 28    3025 ms   scanned 9.1 MiB
+  run 29    3035 ms   scanned 9.1 MiB
+  run 30    3031 ms   scanned 9.1 MiB
+  run 31    3390 ms   scanned 9.1 MiB
+  run 32    2298 ms   scanned 9.1 MiB
+  run 33    3053 ms   scanned 9.1 MiB
+  run 34    2326 ms   scanned 9.1 MiB
+  run 35    2649 ms   scanned 9.1 MiB
+  run 36    3379 ms   scanned 9.1 MiB
+  run 37    3076 ms   scanned 9.1 MiB
+  run 38    4080 ms   scanned 9.1 MiB
+  run 39    3024 ms   scanned 9.1 MiB
+  run 40    3064 ms   scanned 9.1 MiB
+  run 41    3751 ms   scanned 9.1 MiB
+  run 42    2664 ms   scanned 9.1 MiB
+  run 43    3130 ms   scanned 9.1 MiB
+  run 44    2697 ms   scanned 9.1 MiB
+  run 45    3057 ms   scanned 9.1 MiB
+  run 46    3717 ms   scanned 9.1 MiB
+  run 47    3021 ms   scanned 9.1 MiB
+  run 48    2662 ms   scanned 9.1 MiB
+  run 49    3021 ms   scanned 9.1 MiB
+  run 50    2699 ms   scanned 9.1 MiB
+  run 51    3035 ms   scanned 9.1 MiB
+  run 52    4437 ms   scanned 9.1 MiB
+  run 53    2769 ms   scanned 9.1 MiB
+  run 54    2657 ms   scanned 9.1 MiB
+  run 55    2633 ms   scanned 9.1 MiB
+  run 56    3038 ms   scanned 9.1 MiB
+  run 57    5622 ms   scanned 9.1 MiB
+  run 58    3034 ms   scanned 9.1 MiB
+  run 59    2587 ms   scanned 9.1 MiB
+  run 60    3046 ms   scanned 9.1 MiB
+  run 61    2661 ms   scanned 9.1 MiB
+  run 62    3367 ms   scanned 9.1 MiB
+  run 63    5258 ms   scanned 9.1 MiB
+  run 64    3006 ms   scanned 9.1 MiB
+  run 65    3022 ms   scanned 9.1 MiB
+  run 66    2675 ms   scanned 9.1 MiB
+  run 67    4140 ms   scanned 9.1 MiB
+  run 68    3024 ms   scanned 9.1 MiB
+  run 69    2679 ms   scanned 9.1 MiB
+  run 70    3019 ms   scanned 9.1 MiB
+  run 71    3809 ms   scanned 9.1 MiB
+  run 72    3781 ms   scanned 9.1 MiB
+  run 73    3017 ms   scanned 9.1 MiB
+  run 74    3051 ms   scanned 9.1 MiB
+  run 75    3359 ms   scanned 9.1 MiB
+  run 76    3025 ms   scanned 9.1 MiB
+  run 77    3768 ms   scanned 9.1 MiB
+  run 78    2662 ms   scanned 9.1 MiB
+  run 79    3371 ms   scanned 9.1 MiB
+  run 80    3029 ms   scanned 9.1 MiB
+  run 81    3365 ms   scanned 9.1 MiB
+  run 82    2666 ms   scanned 9.1 MiB
+  run 83    5560 ms   scanned 9.1 MiB
+  run 84    4807 ms   scanned 9.1 MiB
+  run 85    2682 ms   scanned 9.1 MiB
+  run 86    3084 ms   scanned 9.1 MiB
+  run 87    3016 ms   scanned 9.1 MiB
+  run 88    2999 ms   scanned 9.1 MiB
+  run 89    3064 ms   scanned 9.1 MiB
+  run 90    5876 ms   scanned 9.1 MiB
+  run 91    3051 ms   scanned 9.1 MiB
+  run 92    3048 ms   scanned 9.1 MiB
+  run 93    3015 ms   scanned 9.1 MiB
+  run 94    5156 ms   scanned 9.1 MiB
+  run 95    4418 ms   scanned 9.1 MiB
+  run 96    2664 ms   scanned 9.1 MiB
+  run 97    3414 ms   scanned 9.1 MiB
+  run 98    2355 ms   scanned 9.1 MiB
+  run 99    3730 ms   scanned 9.1 MiB
+  run 100    3018 ms   scanned 9.1 MiB
+  run 101    2300 ms   scanned 9.1 MiB
+  run 102    4095 ms   scanned 9.1 MiB
+  run 103    3080 ms   scanned 9.1 MiB
+  run 104    3023 ms   scanned 9.1 MiB
+  run 105    3010 ms   scanned 9.1 MiB
+  run 106    4482 ms   scanned 9.1 MiB
+  run 107    2671 ms   scanned 9.1 MiB
+  run 108    2657 ms   scanned 9.1 MiB
+  run 109    2667 ms   scanned 9.1 MiB
+  run 110    3018 ms   scanned 9.1 MiB
+  run 111    3005 ms   scanned 9.1 MiB
+  run 112    3014 ms   scanned 9.1 MiB
+  run 113    3369 ms   scanned 9.1 MiB
+  run 114    3016 ms   scanned 9.1 MiB
+  run 115    2655 ms   scanned 9.1 MiB
+  run 116    3763 ms   scanned 9.1 MiB
+  run 117    5153 ms   scanned 9.1 MiB
+  run 118    2656 ms   scanned 9.1 MiB
+  run 119    2992 ms   scanned 9.1 MiB
+  run 120    3362 ms   scanned 9.1 MiB
+  run 121    3387 ms   scanned 9.1 MiB
+  run 122    3773 ms   scanned 9.1 MiB
+  run 123    2662 ms   scanned 9.1 MiB
+  run 124    5188 ms   scanned 9.1 MiB
+  run 125    2691 ms   scanned 9.1 MiB
+  run 126    4071 ms   scanned 9.1 MiB
+  run 127    4844 ms   scanned 9.1 MiB
+  run 128    2656 ms   scanned 9.1 MiB
+  run 129    2669 ms   scanned 9.1 MiB
+  run 130    3029 ms   scanned 9.1 MiB
+  run 131    2685 ms   scanned 9.1 MiB
+  run 132    3014 ms   scanned 9.1 MiB
+  run 133    2655 ms   scanned 9.1 MiB
+  run 134    3366 ms   scanned 9.1 MiB
+  run 135    3036 ms   scanned 9.1 MiB
+  run 136    3386 ms   scanned 9.1 MiB
+  run 137    3094 ms   scanned 9.1 MiB
+  run 138    3399 ms   scanned 9.1 MiB
+  run 139    2696 ms   scanned 9.1 MiB
+  run 140    3744 ms   scanned 9.1 MiB
+  run 141    2659 ms   scanned 9.1 MiB
+  run 142    3033 ms   scanned 9.1 MiB
+  run 143    2651 ms   scanned 9.1 MiB
+  run 144    3063 ms   scanned 9.1 MiB
+  run 145    2684 ms   scanned 9.1 MiB
+  run 146    3026 ms   scanned 9.1 MiB
+  run 147    3088 ms   scanned 9.1 MiB
+  run 148    3361 ms   scanned 9.1 MiB
+  run 149    3377 ms   scanned 9.1 MiB
+  run 150    4807 ms   scanned 9.1 MiB
+  run 151    2671 ms   scanned 9.1 MiB
+  run 152    4516 ms   scanned 9.1 MiB
+  run 153    2708 ms   scanned 9.1 MiB
+  run 154    3023 ms   scanned 9.1 MiB
+  run 155    2705 ms   scanned 9.1 MiB
+  run 156    4148 ms   scanned 9.1 MiB
+  run 157    2658 ms   scanned 9.1 MiB
+  run 158    3010 ms   scanned 9.1 MiB
+  run 159    3009 ms   scanned 9.1 MiB
+  run 160    2691 ms   scanned 9.1 MiB
+  run 161    3078 ms   scanned 9.1 MiB
+  run 162    2808 ms   scanned 9.1 MiB
+  run 163    3069 ms   scanned 9.1 MiB
+  run 164    5219 ms   scanned 9.1 MiB
+  run 165    3075 ms   scanned 9.1 MiB
+  run 166    6242 ms   scanned 9.1 MiB
+  run 167    3043 ms   scanned 9.1 MiB
+  run 168    3129 ms   scanned 9.1 MiB
+  run 169    4969 ms   scanned 9.1 MiB
+  run 170    3032 ms   scanned 9.1 MiB
+  run 171    3038 ms   scanned 9.1 MiB
+  run 172    3070 ms   scanned 9.1 MiB
+  run 173    4489 ms   scanned 9.1 MiB
+  run 174    3058 ms   scanned 9.1 MiB
+  run 175    3736 ms   scanned 9.1 MiB
+  run 176    5913 ms   scanned 9.1 MiB
+  run 177    3041 ms   scanned 9.1 MiB
+  run 178    3089 ms   scanned 9.1 MiB
+  run 179    3754 ms   scanned 9.1 MiB
+  run 180    3011 ms   scanned 9.1 MiB
+  run 181    5586 ms   scanned 9.1 MiB
+  run 182    3360 ms   scanned 9.1 MiB
+  run 183    2641 ms   scanned 9.1 MiB
+  run 184    3020 ms   scanned 9.1 MiB
+  run 185    3390 ms   scanned 9.1 MiB
+  run 186    5201 ms   scanned 9.1 MiB
+  run 187    3399 ms   scanned 9.1 MiB
+  run 188    4459 ms   scanned 9.1 MiB
+  run 189    3051 ms   scanned 9.1 MiB
+  run 190    3393 ms   scanned 9.1 MiB
+  run 191    4866 ms   scanned 9.1 MiB
+  run 192    5161 ms   scanned 9.1 MiB
+  run 193    3019 ms   scanned 9.1 MiB
+  run 194    4087 ms   scanned 9.1 MiB
+  run 195    5538 ms   scanned 9.1 MiB
+  run 196    3720 ms   scanned 9.1 MiB
+  run 197    2667 ms   scanned 9.1 MiB
+  run 198    3027 ms   scanned 9.1 MiB
+  run 199    2732 ms   scanned 9.1 MiB
+  run 200    5165 ms   scanned 9.1 MiB
+
+EXTERNAL stage 1  (Athena UNLOAD -> S3 Parquet -> download):
+  fact_lab_result           1,000,000 rows in 26 file(s)     6282 ms   scanned 7.2 MiB
+  dim_lab_item                1,650 rows in 1 file(s)     1808 ms   scanned 5.8 KiB
+  fact_admission            546,029 rows in 1 file(s)     1889 ms   scanned 1.9 MiB
+
+EXTERNAL stage 2  (DuckDB join/unnest over the exported Parquet):
+  run  1    70.9 ms
+  run  2    72.3 ms
+  run  3    72.9 ms
+  run  4    69.8 ms
+  run  5    71.1 ms
+  run  6    72.4 ms
+  run  7    70.6 ms
+  run  8    74.6 ms
+  run  9    69.8 ms
+  run 10    68.6 ms
+  run 11    68.0 ms
+  run 12    68.5 ms
+  run 13    62.6 ms
+  run 14    62.4 ms
+  run 15    63.9 ms
+  run 16    61.7 ms
+  run 17    61.9 ms
+  run 18    61.1 ms
+  run 19    61.3 ms
+  run 20    63.6 ms
+  run 21    61.3 ms
+  run 22    60.4 ms
+  run 23    68.6 ms
+  run 24    61.8 ms
+  run 25    61.4 ms
+  run 26    60.8 ms
+  run 27    63.2 ms
+  run 28    62.2 ms
+  run 29    61.3 ms
+  run 30    64.3 ms
+  run 31    70.2 ms
+  run 32    66.1 ms
+  run 33    61.8 ms
+  run 34    60.7 ms
+  run 35    64.6 ms
+  run 36    61.5 ms
+  run 37    60.8 ms
+  run 38    62.0 ms
+  run 39    61.0 ms
+  run 40    61.2 ms
+  run 41    63.5 ms
+  run 42    63.2 ms
+  run 43    63.6 ms
+  run 44    63.5 ms
+  run 45    61.3 ms
+  run 46    62.4 ms
+  run 47    72.3 ms
+  run 48    66.3 ms
+  run 49    61.6 ms
+  run 50    61.9 ms
+  run 51    60.6 ms
+  run 52    63.8 ms
+  run 53    64.3 ms
+  run 54    62.7 ms
+  run 55    62.9 ms
+  run 56    64.5 ms
+  run 57    64.9 ms
+  run 58    62.8 ms
+  run 59    63.2 ms
+  run 60    63.5 ms
+  run 61    61.9 ms
+  run 62    64.2 ms
+  run 63    71.5 ms
+  run 64    67.4 ms
+  run 65    66.8 ms
+  run 66    65.3 ms
+  run 67    64.7 ms
+  run 68    64.6 ms
+  run 69    62.0 ms
+  run 70    61.8 ms
+  run 71    59.2 ms
+  run 72    62.0 ms
+  run 73    62.5 ms
+  run 74    59.8 ms
+  run 75    60.7 ms
+  run 76    62.2 ms
+  run 77    64.2 ms
+  run 78    61.9 ms
+  run 79    59.8 ms
+  run 80    60.6 ms
+  run 81    64.0 ms
+  run 82    64.6 ms
+  run 83    61.7 ms
+  run 84    59.5 ms
+  run 85    60.8 ms
+  run 86    58.9 ms
+  run 87    61.8 ms
+  run 88    66.5 ms
+  run 89    59.3 ms
+  run 90    63.5 ms
+  run 91    62.3 ms
+  run 92    60.3 ms
+  run 93    59.7 ms
+  run 94    62.7 ms
+  run 95    63.1 ms
+  run 96    60.5 ms
+  run 97    63.1 ms
+  run 98    63.9 ms
+  run 99    61.7 ms
+  run 100    62.6 ms
+  run 101    64.3 ms
+  run 102    62.3 ms
+  run 103    64.2 ms
+  run 104    64.9 ms
+  run 105    61.9 ms
+  run 106    63.5 ms
+  run 107    60.3 ms
+  run 108    61.8 ms
+  run 109    61.1 ms
+  run 110    61.7 ms
+  run 111    63.7 ms
+  run 112    62.7 ms
+  run 113    60.3 ms
+  run 114    65.3 ms
+  run 115    59.9 ms
+  run 116    63.0 ms
+  run 117    60.1 ms
+  run 118    63.4 ms
+  run 119    65.7 ms
+  run 120    61.2 ms
+  run 121    59.5 ms
+  run 122    62.1 ms
+  run 123    61.3 ms
+  run 124    59.9 ms
+  run 125    60.6 ms
+  run 126    66.1 ms
+  run 127    64.2 ms
+  run 128    63.5 ms
+  run 129    61.8 ms
+  run 130    60.5 ms
+  run 131    61.7 ms
+  run 132    63.0 ms
+  run 133    63.6 ms
+  run 134    64.1 ms
+  run 135    60.8 ms
+  run 136    61.5 ms
+  run 137    64.1 ms
+  run 138    63.8 ms
+  run 139    61.2 ms
+  run 140    58.8 ms
+  run 141    65.1 ms
+  run 142    61.3 ms
+  run 143    64.4 ms
+  run 144    69.5 ms
+  run 145    63.1 ms
+  run 146    61.7 ms
+  run 147    61.6 ms
+  run 148    62.5 ms
+  run 149    59.8 ms
+  run 150    61.7 ms
+  run 151    60.8 ms
+  run 152    63.4 ms
+  run 153    61.7 ms
+  run 154    62.9 ms
+  run 155    63.8 ms
+  run 156    60.5 ms
+  run 157    64.0 ms
+  run 158    61.4 ms
+  run 159    62.2 ms
+  run 160    70.8 ms
+  run 161    63.6 ms
+  run 162    66.2 ms
+  run 163    64.1 ms
+  run 164    59.8 ms
+  run 165    61.9 ms
+  run 166    61.9 ms
+  run 167    65.2 ms
+  run 168    62.8 ms
+  run 169    64.4 ms
+  run 170    61.2 ms
+  run 171    60.7 ms
+  run 172    63.7 ms
+  run 173    61.1 ms
+  run 174    62.8 ms
+  run 175    64.1 ms
+  run 176    63.7 ms
+  run 177    58.8 ms
+  run 178    62.3 ms
+  run 179    60.9 ms
+  run 180    61.7 ms
+  run 181    64.5 ms
+  run 182    63.7 ms
+  run 183    60.6 ms
+  run 184    61.0 ms
+  run 185    60.5 ms
+  run 186    60.4 ms
+  run 187    62.1 ms
+  run 188    60.5 ms
+  run 189    60.4 ms
+  run 190    62.8 ms
+  run 191    59.1 ms
+  run 192    64.4 ms
+  run 193    68.1 ms
+  run 194    63.1 ms
+  run 195    63.5 ms
+  run 196    63.7 ms
+  run 197    62.3 ms
+  run 198    62.6 ms
+  run 199    61.8 ms
+  run 200    59.3 ms
+
+======================================================================
+Benchmark: radiology  (cross-modal (structured + NLP-derived JSON))
+fact_radiology_note_nlp (disorders, JSON UNNEST) x fact_admission -> non-negated disorder mentions by admission type
+======================================================================
+NATIVE  (Athena over Iceberg, reuse OFF)  ::  200 repeats:
+  run  1    2008 ms   scanned 2.5 MiB
+  run  2    1606 ms   scanned 2.5 MiB
+  run  3    1948 ms   scanned 2.5 MiB
+  run  4    1615 ms   scanned 2.5 MiB
+  run  5    1628 ms   scanned 2.5 MiB
+  run  6    1989 ms   scanned 2.5 MiB
+  run  7    1966 ms   scanned 2.5 MiB
+  run  8    2318 ms   scanned 2.5 MiB
+  run  9    1974 ms   scanned 2.5 MiB
+  run 10    1945 ms   scanned 2.5 MiB
+  run 11    3100 ms   scanned 2.5 MiB
+  run 12    3705 ms   scanned 2.5 MiB
+  run 13    2688 ms   scanned 2.5 MiB
+  run 14    1661 ms   scanned 2.5 MiB
+  run 15    1995 ms   scanned 2.5 MiB
+  run 16    2330 ms   scanned 2.5 MiB
+  run 17    1602 ms   scanned 2.5 MiB
+  run 18    1956 ms   scanned 2.5 MiB
+  run 19    1936 ms   scanned 2.5 MiB
+  run 20    2017 ms   scanned 2.5 MiB
+  run 21    2329 ms   scanned 2.5 MiB
+  run 22    2334 ms   scanned 2.5 MiB
+  run 23    2319 ms   scanned 2.5 MiB
+  run 24    1968 ms   scanned 2.5 MiB
+  run 25    1988 ms   scanned 2.5 MiB
+  run 26    1969 ms   scanned 2.5 MiB
+  run 27    1987 ms   scanned 2.5 MiB
+  run 28    1936 ms   scanned 2.5 MiB
+  run 29    2088 ms   scanned 2.5 MiB
+  run 30    3056 ms   scanned 2.5 MiB
+  run 31    1955 ms   scanned 2.5 MiB
+  run 32    1957 ms   scanned 2.5 MiB
+  run 33    1934 ms   scanned 2.5 MiB
+  run 34    1639 ms   scanned 2.5 MiB
+  run 35    1587 ms   scanned 2.5 MiB
+  run 36    1950 ms   scanned 2.5 MiB
+  run 37    2312 ms   scanned 2.5 MiB
+  run 38    3005 ms   scanned 2.5 MiB
+  run 39    2718 ms   scanned 2.5 MiB
+  run 40    1586 ms   scanned 2.5 MiB
+  run 41    3741 ms   scanned 2.5 MiB
+  run 42    1582 ms   scanned 2.5 MiB
+  run 43    1585 ms   scanned 2.5 MiB
+  run 44    1962 ms   scanned 2.5 MiB
+  run 45    1971 ms   scanned 2.5 MiB
+  run 46    1982 ms   scanned 2.5 MiB
+  run 47    1586 ms   scanned 2.5 MiB
+  run 48    1603 ms   scanned 2.5 MiB
+  run 49    1968 ms   scanned 2.5 MiB
+  run 50    1964 ms   scanned 2.5 MiB
+  run 51    2643 ms   scanned 2.5 MiB
+  run 52    3021 ms   scanned 2.5 MiB
+  run 53    2670 ms   scanned 2.5 MiB
+  run 54    2629 ms   scanned 2.5 MiB
+  run 55    1947 ms   scanned 2.5 MiB
+  run 56    1936 ms   scanned 2.5 MiB
+  run 57    2343 ms   scanned 2.5 MiB
+  run 58    2658 ms   scanned 2.5 MiB
+  run 59    4442 ms   scanned 2.5 MiB
+  run 60    2000 ms   scanned 2.5 MiB
+  run 61    1943 ms   scanned 2.5 MiB
+  run 62    1952 ms   scanned 2.5 MiB
+  run 63    2294 ms   scanned 2.5 MiB
+  run 64    1988 ms   scanned 2.5 MiB
+  run 65    1958 ms   scanned 2.5 MiB
+  run 66    1936 ms   scanned 2.5 MiB
+  run 67    1941 ms   scanned 2.5 MiB
+  run 68    1950 ms   scanned 2.5 MiB
+  run 69    1966 ms   scanned 2.5 MiB
+  run 70    2438 ms   scanned 2.5 MiB
+  run 71    1955 ms   scanned 2.5 MiB
+  run 72    1942 ms   scanned 2.5 MiB
+  run 73    2049 ms   scanned 2.5 MiB
+  run 74    2005 ms   scanned 2.5 MiB
+  run 75    1986 ms   scanned 2.5 MiB
+  run 76    1846 ms   scanned 2.5 MiB
+  run 77    2675 ms   scanned 2.5 MiB
+  run 78    1614 ms   scanned 2.5 MiB
+  run 79    1964 ms   scanned 2.5 MiB
+  run 80    2011 ms   scanned 2.5 MiB
+  run 81    2641 ms   scanned 2.5 MiB
+  run 82    1974 ms   scanned 2.5 MiB
+  run 83    1967 ms   scanned 2.5 MiB
+  run 84    1945 ms   scanned 2.5 MiB
+  run 85    2350 ms   scanned 2.5 MiB
+  run 86    1611 ms   scanned 2.5 MiB
+  run 87    3764 ms   scanned 2.5 MiB
+  run 88    4819 ms   scanned 2.5 MiB
+  run 89    2636 ms   scanned 2.5 MiB
+  run 90    1957 ms   scanned 2.5 MiB
+  run 91    1945 ms   scanned 2.5 MiB
+  run 92    1620 ms   scanned 2.5 MiB
+  run 93    1979 ms   scanned 2.5 MiB
+  run 94    1930 ms   scanned 2.5 MiB
+  run 95    1592 ms   scanned 2.5 MiB
+  run 96    1607 ms   scanned 2.5 MiB
+  run 97    1933 ms   scanned 2.5 MiB
+  run 98    2312 ms   scanned 2.5 MiB
+  run 99    1942 ms   scanned 2.5 MiB
+  run 100    1944 ms   scanned 2.5 MiB
+  run 101    1963 ms   scanned 2.5 MiB
+  run 102    1956 ms   scanned 2.5 MiB
+  run 103    2023 ms   scanned 2.5 MiB
+  run 104    1985 ms   scanned 2.5 MiB
+  run 105    2300 ms   scanned 2.5 MiB
+  run 106    1960 ms   scanned 2.5 MiB
+  run 107    1945 ms   scanned 2.5 MiB
+  run 108    1946 ms   scanned 2.5 MiB
+  run 109    3378 ms   scanned 2.5 MiB
+  run 110    1622 ms   scanned 2.5 MiB
+  run 111    1964 ms   scanned 2.5 MiB
+  run 112    1666 ms   scanned 2.5 MiB
+  run 113    1953 ms   scanned 2.5 MiB
+  run 114    1938 ms   scanned 2.5 MiB
+  run 115    1979 ms   scanned 2.5 MiB
+  run 116    3044 ms   scanned 2.5 MiB
+  run 117    2293 ms   scanned 2.5 MiB
+  run 118    1595 ms   scanned 2.5 MiB
+  run 119    2301 ms   scanned 2.5 MiB
+  run 120    1586 ms   scanned 2.5 MiB
+  run 121    1932 ms   scanned 2.5 MiB
+  run 122    1621 ms   scanned 2.5 MiB
+  run 123    1599 ms   scanned 2.5 MiB
+  run 124    1964 ms   scanned 2.5 MiB
+  run 125    2296 ms   scanned 2.5 MiB
+  run 126    1953 ms   scanned 2.5 MiB
+  run 127    7300 ms   scanned 2.5 MiB
+  run 128    1639 ms   scanned 2.5 MiB
+  run 129    3471 ms   scanned 2.5 MiB
+  run 130    3721 ms   scanned 2.5 MiB
+  run 131    2331 ms   scanned 2.5 MiB
+  run 132    1603 ms   scanned 2.5 MiB
+  run 133    1969 ms   scanned 2.5 MiB
+  run 134    1625 ms   scanned 2.5 MiB
+  run 135    2323 ms   scanned 2.5 MiB
+  run 136    1581 ms   scanned 2.5 MiB
+  run 137    1619 ms   scanned 2.5 MiB
+  run 138    1946 ms   scanned 2.5 MiB
+  run 139    2709 ms   scanned 2.5 MiB
+  run 140    1602 ms   scanned 2.5 MiB
+  run 141    1583 ms   scanned 2.5 MiB
+  run 142    1945 ms   scanned 2.5 MiB
+  run 143    1934 ms   scanned 2.5 MiB
+  run 144    1946 ms   scanned 2.5 MiB
+  run 145    1963 ms   scanned 2.5 MiB
+  run 146    1589 ms   scanned 2.5 MiB
+  run 147    1614 ms   scanned 2.5 MiB
+  run 148    2700 ms   scanned 2.5 MiB
+  run 149    1625 ms   scanned 2.5 MiB
+  run 150    1950 ms   scanned 2.5 MiB
+  run 151    1584 ms   scanned 2.5 MiB
+  run 152    1930 ms   scanned 2.5 MiB
+  run 153    2298 ms   scanned 2.5 MiB
+  run 154    3376 ms   scanned 2.5 MiB
+  run 155    1974 ms   scanned 2.5 MiB
+  run 156    1582 ms   scanned 2.5 MiB
+  run 157    1955 ms   scanned 2.5 MiB
+  run 158    3368 ms   scanned 2.5 MiB
+  run 159    1932 ms   scanned 2.5 MiB
+  run 160    1943 ms   scanned 2.5 MiB
+  run 161    1943 ms   scanned 2.5 MiB
+  run 162    1954 ms   scanned 2.5 MiB
+  run 163    2674 ms   scanned 2.5 MiB
+  run 164    2331 ms   scanned 2.5 MiB
+  run 165    1963 ms   scanned 2.5 MiB
+  run 166    1946 ms   scanned 2.5 MiB
+  run 167    1595 ms   scanned 2.5 MiB
+  run 168    2360 ms   scanned 2.5 MiB
+  run 169    1583 ms   scanned 2.5 MiB
+  run 170    1580 ms   scanned 2.5 MiB
+  run 171    4464 ms   scanned 2.5 MiB
+  run 172    2669 ms   scanned 2.5 MiB
+  run 173    1971 ms   scanned 2.5 MiB
+  run 174    1949 ms   scanned 2.5 MiB
+  run 175    2303 ms   scanned 2.5 MiB
+  run 176    1945 ms   scanned 2.5 MiB
+  run 177    2324 ms   scanned 2.5 MiB
+  run 178    1947 ms   scanned 2.5 MiB
+  run 179    1993 ms   scanned 2.5 MiB
+  run 180    1958 ms   scanned 2.5 MiB
+  run 181    3052 ms   scanned 2.5 MiB
+  run 182    2296 ms   scanned 2.5 MiB
+  run 183    2321 ms   scanned 2.5 MiB
+  run 184    1587 ms   scanned 2.5 MiB
+  run 185    3044 ms   scanned 2.5 MiB
+  run 186    2334 ms   scanned 2.5 MiB
+  run 187    1601 ms   scanned 2.5 MiB
+  run 188    1589 ms   scanned 2.5 MiB
+  run 189    2311 ms   scanned 2.5 MiB
+  run 190    1948 ms   scanned 2.5 MiB
+  run 191    2643 ms   scanned 2.5 MiB
+  run 192    3729 ms   scanned 2.5 MiB
+  run 193    2307 ms   scanned 2.5 MiB
+  run 194    1949 ms   scanned 2.5 MiB
+  run 195    1617 ms   scanned 2.5 MiB
+  run 196    3359 ms   scanned 2.5 MiB
+  run 197    1939 ms   scanned 2.5 MiB
+  run 198    3380 ms   scanned 2.5 MiB
+  run 199    1613 ms   scanned 2.5 MiB
+  run 200    1612 ms   scanned 2.5 MiB
+
+EXTERNAL stage 1  (Athena UNLOAD -> S3 Parquet -> download):
+  fact_radiology_note_nlp     2,531 rows in 6 file(s)     2636 ms   scanned 590.8 KiB
+  fact_admission            546,029 rows in 1 file(s)     2871 ms   scanned 1.9 MiB
+
+EXTERNAL stage 2  (DuckDB join/unnest over the exported Parquet):
+  run  1   137.5 ms
+  run  2    38.4 ms
+  run  3    32.6 ms
+  run  4    35.5 ms
+  run  5    33.4 ms
+  run  6    31.5 ms
+  run  7    31.6 ms
+  run  8    30.2 ms
+  run  9    34.3 ms
+  run 10    34.1 ms
+  run 11    30.8 ms
+  run 12    34.4 ms
+  run 13    29.8 ms
+  run 14    30.3 ms
+  run 15    32.8 ms
+  run 16    28.7 ms
+  run 17    30.0 ms
+  run 18    31.9 ms
+  run 19    27.0 ms
+  run 20    27.3 ms
+  run 21    28.8 ms
+  run 22    28.4 ms
+  run 23    30.3 ms
+  run 24    25.5 ms
+  run 25    27.9 ms
+  run 26    30.3 ms
+  run 27    29.8 ms
+  run 28    28.8 ms
+  run 29    29.2 ms
+  run 30    28.9 ms
+  run 31    31.3 ms
+  run 32    30.6 ms
+  run 33    30.6 ms
+  run 34    30.8 ms
+  run 35    32.0 ms
+  run 36    28.1 ms
+  run 37    30.0 ms
+  run 38    28.6 ms
+  run 39    29.1 ms
+  run 40    28.7 ms
+  run 41    28.5 ms
+  run 42    30.8 ms
+  run 43    27.9 ms
+  run 44    30.7 ms
+  run 45    28.0 ms
+  run 46    28.7 ms
+  run 47    30.7 ms
+  run 48    27.1 ms
+  run 49    30.5 ms
+  run 50    30.7 ms
+  run 51    28.9 ms
+  run 52    28.5 ms
+  run 53    30.7 ms
+  run 54    27.0 ms
+  run 55    30.4 ms
+  run 56    29.3 ms
+  run 57    28.8 ms
+  run 58    31.0 ms
+  run 59    30.1 ms
+  run 60    28.6 ms
+  run 61    32.2 ms
+  run 62    30.2 ms
+  run 63    28.8 ms
+  run 64    26.7 ms
+  run 65    29.2 ms
+  run 66    31.2 ms
+  run 67    27.2 ms
+  run 68    29.9 ms
+  run 69    29.1 ms
+  run 70    26.9 ms
+  run 71    31.7 ms
+  run 72    28.9 ms
+  run 73    28.3 ms
+  run 74    33.4 ms
+  run 75    28.4 ms
+  run 76    27.9 ms
+  run 77    30.3 ms
+  run 78    31.2 ms
+  run 79    31.3 ms
+  run 80    30.4 ms
+  run 81    29.0 ms
+  run 82    30.8 ms
+  run 83    28.6 ms
+  run 84    28.1 ms
+  run 85    29.6 ms
+  run 86    28.9 ms
+  run 87    28.4 ms
+  run 88    27.4 ms
+  run 89    30.6 ms
+  run 90    31.0 ms
+  run 91    30.4 ms
+  run 92    31.3 ms
+  run 93    32.6 ms
+  run 94    29.0 ms
+  run 95    26.9 ms
+  run 96    31.6 ms
+  run 97    28.2 ms
+  run 98    27.7 ms
+  run 99    28.6 ms
+  run 100    28.1 ms
+  run 101    31.0 ms
+  run 102    28.1 ms
+  run 103    30.2 ms
+  run 104    30.4 ms
+  run 105    27.7 ms
+  run 106    27.2 ms
+  run 107    28.6 ms
+  run 108    30.7 ms
+  run 109    30.8 ms
+  run 110    29.5 ms
+  run 111    27.0 ms
+  run 112    29.3 ms
+  run 113    27.2 ms
+  run 114    29.7 ms
+  run 115    29.6 ms
+  run 116    29.2 ms
+  run 117    29.4 ms
+  run 118    30.5 ms
+  run 119    28.6 ms
+  run 120    31.0 ms
+  run 121    27.9 ms
+  run 122    27.2 ms
+  run 123    27.8 ms
+  run 124    29.6 ms
+  run 125    29.1 ms
+  run 126    31.4 ms
+  run 127    30.7 ms
+  run 128    35.1 ms
+  run 129    31.0 ms
+  run 130    29.8 ms
+  run 131    30.3 ms
+  run 132    28.6 ms
+  run 133    30.8 ms
+  run 134    29.3 ms
+  run 135    33.3 ms
+  run 136    30.3 ms
+  run 137    29.5 ms
+  run 138    30.1 ms
+  run 139    26.8 ms
+  run 140    28.9 ms
+  run 141    31.3 ms
+  run 142    29.2 ms
+  run 143    30.7 ms
+  run 144    29.2 ms
+  run 145    27.2 ms
+  run 146    29.8 ms
+  run 147    27.9 ms
+  run 148    31.4 ms
+  run 149    28.2 ms
+  run 150    26.3 ms
+  run 151    27.4 ms
+  run 152    29.6 ms
+  run 153    27.1 ms
+  run 154    27.5 ms
+  run 155    28.5 ms
+  run 156    26.4 ms
+  run 157    29.2 ms
+  run 158    30.1 ms
+  run 159    28.1 ms
+  run 160    31.4 ms
+  run 161    28.4 ms
+  run 162    28.4 ms
+  run 163    32.1 ms
+  run 164    31.5 ms
+  run 165    30.6 ms
+  run 166    27.9 ms
+  run 167    32.3 ms
+  run 168    33.6 ms
+  run 169    26.9 ms
+  run 170    29.5 ms
+  run 171    30.5 ms
+  run 172    30.2 ms
+  run 173    30.3 ms
+  run 174    28.2 ms
+  run 175    29.7 ms
+  run 176    30.5 ms
+  run 177    29.4 ms
+  run 178    30.4 ms
+  run 179    31.2 ms
+  run 180    27.8 ms
+  run 181    27.5 ms
+  run 182    27.9 ms
+  run 183    29.8 ms
+  run 184    29.0 ms
+  run 185    28.9 ms
+  run 186    29.1 ms
+  run 187    29.2 ms
+  run 188    30.1 ms
+  run 189    27.7 ms
+  run 190    27.1 ms
+  run 191    25.6 ms
+  run 192    28.0 ms
+  run 193    27.7 ms
+  run 194    27.5 ms
+  run 195    28.9 ms
+  run 196    25.5 ms
+  run 197    28.2 ms
+  run 198    27.4 ms
+  run 199    28.7 ms
+  run 200    29.4 ms
+
+======================================================================
+[lab] NATIVE   3038 ms     509,445 rows/s   EXTERNAL  10041 ms     154,132 rows/s   acceptance: PASS
+[radiology] NATIVE   1963 ms     279,486 rows/s   EXTERNAL   5536 ms      99,084 rows/s   acceptance: PASS
+report: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\p5\full\latest.md
+-- measure_native_vs_external_join: OK in 1145s --
+
+====================================================================================================
+$ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe measure_time_to_insight.py --dataset fulldataset   (cwd=C:\MIMICIV\gitmimic\mimic_lakehouse_repo)
+log: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\logs\measure_time_to_insight_20260922_055733.log
+====================================================================================================
+time-to-insight :: mimic4_db_business_full via Athena/primary :: 20 queries x 200 repeats x 2 pass(es) :: render budget 500 ms
+Nielsen bands   :: A < 1000 ms (flow)  |  B 1000-10000 ms (sustained attention)  |  C >= 10000 ms (attention lost)
+P6 acceptance   :: queries land in A or B (<=10 s) -- standalone test, no baseline comparison
+
+=== cold pass (result reuse OFF) ===
+  floor  T0  A  tti med    941 ms  (p90    989)  total   321  fetch  120  scan        0 B  1 rows
+  T1a    T1  B  tti med   2066 ms  (p90   3383)  total  1414  fetch  145  scan   90.8 KiB  999 rows
+  T1b    T1  B  tti med   1437 ms  (p90   2201)  total   815  fetch  122  scan  183.3 KiB  10 rows
+  T2a    T2  B  tti med   2197 ms  (p90   3252)  total  1578  fetch  121  scan    4.5 MiB  4 rows
+  T2b    T2  B  tti med   3023 ms  (p90   4158)  total  2392  fetch  121  scan    5.5 MiB  9 rows
+  T3a    T3  B  tti med   2507 ms  (p90   3608)  total  1891  fetch  121  scan  721.2 KiB  3 rows
+  T3b    T3  B  tti med   2163 ms  (p90   3065)  total  1542  fetch  120  scan    3.3 MiB  1 rows
+  T3c    T3  B  tti med   1959 ms  (p90   2817)  total  1311  fetch  153  scan    3.4 MiB  999 rows
+  T4a    T4  B  tti med   2013 ms  (p90   3080)  total  1386  fetch  122  scan  984.2 KiB  4 rows
+  T4b    T4  B  tti med   2176 ms  (p90   3757)  total  1549  fetch  124  scan  420.5 KiB  4 rows
+  T4c    T4  B  tti med   2009 ms  (p90   3043)  total  1377  fetch  126  scan    1.1 MiB  17 rows
+  T5a    T5  B  tti med   2329 ms  (p90   3297)  total  1702  fetch  125  scan    3.9 MiB  4 rows
+  T5b    T5  B  tti med   2433 ms  (p90   3765)  total  1802  fetch  128  scan    3.8 MiB  3 rows
+  T5c    T5  B  tti med   2318 ms  (p90   3687)  total  1692  fetch  123  scan    2.3 MiB  16 rows
+  T6a    T6  B  tti med   2060 ms  (p90   3070)  total  1433  fetch  122  scan  485.0 KiB  25 rows
+  T6b    T6  B  tti med   2393 ms  (p90   3620)  total  1771  fetch  123  scan    2.3 MiB  7 rows
+  T6c    T6  B  tti med   2709 ms  (p90   4180)  total  2075  fetch  125  scan    7.7 MiB  25 rows
+  T7a    T7  B  tti med   1890 ms  (p90   2824)  total  1262  fetch  125  scan    1.7 MiB  1 rows
+  T7b    T7  B  tti med   1890 ms  (p90   2809)  total  1253  fetch  130  scan    1.6 MiB  191 rows
+  T7c    T7  B  tti med   1895 ms  (p90   2854)  total  1264  fetch  124  scan    2.4 MiB  25 rows
+
+=== warm pass (result reuse ON) ===
+  floor  T0  A  tti med    951 ms  (p90    997)  total   328  fetch  122  scan        0 B  1 rows
+  T1a    T1  A  tti med    890 ms  (p90    927)  total   240  fetch  147  scan        0 B  999 rows  [reused]
+  T1b    T1  A  tti med    867 ms  (p90    904)  total   246  fetch  122  scan        0 B  10 rows  [reused]
+  T2a    T2  A  tti med    878 ms  (p90    920)  total   255  fetch  121  scan        0 B  4 rows  [reused]
+  T2b    T2  A  tti med    870 ms  (p90    906)  total   247  fetch  121  scan        0 B  9 rows  [reused]
+  T3a    T3  A  tti med    862 ms  (p90    904)  total   241  fetch  120  scan        0 B  3 rows  [reused]
+  T3b    T3  A  tti med    861 ms  (p90    905)  total   241  fetch  120  scan        0 B  1 rows  [reused]
+  T3c    T3  A  tti med    895 ms  (p90    936)  total   247  fetch  149  scan        0 B  999 rows  [reused]
+  T4a    T4  A  tti med    865 ms  (p90    896)  total   244  fetch  121  scan        0 B  4 rows  [reused]
+  T4b    T4  A  tti med    868 ms  (p90    908)  total   246  fetch  120  scan        0 B  4 rows  [reused]
+  T4c    T4  A  tti med    867 ms  (p90    898)  total   243  fetch  123  scan        0 B  17 rows  [reused]
+  T5a    T5  A  tti med    874 ms  (p90    903)  total   250  fetch  122  scan        0 B  4 rows  [reused]
+  T5b    T5  A  tti med    871 ms  (p90    902)  total   253  fetch  120  scan        0 B  3 rows  [reused]
+  T5c    T5  A  tti med    870 ms  (p90    904)  total   248  fetch  121  scan        0 B  16 rows  [reused]
+  T6a    T6  A  tti med    862 ms  (p90    900)  total   243  fetch  120  scan        0 B  25 rows  [reused]
+  T6b    T6  A  tti med    869 ms  (p90    911)  total   251  fetch  118  scan        0 B  7 rows  [reused]
+  T6c    T6  A  tti med    875 ms  (p90    914)  total   254  fetch  119  scan        0 B  25 rows  [reused]
+  T7a    T7  A  tti med    854 ms  (p90    894)  total   234  fetch  119  scan        0 B  1 rows  [reused]
+  T7b    T7  A  tti med    872 ms  (p90    923)  total   245  fetch  126  scan        0 B  191 rows  [reused]
+  T7c    T7  A  tti med    868 ms  (p90    903)  total   247  fetch  119  scan        0 B  25 rows  [reused]
+
+================================================================
+cold pass: 100.0% within Nielsen's sustained-attention band (<=10 s), 0.0% within flow (<1 s); overall p90 2507 ms
+Athena floor (SELECT 1): 941 ms
+P6 acceptance test: PASS (0 of 19 queries lost the attention band, >10 s)
+report: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\tti\full\latest.md
+-- measure_time_to_insight: OK in 43632s --
+
+====================================================================================================
+$ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe measure_aws_resources.py --dataset fulldataset --by-run --last-n 5 --since 2026-09-20 02:21:50.915000   (cwd=C:\MIMICIV\gitmimic\mimic_lakehouse_repo)
+log: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\logs\measure_aws_resources_by_run_20260922_180446.log
+====================================================================================================
+[dataset] fulldataset -> jobs *-full, catalog mimic4_db_raw_full/mimic4_db_business_full
+[by-run] querying mimic4_db_business_full.etl_process_log ...
+[by-run] --since 2026-09-20 02:21:50.915000 -> excluding 4 run(s) started before it (6 eligible)
+[by-run] 10 total run(s) found; reporting the last 5 since 2026-09-20 02:21:50.915000.
+[by-run] current resource footprint (storage, catalog, CloudWatch, crawlers) ...
+
+5 full run(s) found.
+  full_run_id 8: 42 jobs, 3h42m wall clock, $10.4031 Glue
+  full_run_id 9: 42 jobs, 1h45m wall clock, $10.2658 Glue
+  full_run_id 10: 42 jobs, 1h50m wall clock, $10.5667 Glue
+  full_run_id 11: 42 jobs, 1h46m wall clock, $10.4471 Glue
+  full_run_id 12: 42 jobs, 1h48m wall clock, $10.6941 Glue
+report: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\cost\full\latest_runs.md
+-- measure_aws_resources_by_run: OK in 137s --
+
+====================================================================================================
+$ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe measure_aws_resources.py --dataset fulldataset   (cwd=C:\MIMICIV\gitmimic\mimic_lakehouse_repo)
+log: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\logs\measure_aws_resources_snapshot_20260922_180703.log
+====================================================================================================
+[dataset] fulldataset -> jobs *-full, catalog mimic4_db_raw_full/mimic4_db_business_full
+[1/6] Glue jobs ...
+[2/6] Glue crawler ...
+[3/6] CloudWatch Logs ...
+[4/6] Glue Data Catalog ...
+[5/6] Athena history ...
+[6/6] Storage footprint (from latest.json) ...
+
+============================================================
+one-time build + debug   : $350.08
+one clean pipeline run   : $4.76
+steady-state / month     : $0.565 as-deployed  /  $0.543 after cleanup
+first year (load + 12mo) : $11.53 as-deployed  /  $11.27 after cleanup
+report                   : C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\cost\full\latest.md
+-- measure_aws_resources_snapshot: OK in 143s --
+
+====================================================================================================
+$ C:\MIMICIV\gitmimic\mimic_datawarehouse_repo\.venv\Scripts\python.exe scripts/measure_warehouse_size.py --dataset fulldataset --json   (cwd=C:\MIMICIV\gitmimic\mimic_datawarehouse_repo)
+log: C:\MIMICIV\gitmimic\mimic_datawarehouse_repo\logs\measure_warehouse_size_20260922_180926.log
+====================================================================================================
+{
+  "generated_at": "2026-09-22T22:10:19.114907+00:00",
+  "dataset": "fulldataset",
+  "database": "mimic4rds_full",
+  "live_snapshot_method": "pgstattuple",
+  "database_total_bytes": 9297298675,
+  "measured_total_bytes": 9286426624,
+  "categories": {
+    "structured": {
+      "physical_bytes": 9286426624,
+      "live_bytes": 8739267071,
+      "table_count": 67,
+      "in_aurora": true
+    },
+    "infrastructure": {
+      "physical_bytes": 0,
+      "live_bytes": 0,
+      "table_count": 0,
+      "in_aurora": true
+    },
+    "unstructured_nlp": {
+      "physical_bytes": 0,
+      "live_bytes": 0,
+      "table_count": 0,
+      "in_aurora": false
+    }
+  },
+  "tables": [
+    {
+      "schema": "staging",
+      "table": "stg_admissions",
+      "category": "structured",
+      "row_count": 546028,
+      "total_bytes": 118587392,
+      "live_bytes": 114791008
+    },
+    {
+      "schema": "staging",
+      "table": "stg_caregiver",
+      "category": "structured",
+      "row_count": 17984,
+      "total_bytes": 688128,
+      "live_bytes": 608256
+    },
+    {
+      "schema": "staging",
+      "table": "stg_chartevents",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 144097280,
+      "live_bytes": 138606608
+    },
+    {
+      "schema": "staging",
+      "table": "stg_d_hcpcs",
+      "category": "structured",
+      "row_count": 89208,
+      "total_bytes": 6119424,
+      "live_bytes": 5416227
+    },
+    {
+      "schema": "staging",
+      "table": "stg_d_icd_diagnoses",
+      "category": "structured",
+      "row_count": 112107,
+      "total_bytes": 13312000,
+      "live_bytes": 12366773
+    },
+    {
+      "schema": "staging",
+      "table": "stg_d_icd_procedures",
+      "category": "structured",
+      "row_count": 86423,
+      "total_bytes": 10608640,
+      "live_bytes": 9875948
+    },
+    {
+      "schema": "staging",
+      "table": "stg_d_items",
+      "category": "structured",
+      "row_count": 4095,
+      "total_bytes": 581632,
+      "live_bytes": 540393
+    },
+    {
+      "schema": "staging",
+      "table": "stg_d_labitems",
+      "category": "structured",
+      "row_count": 1650,
+      "total_bytes": 163840,
+      "live_bytes": 147909
+    },
+    {
+      "schema": "staging",
+      "table": "stg_datetimeevents",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 152010752,
+      "live_bytes": 146350904
+    },
+    {
+      "schema": "staging",
+      "table": "stg_diagnoses_icd",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 68329472,
+      "live_bytes": 64057344
+    },
+    {
+      "schema": "staging",
+      "table": "stg_drgcodes",
+      "category": "structured",
+      "row_count": 761856,
+      "total_bytes": 87007232,
+      "live_bytes": 81803732
+    },
+    {
+      "schema": "staging",
+      "table": "stg_emar",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 192774144,
+      "live_bytes": 182556443
+    },
+    {
+      "schema": "staging",
+      "table": "stg_emar_detail",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 128573440,
+      "live_bytes": 119889899
+    },
+    {
+      "schema": "staging",
+      "table": "stg_hcpcsevents",
+      "category": "structured",
+      "row_count": 186074,
+      "total_bytes": 19931136,
+      "live_bytes": 18443896
+    },
+    {
+      "schema": "staging",
+      "table": "stg_icustays",
+      "category": "structured",
+      "row_count": 94458,
+      "total_bytes": 16621568,
+      "live_bytes": 16041328
+    },
+    {
+      "schema": "staging",
+      "table": "stg_ingredientevents",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 212008960,
+      "live_bytes": 204640016
+    },
+    {
+      "schema": "staging",
+      "table": "stg_inputevents",
+      "category": "structured",
+      "row_count": 1000139,
+      "total_bytes": 324124672,
+      "live_bytes": 313870160
+    },
+    {
+      "schema": "staging",
+      "table": "stg_labevents",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 168624128,
+      "live_bytes": 160175503
+    },
+    {
+      "schema": "staging",
+      "table": "stg_microbiologyevents",
+      "category": "structured",
+      "row_count": 999668,
+      "total_bytes": 285417472,
+      "live_bytes": 273371331
+    },
+    {
+      "schema": "staging",
+      "table": "stg_omr",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 84533248,
+      "live_bytes": 75437623
+    },
+    {
+      "schema": "staging",
+      "table": "stg_outputevents",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 126099456,
+      "live_bytes": 115065536
+    },
+    {
+      "schema": "staging",
+      "table": "stg_patients",
+      "category": "structured",
+      "row_count": 364627,
+      "total_bytes": 28262400,
+      "live_bytes": 25256907
+    },
+    {
+      "schema": "staging",
+      "table": "stg_pharmacy",
+      "category": "structured",
+      "row_count": 999953,
+      "total_bytes": 265986048,
+      "live_bytes": 255566100
+    },
+    {
+      "schema": "staging",
+      "table": "stg_poe",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 141950976,
+      "live_bytes": 132400062
+    },
+    {
+      "schema": "staging",
+      "table": "stg_poe_detail",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 89473024,
+      "live_bytes": 80037532
+    },
+    {
+      "schema": "staging",
+      "table": "stg_prescriptions",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 223928320,
+      "live_bytes": 212801069
+    },
+    {
+      "schema": "staging",
+      "table": "stg_procedureevents",
+      "category": "structured",
+      "row_count": 808706,
+      "total_bytes": 213434368,
+      "live_bytes": 206400016
+    },
+    {
+      "schema": "staging",
+      "table": "stg_procedures_icd",
+      "category": "structured",
+      "row_count": 859655,
+      "total_bytes": 69042176,
+      "live_bytes": 65076072
+    },
+    {
+      "schema": "staging",
+      "table": "stg_provider",
+      "category": "structured",
+      "row_count": 42244,
+      "total_bytes": 1572864,
+      "live_bytes": 1350524
+    },
+    {
+      "schema": "staging",
+      "table": "stg_services",
+      "category": "structured",
+      "row_count": 593071,
+      "total_bytes": 42934272,
+      "live_bytes": 38592997
+    },
+    {
+      "schema": "staging",
+      "table": "stg_transfers",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 112803840,
+      "live_bytes": 105887203
+    },
+    {
+      "schema": "warehouse",
+      "table": "agg_admission_daily",
+      "category": "structured",
+      "row_count": 244500,
+      "total_bytes": 56737792,
+      "live_bytes": 36093840
+    },
+    {
+      "schema": "warehouse",
+      "table": "agg_admission_monthly",
+      "category": "structured",
+      "row_count": 10856,
+      "total_bytes": 2588672,
+      "live_bytes": 1664016
+    },
+    {
+      "schema": "warehouse",
+      "table": "agg_icu_fluid_balance_daily",
+      "category": "structured",
+      "row_count": 75366,
+      "total_bytes": 17915904,
+      "live_bytes": 11214816
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_caregiver",
+      "category": "structured",
+      "row_count": 17984,
+      "total_bytes": 2572288,
+      "live_bytes": 2445184
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_chart_item",
+      "category": "structured",
+      "row_count": 4095,
+      "total_bytes": 1990656,
+      "live_bytes": 1079186
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_date",
+      "category": "structured",
+      "row_count": 47846,
+      "total_bytes": 20127744,
+      "live_bytes": 10654680
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_diagnosis",
+      "category": "structured",
+      "row_count": 112107,
+      "total_bytes": 50692096,
+      "live_bytes": 27813122
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_hcpcs",
+      "category": "structured",
+      "row_count": 89208,
+      "total_bytes": 32006144,
+      "live_bytes": 17383232
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_lab_item",
+      "category": "structured",
+      "row_count": 1650,
+      "total_bytes": 647168,
+      "live_bytes": 372540
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_patient",
+      "category": "structured",
+      "row_count": 364627,
+      "total_bytes": 125091840,
+      "live_bytes": 68242954
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_procedure",
+      "category": "structured",
+      "row_count": 86423,
+      "total_bytes": 39624704,
+      "live_bytes": 21597762
+    },
+    {
+      "schema": "warehouse",
+      "table": "dim_provider",
+      "category": "structured",
+      "row_count": 42244,
+      "total_bytes": 5955584,
+      "live_bytes": 5654456
+    },
+    {
+      "schema": "warehouse",
+      "table": "etl_process_log",
+      "category": "structured",
+      "row_count": 390,
+      "total_bytes": 196608,
+      "live_bytes": 174960
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_admission",
+      "category": "structured",
+      "row_count": 546028,
+      "total_bytes": 174948352,
+      "live_bytes": 167823832
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_chart_observation",
+      "category": "structured",
+      "row_count": 1008075,
+      "total_bytes": 240279552,
+      "live_bytes": 229415372
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_datetime_event",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 307470336,
+      "live_bytes": 297380408
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_diagnosis",
+      "category": "structured",
+      "row_count": 999977,
+      "total_bytes": 186499072,
+      "live_bytes": 176196572
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_drg_assignment",
+      "category": "structured",
+      "row_count": 761856,
+      "total_bytes": 183476224,
+      "live_bytes": 175708328
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_hcpcs_event",
+      "category": "structured",
+      "row_count": 186074,
+      "total_bytes": 39370752,
+      "live_bytes": 37506832
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_icu_stay_accumulating",
+      "category": "structured",
+      "row_count": 94458,
+      "total_bytes": 26116096,
+      "live_bytes": 24996072
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_ingredient_event",
+      "category": "structured",
+      "row_count": 1000020,
+      "total_bytes": 381861888,
+      "live_bytes": 368268816
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_input_event",
+      "category": "structured",
+      "row_count": 999887,
+      "total_bytes": 486088704,
+      "live_bytes": 468999248
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_lab_result",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 273620992,
+      "live_bytes": 262439504
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_medication_administration",
+      "category": "structured",
+      "row_count": 999986,
+      "total_bytes": 288825344,
+      "live_bytes": 276919048
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_medication_administration_mini_detail",
+      "category": "structured",
+      "row_count": 999936,
+      "total_bytes": 295280640,
+      "live_bytes": 284705216
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_microbiology_result",
+      "category": "structured",
+      "row_count": 1000166,
+      "total_bytes": 353583104,
+      "live_bytes": 340069248
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_outpatient_measurement",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 194387968,
+      "live_bytes": 184901936
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_output_event",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 291782656,
+      "live_bytes": 279971584
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_pharmacy_order",
+      "category": "structured",
+      "row_count": 999850,
+      "total_bytes": 334217216,
+      "live_bytes": 320376952
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_prescription",
+      "category": "structured",
+      "row_count": 999892,
+      "total_bytes": 417521664,
+      "live_bytes": 404597912
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_procedure",
+      "category": "structured",
+      "row_count": 859650,
+      "total_bytes": 164020224,
+      "live_bytes": 156072200
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_procedure_event",
+      "category": "structured",
+      "row_count": 808693,
+      "total_bytes": 341917696,
+      "live_bytes": 329741944
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_provider_order",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 239116288,
+      "live_bytes": 228190448
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_provider_order_mini_detail",
+      "category": "structured",
+      "row_count": 159231,
+      "total_bytes": 35209216,
+      "live_bytes": 33620724
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_service_assignment",
+      "category": "structured",
+      "row_count": 593070,
+      "total_bytes": 112492544,
+      "live_bytes": 107161096
+    },
+    {
+      "schema": "warehouse",
+      "table": "fact_transfer",
+      "category": "structured",
+      "row_count": 1000000,
+      "total_bytes": 212590592,
+      "live_bytes": 202387712
+    }
+  ]
+}
+-- measure_warehouse_size: OK in 53s --
+
+====================================================================================================
+$ C:\MIMICIV\gitmimic\mimic_datawarehouse_repo\.venv\Scripts\python.exe scripts/measure_aws_resources.py --dataset fulldataset --by-run --last-n 5 --since 2026-09-19 17:41:02.235776   (cwd=C:\MIMICIV\gitmimic\mimic_datawarehouse_repo)
+log: C:\MIMICIV\gitmimic\mimic_datawarehouse_repo\logs\measure_aws_resources_by_run_20260922_181019.log
+====================================================================================================
+[by-run] --since 2026-09-19 17:41:02.235776 -> excluding 0 run(s) started before it (6 eligible)
+[by-run] 6 total run(s) found; reporting the last 5 since 2026-09-19 17:41:02.235776.
+[by-run] current resource footprint (Aurora, Glue, S3, CloudWatch, IAM) ...
+full_run_id 2: 38m49s wall, 65 tables (0 failed), $0.5692
+full_run_id 3: 37m57s wall, 65 tables (0 failed), $0.5561
+full_run_id 4: 36m59s wall, 65 tables (0 failed), $0.5434
+full_run_id 5: 37m25s wall, 65 tables (0 failed), $0.5450
+full_run_id 6: 38m25s wall, 65 tables (0 failed), $0.5609
+report: C:\MIMICIV\gitmimic\mimic_datawarehouse_repo\docs\cost\full\latest_runs.md
+-- measure_aws_resources_by_run: OK in 33s --
+
+====================================================================================================
+$ C:\MIMICIV\gitmimic\mimic_datawarehouse_repo\.venv\Scripts\python.exe scripts/measure_aws_resources.py --dataset fulldataset   (cwd=C:\MIMICIV\gitmimic\mimic_datawarehouse_repo)
+log: C:\MIMICIV\gitmimic\mimic_datawarehouse_repo\logs\measure_aws_resources_snapshot_20260922_181051.log
+====================================================================================================
+====================================================================================================
+AWS resource footprint -- Glue ETL pipeline (baseline for lakehouse comparison)
+====================================================================================================
+
+Aurora (RDS)
+----------------------------------------------------------------------------------------------------
+  Cluster              : mimic4rds (aurora-postgresql 17.9)
+  Serverless v2 ACU    : min 0.0 / max 4.0
+  Created              : 2026-09-19T01:44:14.347000+00:00
+  Current volume used  : 8.80 GiB
+  ACU-hours since 2026-09-19: 63.655 ACU-hr (peak 4.0 ACU)
+  Compute + I/O cost   : $16.2481 ($7.6386 ACU + $8.6094 I/O, 43,047,239 requests) since 2026-09-19
+  Storage cost         : $0.9453/month at current volume
+
+Glue jobs
+----------------------------------------------------------------------------------------------------
+  job                             workers   runs   exec (s)    DPU-sec states
+  mimic4-dw-etl-full-schema-bootstrap    1.0 DPU     11        150        0.0 SUCCEEDED:11
+  mimic4-dw-etl-full-stg-load      2xG.1X     10       7264    14532.0 SUCCEEDED:9, FAILED:1
+  mimic4-dw-etl-full-wh-dimensions     2xG.1X      9        905     1813.0 SUCCEEDED:9
+  mimic4-dw-etl-full-wh-facts      2xG.1X     11      12801    25608.0 SUCCEEDED:8, FAILED:3
+  mimic4-dw-etl-full-wh-aggregates     2xG.1X      8        654     1312.0 SUCCEEDED:8
+  TOTAL                                                                  12.0181 DPU-hours total
+
+S3
+----------------------------------------------------------------------------------------------------
+  Bucket               : mimic4-dw-sourcefiles-full
+  Total                : 10.17 GiB across 187 objects
+    hosp/                    5.87 GiB  (22 objects)
+    icu/                     4.06 GiB  (9 objects)
+    spark-logs/            252.29 MiB  (148 objects)
+    glue-scripts/          107.57 KiB  (6 objects)
+    glue-sql/               54.06 KiB  (2 objects)
+
+CloudWatch Logs (Glue job output)
+----------------------------------------------------------------------------------------------------
+  /aws-glue/jobs/output        602.56 KiB
+  /aws-glue/jobs/error         4.40 GiB
+  /aws-glue/jobs/logs-v2       188.12 MiB
+  TOTAL                        4.59 GiB
+
+IAM roles (informational -- no storage/compute cost)
+----------------------------------------------------------------------------------------------------
+  mimic4-aurora-s3-import-role-full        created 2026-09-19
+  mimic4-dw-etl-glue-role-full             created 2026-09-19
+
+Cost estimate (USD)
+----------------------------------------------------------------------------------------------------
+  One-time (cumulative, all runs) : $24.00  (Aurora $16.2481 + Glue $5.29 + CW ingest $2.4633)
+  One clean pipeline run          : $0.5333  (Aurora ACU/I/O cost is not separable per-run from the account-wide CloudWatch window -- this figure is Glue-only.)
+  Steady-state / month            : $1.0931  (Aurora storage $0.9453 + CW storage $0.1478)
+  Load + 1 year steady-state      : $13.65  (load $0.5333 + annual $13.12)
+
+For what's inside the database itself (staging/warehouse table sizes), see
+scripts/measure_warehouse_size.py.
+-- measure_aws_resources_snapshot: OK in 4s --
+
+====================================================================================================
+$ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe compare_environments.py --dataset fulldataset --by-run --last-n 5   (cwd=C:\MIMICIV\gitmimic\mimic_lakehouse_repo)
+log: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\logs\compare_environments_by_run_20260922_181056.log
+====================================================================================================
+# Lakehouse vs Data Warehouse — resource usage across the last N runs
+
+Generated 2026-09-22T22:10:56.064766+00:00.
+- **Lakehouse**: 5 run(s) reported (of 10 available), source generated 2026-09-22T22:07:02.909865+00:00.
+- **Warehouse**: 5 run(s) reported (of 6 available), source generated 2026-09-22T22:10:51.649374+00:00.
+
+Supports propositions P1-P7 (see the proposition column per metric). Each statistic is mean / median / stdev / min / max across that side's last-N full pipeline runs, computed by each repo's own `measure_aws_resources.py --by-run --last-n <N>` -- run that in both repos first (same --dataset) to refresh these numbers.
+
+## Detailed data -- one row per full_run_id, both sides
+
+The raw per-run rows behind the statistics below, captured here alongside them so the detailed data and the cross-run statistics live in one document instead of two separate per-repo reports. "CW bytes (group total)" is every byte the account's shared Glue log groups ingested during that run's wall-clock window, from any job in the account; "CW bytes (attributed)" is the CloudWatch Logs Insights-computed subset attributable specifically to that run's own Glue JobRunIds -- see either repo's measure_aws_resources.py --by-run output for the full attribution methodology note.
+
+### Lakehouse
+
+| full_run_id | started_at | wall clock | jobs | failed | DPU-s | Cost $ | CW bytes (group total) | CW bytes (attributed) | raw rows | gold rows |
+|--:|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| 8 | 2026-09-20 04:30:38.652000 | 3h42m | 42 | 0 | 85,116.0 | $10.4031 | 1.6 GiB | 103.6 MiB | 893,670,689 | 21,964,590 |
+| 9 | 2026-09-20 08:38:19.648000 | 1h45m | 42 | 0 | 83,993.0 | $10.2658 | 1.6 GiB | 103.6 MiB | 893,670,689 | 21,964,590 |
+| 10 | 2026-09-20 11:00:17.399000 | 1h50m | 42 | 0 | 86,455.0 | $10.5667 | 1.6 GiB | 103.5 MiB | 893,670,689 | 21,964,590 |
+| 11 | 2026-09-20 13:36:40.710000 | 1h46m | 42 | 0 | 85,476.0 | $10.4471 | 1.6 GiB | 103.5 MiB | 893,670,689 | 21,964,590 |
+| 12 | 2026-09-21 10:54:36.126000 | 1h48m | 42 | 0 | 87,497.0 | $10.6941 | 1.6 GiB | 103.6 MiB | 893,670,689 | 21,964,590 |
+
+### Warehouse
+
+| full_run_id | started_at | wall clock | jobs | failed | DPU-s | Cost $ | CW bytes (group total) | CW bytes (attributed) | raw rows | gold rows |
+|--:|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| 2 | 2026-09-19T19:57:06.771674 | 38m49s | 65 | 0 | 4,657.0 | $0.5692 | 14.3 MiB | 1.1 MiB | 20,568,186 | 40,627,781 |
+| 3 | 2026-09-19T20:42:18.283884 | 37m57s | 65 | 0 | 4,550.0 | $0.5561 | 13.4 MiB | 1.1 MiB | 20,568,186 | 40,629,396 |
+| 4 | 2026-09-19T22:12:27.422217 | 36m59s | 65 | 0 | 4,446.0 | $0.5434 | 2.1 MiB | 1.1 MiB | 20,568,186 | 40,631,011 |
+| 5 | 2026-09-19T23:27:24.564409 | 37m25s | 65 | 0 | 4,459.0 | $0.5450 | 1.1 GiB | 1.1 MiB | 20,568,186 | 40,632,626 |
+| 6 | 2026-09-21T10:42:37.240036 | 38m25s | 65 | 0 | 4,589.0 | $0.5609 | 37.6 MiB | 1.1 MiB | 20,568,186 | 40,634,241 |
+
+## Per-run statistics, lakehouse vs warehouse
+
+### Wall clock per run (s)  (`wall_clock_seconds` — P5)
+
+| Environment | n | Mean | Median | Stdev | Min | Max |
+|---|--:|--:|--:|--:|--:|--:|
+| Lakehouse | 5 | 7,826.429 | 6,500.997 | 3,078.915 | 6,303.437 | 13,330.234 |
+| Warehouse | 5 | 2,275.744 | 2,277.885 | 44.150 | 2,219.946 | 2,329.519 |
+
+Ratio (lakehouse mean / warehouse mean): 3.439×
+
+### Total Glue DPU-seconds per run  (`total_dpu_seconds` — P5, P7)
+
+| Environment | n | Mean | Median | Stdev | Min | Max |
+|---|--:|--:|--:|--:|--:|--:|
+| Lakehouse | 5 | 85,707.400 | 85,476.000 | 1,332.670 | 83,993.000 | 87,497.000 |
+| Warehouse | 5 | 4,540.200 | 4,550.000 | 88.863 | 4,446.000 | 4,657.000 |
+
+Ratio (lakehouse mean / warehouse mean): 18.877×
+
+### Total Glue DPU-hours per run  (`total_dpu_hours` — P5, P7)
+
+| Environment | n | Mean | Median | Stdev | Min | Max |
+|---|--:|--:|--:|--:|--:|--:|
+| Lakehouse | 5 | 23.808 | 23.743 | 0.370 | 23.331 | 24.305 |
+| Warehouse | 5 | 1.261 | 1.264 | 0.025 | 1.235 | 1.294 |
+
+Ratio (lakehouse mean / warehouse mean): 18.878×
+
+### Glue compute cost per run (USD)  (`glue_cost_usd` — P5, P7)
+
+| Environment | n | Mean | Median | Stdev | Min | Max |
+|---|--:|--:|--:|--:|--:|--:|
+| Lakehouse | 5 | 10.475 | 10.447 | 0.163 | 10.266 | 10.694 |
+| Warehouse | 5 | 0.555 | 0.556 | 0.011 | 0.543 | 0.569 |
+
+Ratio (lakehouse mean / warehouse mean): 18.877×
+
+### CloudWatch bytes ingested per run  (`cloudwatch_bytes_ingested` — P3, P5)
+
+| Environment | n | Mean | Median | Stdev | Min | Max |
+|---|--:|--:|--:|--:|--:|--:|
+| Lakehouse | 5 | 1,719,312,822.600 | 1,719,426,497.000 | 899,323.579 | 1,718,221,022.000 | 1,720,559,565.000 |
+| Warehouse | 5 | 256,434,373.200 | 14,984,296.000 | 534,080,687.906 | 2,189,168.000 | 1,211,518,853.000 |
+
+Ratio (lakehouse mean / warehouse mean): 6.705×
+
+### Jobs / tables loaded per run  (`job_count` — P1, P2)
+
+| Environment | n | Mean | Median | Stdev | Min | Max |
+|---|--:|--:|--:|--:|--:|--:|
+| Lakehouse | 5 | 42 | 42 | 0.000 | 42 | 42 |
+| Warehouse | 5 | 65 | 65 | 0.000 | 65 | 65 |
+
+Ratio (lakehouse mean / warehouse mean): 0.646×
+
+### Failed jobs per run  (`failed_count` — P5, P7)
+
+| Environment | n | Mean | Median | Stdev | Min | Max |
+|---|--:|--:|--:|--:|--:|--:|
+| Lakehouse | 5 | 0 | 0 | 0.000 | 0 | 0 |
+| Warehouse | 5 | 0 | 0 | 0.000 | 0 | 0 |
+
+### Total raw rows processed per run  (`total_raw_rows` — P5)
+
+| Environment | n | Mean | Median | Stdev | Min | Max |
+|---|--:|--:|--:|--:|--:|--:|
+| Lakehouse | 5 | 893,670,689 | 893,670,689 | 0.000 | 893,670,689 | 893,670,689 |
+| Warehouse | 5 | 20,568,186 | 20,568,186 | 0.000 | 20,568,186 | 20,568,186 |
+
+Ratio (lakehouse mean / warehouse mean): 43.449×
+
+### Total gold rows produced per run  (`total_gold_rows` — P3, P4)
+
+| Environment | n | Mean | Median | Stdev | Min | Max |
+|---|--:|--:|--:|--:|--:|--:|
+| Lakehouse | 5 | 21,964,590 | 21,964,590 | 0.000 | 21,964,590 | 21,964,590 |
+| Warehouse | 5 | 40,631,011 | 40,631,011 | 2,553.539 | 40,627,781 | 40,634,241 |
+
+Ratio (lakehouse mean / warehouse mean): 0.541×
+
+## Current resource footprint (point-in-time, not per-run)
+
+Storage, catalog, and log-retention totals don't have a clean per-run reading on either side (the underlying AWS metrics are daily-to-hourly and lag) -- these are each side's current state, for context alongside the per-run statistics above.
+
+**Lakehouse** (measured 2026-09-22T22:07:02.909749+00:00):
+- S3 physical (all): 16.9 GiB  ·  Gold live: 1.3 GiB (74059 objects)
+- CloudWatch log groups: 4.6 GiB across 7 group(s)
+- Glue Data Catalog: 77 tables  ·  Crawlers: 1  ·  IAM roles: 8
+- Load + 1 year running: $11.53 as-deployed (load $4.76 + annual $6.77)
+
+**Warehouse** (measured 2026-09-22T22:10:50.872203+00:00):
+- Aurora `mimic4rds` volume: 8.8 GiB  ·  ACU-hr since 2026-09-19: 63.655
+- Aurora cost: $16.2481 compute+I/O ($7.6386 ACU + $8.6094 I/O, 43,047,239 requests) since 2026-09-19, plus $0.9453/month storage
+- S3: 10.2 GiB across 187 objects
+- CloudWatch log groups: 4.6 GiB across 3 group(s)
+- IAM roles: 2
+- Load + 1 year running: $13.65 (load $0.5333 + annual $13.12)
+
+**Load + 1 year running, side by side**: lakehouse $11.53 vs warehouse $13.65 (1.18× the lakehouse figure).
+
+
+written: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\comparison\full\latest_by_run_comparison.md
+-- compare_environments_by_run: OK in 0s --
+
+====================================================================================================
+$ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe compare_environments.py --dataset fulldataset   (cwd=C:\MIMICIV\gitmimic\mimic_lakehouse_repo)
+log: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\logs\compare_environments_20260922_181056.log
+====================================================================================================
+# Lakehouse vs Data Warehouse — consolidated comparison
+
+Generated 2026-09-22T22:10:56.148477+00:00. Sources: lakehouse_cost 2026-09-22, lakehouse_storage 2026-09-22, lakehouse_tti 2026-09-22, lakehouse_p5 2026-09-22, aurora_baseline 2026-09-22, warehouse_by_run 2026-09-22
+
+## Proposition scorecard
+
+| P | Claim | Lakehouse | Warehouse | Verdict |
+|---|---|---|---|---|
+| **P1** | Layered architecture supports more end-to-end workflows | 88.9%  (35 S / 10 P / 0 U) | 72.2%  (26 S / 13 P / 6 U) | holds — the gap is entirely in the 18 cross-modal workflows |
+| **P2** | Fewer integration points for cross-modal queries | ≈ 3.3 | ≈ 6.1 | holds — mechanism is the shared Glue catalog |
+| **P3** | Less physical data duplication (redundancy ratio) | 11430.9 MiB live / 11533.8 MiB phys / 1.0× compacted (gold is the only copy) | 8334.41 MiB live / 8856.23 MiB phys / 2.0× (staging + warehouse) | holds architecturally — lakehouse eliminates the staging materialization (external tables = 0 bytes); on information content it is ~0.15× the warehouse |
+| **P4** | More ad-hoc queries combining structured data with AI outputs | 97.8%  (43 answerable, 2 partial, 0 no) | 7.8%  (0 answerable, 7 structured proxy, 38 no path) | holds decisively — NLP tables are in the shared catalog vs absent from Postgres |
+| **P5** | Native in-lake join beats externalized two-stage pipeline | native (Athena/Iceberg): 3,038 ms, 509,445 rows/s | external (Athena UNLOAD + DuckDB): 10,041 ms (154,132 rows/s); DuckDB join alone 62 ms | holds — native ~3.3× faster end to end; the whole penalty is the extract hop, not the engine |
+| **P6** | Unified abstraction layer renders results inside Nielsen's sustained-attention band (1-10 s), not the >10 s attention-lost band | cold 0 A / 19 B / 0 C  (p90 2507 ms); 100.0% within 10 s; warm 100% band A (~0.8 s) | n/a — proposition has no baseline comparison | PASS -- every query lands at or under 10 s |
+| **P7** | Less effort to re-execute models when new data arrives | agg/OBT + NLP jobs incremental via etl_control — re-run 100–125 s (platform floor) vs 183–1,846 s backfill; 2–16× faster | no incremental mechanism — every refresh is a full TRUNCATE+reload (~954 DPU-s, README: “that mechanism isn’t implemented here”) | holds — lakehouse cost scales with what changed, warehouse with total volume |
+| **P8** | Engineers complete tasks faster + lower NASA-TLX with multimodal schemas | — | — | not tested — human study |
+| **P9** | Practitioners perceive gains outweigh complexity (TAM), high intent to adopt | — | — | not tested — human study |
+
+## Evidence status
+
+| P | Metric | Evidence |
+|---|---|---|
+| P1 | workflow coverage (Supported + ½·Partial) / 45 | analysis — atlas_P1_workflow_taxonomy.docx (lakehouse repo-verified; decoupled baseline scored as-designed, not built) |
+| P2 | mean onboarding integration points, cross-modal rows | analysis — counted from Glue job DAGs + Athena joins in both repos |
+| P3 | structured layer: live bytes / physical bytes / redundancy ratio | ✅ measured both sides — measure_storage_footprint.py + measure_warehouse_size.py |
+| P4 | 45-query catalogue coverage | analysis — atlas_P4_adhoc_query_catalog.docx (2 queries verified live in Athena) |
+| P5 | wall-clock + throughput for a 3-way join + aggregate | ✅ measured — measure_native_vs_external_join.py (12 reps) |
+| P6 | 19-query battery; % within 10 s (sustained attention or faster), p90 | ✅ measured — measure_time_to_insight.py (standalone; no baseline required) |
+| P7 | incremental refresh vs full reload, re-run wall time | ✅ lakehouse verified via Glue run stats; warehouse from its manifest + README |
+| P8 | task completion time + raw NASA-TLX, within-subject | needs a 5-task battery, a digital NASA-TLX form, counterbalanced design, paired t-tests + Cohen's d |
+| P9 | Davis TAM instrument (PU / PEOU / BI) + net-benefit item | needs the validated TAM survey; ~N=34 per condition for d=0.5 at power 0.8 |
+
+## Pipeline cost
+
+| | Lakehouse | Warehouse |
+|---|--:|--:|
+| One-time build + debug | $350.08 | $24.00 |
+| One clean rebuild | $4.76 | $0.5333 |
+| Steady-state / month (idle) | $0.565 (→ $0.543 cleaned) | $1.093 |
+| **Load + 1 year running** | **$11.53** | **$13.65** |
+
+Warehouse one-time detail (live): LIVE (measured 2026-09-22T22:10:50.872203+00:00): Aurora compute+I/O $16.2481 + Glue $5.29 + CloudWatch ingest $2.4633
+
+
+written: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\comparison\full\latest.md
+-- compare_environments: OK in 0s --
+
+====================================================================================================
+Measurement suite summary -- fulldataset
+====================================================================================================
+  [OK  ] storage            measure_storage_footprint
+  [OK  ] join               measure_native_vs_external_join
+  [OK  ] tti                measure_time_to_insight
+  [OK  ] lh_cost_by_run     measure_aws_resources_by_run
+  [OK  ] lh_cost_snapshot   measure_aws_resources_snapshot
+  [OK  ] wh_size            measure_warehouse_size
+  [OK  ] wh_cost_by_run     measure_aws_resources_by_run
+  [OK  ] wh_cost_snapshot   measure_aws_resources_snapshot
+  [OK  ] compare_by_run     compare_environments_by_run
+  [OK  ] compare            compare_environments
+
+All steps succeeded.

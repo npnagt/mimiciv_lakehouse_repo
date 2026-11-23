@@ -1,0 +1,53 @@
+time-to-insight :: mimic4_db_business_full via Athena/primary :: 20 queries x 200 repeats x 2 pass(es) :: render budget 500 ms
+Nielsen bands   :: A < 1000 ms (flow)  |  B 1000-10000 ms (sustained attention)  |  C >= 10000 ms (attention lost)
+P6 acceptance   :: queries land in A or B (<=10 s) -- standalone test, no baseline comparison
+
+=== cold pass (result reuse OFF) ===
+  floor  T0  A  tti med    943 ms  (p90    990)  total   319  fetch  122  scan        0 B  1 rows
+  T1a    T1  B  tti med   1868 ms  (p90   2710)  total  1219  fetch  144  scan   90.8 KiB  999 rows
+  T1b    T1  B  tti med   1445 ms  (p90   2221)  total   819  fetch  120  scan  183.3 KiB  10 rows
+  T2a    T2  B  tti med   2027 ms  (p90   3050)  total  1400  fetch  121  scan    4.5 MiB  4 rows
+  T2b    T2  B  tti med   3040 ms  (p90   4281)  total  2430  fetch  122  scan    5.5 MiB  9 rows
+  T3a    T3  B  tti med   2431 ms  (p90   3463)  total  1806  fetch  120  scan  721.2 KiB  3 rows
+  T3b    T3  B  tti med   2040 ms  (p90   3100)  total  1419  fetch  120  scan    3.3 MiB  1 rows
+  T3c    T3  B  tti med   2057 ms  (p90   3581)  total  1400  fetch  152  scan    3.4 MiB  999 rows
+  T4a    T4  B  tti med   2014 ms  (p90   2966)  total  1381  fetch  123  scan  984.3 KiB  4 rows
+  T4b    T4  B  tti med   2012 ms  (p90   2996)  total  1385  fetch  122  scan  420.5 KiB  4 rows
+  T4c    T4  B  tti med   1976 ms  (p90   2906)  total  1345  fetch  124  scan    1.1 MiB  17 rows
+  T5a    T5  B  tti med   1980 ms  (p90   2705)  total  1360  fetch  121  scan    3.4 MiB  4 rows
+  T5b    T5  B  tti med   2442 ms  (p90   3616)  total  1818  fetch  122  scan    3.5 MiB  3 rows
+  T5c    T5  B  tti med   1903 ms  (p90   2814)  total  1276  fetch  122  scan    1.8 MiB  16 rows
+  T6a    T6  B  tti med   1612 ms  (p90   2003)  total   984  fetch  121  scan  171.0 KiB  25 rows
+  T6b    T6  B  tti med   1849 ms  (p90   2794)  total  1230  fetch  123  scan    1.9 MiB  7 rows
+  T6c    T6  B  tti med   2455 ms  (p90   3812)  total  1832  fetch  124  scan    7.3 MiB  25 rows
+  T7a    T7  B  tti med   1799 ms  (p90   2616)  total  1178  fetch  121  scan    1.7 MiB  1 rows
+  T7b    T7  B  tti med   1776 ms  (p90   2757)  total  1146  fetch  125  scan    1.6 MiB  191 rows
+  T7c    T7  B  tti med   1773 ms  (p90   2682)  total  1155  fetch  121  scan    2.4 MiB  25 rows
+
+=== warm pass (result reuse ON) ===
+  floor  T0  A  tti med    938 ms  (p90    981)  total   321  fetch  119  scan        0 B  1 rows
+  T1a    T1  A  tti med    883 ms  (p90    928)  total   241  fetch  142  scan        0 B  999 rows  [reused]
+  T1b    T1  A  tti med    863 ms  (p90    904)  total   241  fetch  119  scan        0 B  10 rows  [reused]
+  T2a    T2  A  tti med    871 ms  (p90    923)  total   254  fetch  118  scan        0 B  4 rows  [reused]
+  T2b    T2  A  tti med    873 ms  (p90    925)  total   251  fetch  120  scan        0 B  9 rows  [reused]
+  T3a    T3  A  tti med    859 ms  (p90    899)  total   238  fetch  119  scan        0 B  3 rows  [reused]
+  T3b    T3  A  tti med    861 ms  (p90    907)  total   240  fetch  120  scan        0 B  1 rows  [reused]
+  T3c    T3  A  tti med    889 ms  (p90    933)  total   242  fetch  151  scan        0 B  999 rows  [reused]
+  T4a    T4  A  tti med    867 ms  (p90    908)  total   248  fetch  119  scan        0 B  4 rows  [reused]
+  T4b    T4  A  tti med    865 ms  (p90    908)  total   246  fetch  120  scan        0 B  4 rows  [reused]
+  T4c    T4  A  tti med    862 ms  (p90    902)  total   244  fetch  120  scan        0 B  17 rows  [reused]
+  T5a    T5  A  tti med    870 ms  (p90    916)  total   249  fetch  119  scan        0 B  4 rows  [reused]
+  T5b    T5  A  tti med    862 ms  (p90    906)  total   241  fetch  119  scan        0 B  3 rows  [reused]
+  T5c    T5  A  tti med    865 ms  (p90    910)  total   244  fetch  119  scan        0 B  16 rows  [reused]
+  T6a    T6  A  tti med    861 ms  (p90    903)  total   239  fetch  121  scan        0 B  25 rows  [reused]
+  T6b    T6  A  tti med    880 ms  (p90    930)  total   256  fetch  121  scan        0 B  7 rows  [reused]
+  T6c    T6  A  tti med    877 ms  (p90    918)  total   253  fetch  121  scan        0 B  25 rows  [reused]
+  T7a    T7  A  tti med    858 ms  (p90    904)  total   239  fetch  119  scan        0 B  1 rows  [reused]
+  T7b    T7  A  tti med    869 ms  (p90    905)  total   241  fetch  127  scan        0 B  191 rows  [reused]
+  T7c    T7  A  tti med    867 ms  (p90    908)  total   243  fetch  120  scan        0 B  25 rows  [reused]
+
+================================================================
+cold pass: 100.0% within Nielsen's sustained-attention band (<=10 s), 0.0% within flow (<1 s); overall p90 2442 ms
+Athena floor (SELECT 1): 943 ms
+P6 acceptance test: PASS (0 of 19 queries lost the attention band, >10 s)
+report: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\tti\full\latest.md

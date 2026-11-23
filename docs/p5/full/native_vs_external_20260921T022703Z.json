@@ -1,0 +1,28 @@
+{
+  "generated_utc": "2026-09-21T02:27:03.640458+00:00",
+  "dataset": "fulldataset",
+  "region": "us-east-2",
+  "repeats": 200,
+  "input_rows": 1547679,
+  "benchmark": "fact_lab_result x dim_lab_item x fact_admission -> abnormal-rate agg",
+  "native": {
+    "wall_median_ms": 3073.4,
+    "wall_sd_ms": 990.5,
+    "scanned_bytes_median": 9578422,
+    "cost_usd": 4.4e-05,
+    "throughput_rows_per_s": 503573
+  },
+  "external": {
+    "export_wall_ms": 11641.6,
+    "export_scanned_bytes": 9578536,
+    "export_cost_usd": 4.4e-05,
+    "duckdb_join_median_ms": 61.9,
+    "duckdb_join_sd_ms": 2.4,
+    "total_wall_ms_export_plus_one_join": 11703.5,
+    "throughput_join_only_rows_per_s": 24992632,
+    "throughput_total_rows_per_s": 132241,
+    "cost_usd_export_only": 4.4e-05,
+    "note": "DuckDB runs on the local machine; on a dedicated EC2/EMR box add its instance-hour cost."
+  },
+  "acceptance_native_faster_than_external_mean_plus_1sd": true
+}

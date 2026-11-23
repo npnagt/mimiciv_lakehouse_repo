@@ -1,0 +1,56 @@
+{
+  "generated_utc": "2026-09-22T09:20:57.804120+00:00",
+  "dataset": "fulldataset",
+  "region": "us-east-2",
+  "repeats": 3,
+  "benchmarks": [
+    {
+      "benchmark": "lab",
+      "label": "fact_lab_result x dim_lab_item x fact_admission -> abnormal-rate agg",
+      "modality": "structured",
+      "input_rows": 1547679,
+      "native": {
+        "wall_median_ms": 3571.7,
+        "wall_sd_ms": 180.1,
+        "scanned_bytes_median": 9578422,
+        "cost_usd": 4.4e-05,
+        "throughput_rows_per_s": 433318
+      },
+      "external": {
+        "export_wall_ms": 10316.9,
+        "export_scanned_bytes": 9578536,
+        "export_cost_usd": 4.4e-05,
+        "duckdb_join_median_ms": 69.5,
+        "duckdb_join_sd_ms": 0.1,
+        "total_wall_ms_export_plus_one_join": 10386.4,
+        "throughput_join_only_rows_per_s": 22284406,
+        "throughput_total_rows_per_s": 149010,
+        "cost_usd_export_only": 4.4e-05,
+        "note": "DuckDB runs on the local machine; on a dedicated EC2/EMR box add its instance-hour cost."
+      },
+      "acceptance_native_faster_than_external_mean_plus_1sd": true
+    }
+  ],
+  "benchmark": "fact_lab_result x dim_lab_item x fact_admission -> abnormal-rate agg",
+  "native": {
+    "wall_median_ms": 3571.7,
+    "wall_sd_ms": 180.1,
+    "scanned_bytes_median": 9578422,
+    "cost_usd": 4.4e-05,
+    "throughput_rows_per_s": 433318
+  },
+  "external": {
+    "export_wall_ms": 10316.9,
+    "export_scanned_bytes": 9578536,
+    "export_cost_usd": 4.4e-05,
+    "duckdb_join_median_ms": 69.5,
+    "duckdb_join_sd_ms": 0.1,
+    "total_wall_ms_export_plus_one_join": 10386.4,
+    "throughput_join_only_rows_per_s": 22284406,
+    "throughput_total_rows_per_s": 149010,
+    "cost_usd_export_only": 4.4e-05,
+    "note": "DuckDB runs on the local machine; on a dedicated EC2/EMR box add its instance-hour cost."
+  },
+  "input_rows": 1547679,
+  "acceptance_native_faster_than_external_mean_plus_1sd": true
+}

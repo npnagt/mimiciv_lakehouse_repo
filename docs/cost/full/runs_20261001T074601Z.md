@@ -1,0 +1,203 @@
+# Lakehouse pipeline -- resource usage by full run
+
+Generated 2026-10-01T07:46:01.713619+00:00  ·  dataset fulldataset  ·  source `mimic4_db_business_full.etl_process_log`  ·  last 12 run(s)
+- **Since cutoff:** `2026-09-20 02:21:50.915000` -- 4 run(s) excluded as started before it (12 of 16 eligible)
+
+## Detailed data -- one row per full_run_id
+
+| full_run_id | started_at | wall clock | jobs | failed | DPU-s | Glue $ | CW bytes (group total) | CW bytes (this run, attributed) | raw rows | gold rows |
+|--:|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| 7 | 2026-09-20 02:21:50.915000 | 1h52m | 42 | 0 | 82,538.0 | $10.0880 | 1.6 GiB | — | 893,670,689 | 21,964,590 |
+| 8 | 2026-09-20 04:30:38.652000 | 3h42m | 42 | 0 | 85,116.0 | $10.4031 | 1.6 GiB | — | 893,670,689 | 21,964,590 |
+| 9 | 2026-09-20 08:38:19.648000 | 1h45m | 42 | 0 | 83,993.0 | $10.2658 | 1.6 GiB | — | 893,670,689 | 21,964,590 |
+| 10 | 2026-09-20 11:00:17.399000 | 1h50m | 42 | 0 | 86,455.0 | $10.5667 | 1.6 GiB | — | 893,670,689 | 21,964,590 |
+| 11 | 2026-09-20 13:36:40.710000 | 1h46m | 42 | 0 | 85,476.0 | $10.4471 | 1.6 GiB | — | 893,670,689 | 21,964,590 |
+| 12 | 2026-09-21 10:54:36.126000 | 1h48m | 42 | 0 | 87,497.0 | $10.6941 | 1.6 GiB | — | 893,670,689 | 21,964,590 |
+| 13 | 2026-09-26 17:05:51.495000 | 1h45m | 44 | 0 | 84,176.0 | $10.2882 | 1.6 GiB | 103.9 MiB | 896,323,837 | 22,606,053 |
+| 14 | 2026-09-26 20:01:52.876000 | 4h02m | 47 | 1 | 92,688.0 | $11.3285 | 1.7 GiB | 125.3 MiB | 898,645,192 | 22,606,053 |
+| 15 | 2026-09-27 16:09:05.830000 | 2h00m | 47 | 0 | 98,231.0 | $12.0060 | 1.6 GiB | 112.7 MiB | 894,002,482 | 22,606,053 |
+| 16 | 2026-09-27 20:59:30.614000 | 2h01m | 47 | 0 | 99,086.0 | $12.1105 | 1.6 GiB | 112.7 MiB | 894,002,482 | 22,606,053 |
+| 17 | 2026-09-30 00:23:33.620000 | 1h55m | 44 | 0 | 98,482.0 | $12.0367 | 1.6 GiB | 111.6 MiB | 894,002,482 | 22,606,053 |
+| 18 | 2026-09-30 22:42:44.958000 | 2h14m | 45 | 0 | 99,461.0 | $12.1563 | 1.6 GiB | 111.8 MiB | 894,002,482 | 22,606,053 |
+
+"CW bytes (group total)" is every byte the account's shared Glue log groups ingested during this run's wall-clock window, from any job in the account -- including the warehouse pipeline's jobs if they happened to run concurrently. "CW bytes (this run, attributed)" is the CloudWatch Logs Insights-computed subset attributable specifically to this run's own Glue JobRunIds (log streams are named `jr_<JobRunId>[-task]`, so exact per-job-run attribution is possible even in a shared log group); it approximates ingested bytes via message length (`strlen(@message)`), not CloudWatch's own per-event wire-format accounting, so expect it to run slightly under the true IncomingBytes figure. Use the attributed column when comparing CloudWatch cost between architectures.
+
+### Per-run breakdown by process type
+
+**full_run_id 7**
+
+| process_type | jobs | DPU-s | Glue $ |
+|---|--:|--:|--:|
+| agg | 3 | 6,088.0 | $0.7441 |
+| dim | 8 | 1,162.0 | $0.1420 |
+| dim_date_seed | 1 | 110.0 | $0.0134 |
+| fact | 23 | 20,442.0 | $2.4985 |
+| nlp | 3 | 40,346.0 | $4.9312 |
+| notes_ingest | 1 | 2,990.0 | $0.3654 |
+| obt | 3 | 11,400.0 | $1.3933 |
+
+**full_run_id 8**
+
+| process_type | jobs | DPU-s | Glue $ |
+|---|--:|--:|--:|
+| agg | 3 | 9,166.0 | $1.1203 |
+| dim | 8 | 1,225.0 | $0.1497 |
+| dim_date_seed | 1 | 125.0 | $0.0153 |
+| fact | 23 | 20,897.0 | $2.5541 |
+| nlp | 3 | 39,423.0 | $4.8184 |
+| notes_ingest | 1 | 3,056.0 | $0.3735 |
+| obt | 3 | 11,224.0 | $1.3718 |
+
+**full_run_id 9**
+
+| process_type | jobs | DPU-s | Glue $ |
+|---|--:|--:|--:|
+| agg | 3 | 8,911.0 | $1.0891 |
+| dim | 8 | 1,109.0 | $0.1355 |
+| dim_date_seed | 1 | 117.0 | $0.0143 |
+| fact | 23 | 20,651.0 | $2.5240 |
+| nlp | 3 | 39,675.0 | $4.8492 |
+| notes_ingest | 1 | 2,850.0 | $0.3483 |
+| obt | 3 | 10,680.0 | $1.3053 |
+
+**full_run_id 10**
+
+| process_type | jobs | DPU-s | Glue $ |
+|---|--:|--:|--:|
+| agg | 3 | 9,181.0 | $1.1221 |
+| dim | 8 | 1,415.0 | $0.1729 |
+| dim_date_seed | 1 | 172.0 | $0.0210 |
+| fact | 23 | 20,657.0 | $2.5247 |
+| nlp | 3 | 40,784.0 | $4.9847 |
+| notes_ingest | 1 | 2,876.0 | $0.3515 |
+| obt | 3 | 11,370.0 | $1.3897 |
+
+**full_run_id 11**
+
+| process_type | jobs | DPU-s | Glue $ |
+|---|--:|--:|--:|
+| agg | 3 | 8,980.0 | $1.0976 |
+| dim | 8 | 1,193.0 | $0.1458 |
+| dim_date_seed | 1 | 120.0 | $0.0147 |
+| fact | 23 | 21,095.0 | $2.5783 |
+| nlp | 3 | 39,984.0 | $4.8869 |
+| notes_ingest | 1 | 2,866.0 | $0.3503 |
+| obt | 3 | 11,238.0 | $1.3735 |
+
+**full_run_id 12**
+
+| process_type | jobs | DPU-s | Glue $ |
+|---|--:|--:|--:|
+| agg | 3 | 9,161.0 | $1.1197 |
+| dim | 8 | 1,221.0 | $0.1492 |
+| dim_date_seed | 1 | 123.0 | $0.0150 |
+| fact | 23 | 21,262.0 | $2.5987 |
+| nlp | 3 | 40,762.0 | $4.9820 |
+| notes_ingest | 1 | 2,898.0 | $0.3542 |
+| obt | 3 | 12,070.0 | $1.4752 |
+
+**full_run_id 13**
+
+| process_type | jobs | DPU-s | Glue $ |
+|---|--:|--:|--:|
+| agg | 3 | 9,145.0 | $1.1177 |
+| dim | 8 | 1,178.0 | $0.1440 |
+| dim_date_seed | 1 | 132.0 | $0.0161 |
+| fact | 23 | 19,670.0 | $2.4041 |
+| nlp | 5 | 40,035.0 | $4.8932 |
+| notes_ingest | 1 | 2,982.0 | $0.3645 |
+| obt | 3 | 11,034.0 | $1.3486 |
+
+**full_run_id 14**
+
+| process_type | jobs | DPU-s | Glue $ |
+|---|--:|--:|--:|
+| agg | 3 | 9,002.0 | $1.1002 |
+| compare | 2 | 1,276.0 | $0.1560 |
+| dim | 8 | 1,436.0 | $0.1755 |
+| dim_date_seed | 1 | 168.0 | $0.0205 |
+| fact | 23 | 20,890.0 | $2.5532 |
+| nlp | 6 | 46,258.0 | $5.6538 |
+| notes_ingest | 1 | 2,776.0 | $0.3393 |
+| obt | 3 | 10,882.0 | $1.3300 |
+
+**full_run_id 15**
+
+| process_type | jobs | DPU-s | Glue $ |
+|---|--:|--:|--:|
+| agg | 3 | 9,041.0 | $1.1050 |
+| compare | 3 | 1,323.0 | $0.1617 |
+| dim | 8 | 1,227.0 | $0.1500 |
+| dim_date_seed | 1 | 147.0 | $0.0180 |
+| fact | 23 | 20,660.0 | $2.5251 |
+| nlp | 5 | 51,733.0 | $6.3229 |
+| notes_ingest | 1 | 3,124.0 | $0.3818 |
+| obt | 3 | 10,976.0 | $1.3415 |
+
+**full_run_id 16**
+
+| process_type | jobs | DPU-s | Glue $ |
+|---|--:|--:|--:|
+| agg | 3 | 8,923.0 | $1.0906 |
+| compare | 3 | 1,338.0 | $0.1635 |
+| dim | 8 | 1,569.0 | $0.1918 |
+| dim_date_seed | 1 | 134.0 | $0.0164 |
+| fact | 23 | 21,138.0 | $2.5835 |
+| nlp | 5 | 52,084.0 | $6.3658 |
+| notes_ingest | 1 | 2,994.0 | $0.3659 |
+| obt | 3 | 10,906.0 | $1.3330 |
+
+**full_run_id 17**
+
+| process_type | jobs | DPU-s | Glue $ |
+|---|--:|--:|--:|
+| agg | 3 | 9,131.0 | $1.1160 |
+| dim | 8 | 1,253.0 | $0.1531 |
+| dim_date_seed | 1 | 126.0 | $0.0154 |
+| fact | 23 | 21,784.0 | $2.6625 |
+| nlp | 5 | 51,842.0 | $6.3362 |
+| notes_ingest | 1 | 2,944.0 | $0.3598 |
+| obt | 3 | 11,402.0 | $1.3936 |
+
+**full_run_id 18**
+
+| process_type | jobs | DPU-s | Glue $ |
+|---|--:|--:|--:|
+| agg | 3 | 9,130.0 | $1.1159 |
+| dim | 8 | 1,126.0 | $0.1376 |
+| dim_date_seed | 1 | 153.0 | $0.0187 |
+| fact | 23 | 20,421.0 | $2.4959 |
+| maintenance | 1 | 137.0 | $0.0167 |
+| nlp | 5 | 53,798.0 | $6.5753 |
+| notes_ingest | 1 | 3,028.0 | $0.3701 |
+| obt | 3 | 11,668.0 | $1.4261 |
+
+## Statistical analysis across runs
+
+n = 12 run(s). stdev is sample stdev (n-1); reported as — for a single run, not fabricated as 0.
+
+| Metric | Mean | Median | Stdev | Min | Max |
+|---|--:|--:|--:|--:|--:|
+| Wall clock (s) | 8,027.830 | 6,860.916 | 2,824.984 | 6,303.437 | 14,574.186 |
+| Total DPU-seconds | 90,266.583 | 86,976.000 | 6,788.819 | 82,538.000 | 99,461.000 |
+| Total DPU-hours | 25.074 | 24.160 | 1.886 | 22.927 | 27.628 |
+| Total execution (s) | 10,740.833 | 10,196.000 | 945.487 | 9,747.000 | 12,308.000 |
+| Glue cost (USD) | 11.033 | 10.630 | 0.830 | 10.088 | 12.156 |
+| CloudWatch bytes ingested (shared log group total) | 1,733,430,045.833 | 1,725,901,808.000 | 20,487,054.723 | 1,718,221,022.000 | 1,788,196,170.000 |
+| CloudWatch bytes attributed (this run's own jobs) | 118,487,024.167 | 117,706,204.000 | 7,229,579.760 | 108,907,635.000 | 131,363,708.000 |
+| Job count | 43.833 | 43.000 | 2.167 | 42.000 | 47.000 |
+| Failed job count | 0.083 | 0.000 | 0.289 | 0.000 | 1.000 |
+| Total raw rows | 894,416,924.250 | 893,836,585.500 | 1,523,835.359 | 893,670,689.000 | 898,645,192.000 |
+| Total gold rows | 22,285,321.500 | 22,285,321.500 | 334,993.126 | 21,964,590.000 | 22,606,053.000 |
+
+## Current resource footprint (point-in-time, not per-run)
+
+S3 storage, the Glue Data Catalog, and CloudWatch log retention don't have a clean per-run reading (S3's own size metrics are daily and lag up to 24h) -- this is the current state, for context alongside the per-run compute/logging trend above.
+
+- **Measured:** 2026-10-01T07:46:01.713477+00:00
+- **S3 physical (all)**: 19.8 GiB  ·  **raw**: 14.7 GiB  ·  **Gold live**: 2.0 GiB (67242 objects)
+- **CloudWatch log groups (Glue, shared w/ warehouse if same account)**: 1.8 GiB across 6 group(s)
+- **Glue Data Catalog**: 102 tables across 2 database(s)
+- **Glue crawlers**: 1  ·  **IAM roles**: 8
+- **Load + 1 year running**: $11.25 as-deployed (load $4.68 + annual $6.57)
+

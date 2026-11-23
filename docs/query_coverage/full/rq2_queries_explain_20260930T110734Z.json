@@ -1,0 +1,19 @@
+{
+  "generated_utc": "20260930T110734Z",
+  "mode": "explain",
+  "database": "mimic4_db_business_full",
+  "total": 1,
+  "passed": 1,
+  "results": [
+    {
+      "id": "W10",
+      "title": "HCPCS / CPT billing events -> per-admission billed-event cost proxy",
+      "query_execution_id": "af12ae16-23be-4939-9963-ef30d4362ce2",
+      "state": "SUCCEEDED",
+      "error": null,
+      "engine_ms": 635,
+      "total_ms": 853,
+      "scanned_bytes": 0
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+time-to-insight :: mimic4_db_business_full via Athena/primary :: 20 queries x 200 repeats x 2 pass(es) :: render budget 500 ms
+Nielsen bands   :: A < 1000 ms (flow)  |  B 1000-10000 ms (sustained attention)  |  C >= 10000 ms (attention lost)
+P6 acceptance   :: queries land in A or B (<=10 s) -- standalone test, no baseline comparison
+
+=== cold pass (result reuse OFF) ===
+  floor  T0  A  tti med    947 ms  (p90    993)  total   327  fetch  118  scan        0 B  1 rows
+  T1a    T1  B  tti med   1877 ms  (p90   2802)  total  1231  fetch  143  scan   90.8 KiB  999 rows
+  T1b    T1  B  tti med   1432 ms  (p90   2439)  total   810  fetch  120  scan  183.3 KiB  10 rows
+  T2a    T2  B  tti med   2097 ms  (p90   3253)  total  1462  fetch  120  scan    4.5 MiB  4 rows
+  T2b    T2  B  tti med   3125 ms  (p90   4610)  total  2499  fetch  119  scan    5.5 MiB  9 rows
+  T3a    T3  B  tti med   2516 ms  (p90   3778)  total  1898  fetch  119  scan  721.2 KiB  3 rows
+  T3b    T3  B  tti med   2216 ms  (p90   3234)  total  1596  fetch  121  scan    3.3 MiB  1 rows
+  T3c    T3  B  tti med   2040 ms  (p90   3258)  total  1393  fetch  154  scan    3.4 MiB  999 rows
+  T4a    T4  B  tti med   2029 ms  (p90   2991)  total  1412  fetch  120  scan  984.2 KiB  4 rows
+  T4b    T4  B  tti med   1998 ms  (p90   3147)  total  1375  fetch  120  scan  420.5 KiB  4 rows
+  T4c    T4  B  tti med   1946 ms  (p90   2914)  total  1319  fetch  122  scan    1.1 MiB  17 rows
+  T5a    T5  B  tti med   2283 ms  (p90   3701)  total  1664  fetch  119  scan    3.9 MiB  4 rows
+  T5b    T5  B  tti med   2542 ms  (p90   3919)  total  1895  fetch  121  scan    3.8 MiB  3 rows
+  T5c    T5  B  tti med   2421 ms  (p90   3814)  total  1797  fetch  123  scan    2.3 MiB  16 rows
+  T6a    T6  B  tti med   2046 ms  (p90   3068)  total  1420  fetch  126  scan  485.0 KiB  25 rows
+  T6b    T6  B  tti med   2340 ms  (p90   3499)  total  1713  fetch  122  scan    2.3 MiB  7 rows
+  T6c    T6  B  tti med   2626 ms  (p90   3940)  total  2002  fetch  123  scan    7.7 MiB  25 rows
+  T7a    T7  B  tti med   1799 ms  (p90   2789)  total  1176  fetch  121  scan    1.7 MiB  1 rows
+  T7b    T7  B  tti med   1797 ms  (p90   2649)  total  1172  fetch  129  scan    1.6 MiB  191 rows
+  T7c    T7  B  tti med   1882 ms  (p90   2970)  total  1257  fetch  123  scan    2.4 MiB  25 rows
+
+=== warm pass (result reuse ON) ===
+  floor  T0  A  tti med    946 ms  (p90    991)  total   325  fetch  122  scan        0 B  1 rows
+  T1a    T1  A  tti med    898 ms  (p90    969)  total   244  fetch  152  scan        0 B  999 rows  [reused]
+  T1b    T1  A  tti med    860 ms  (p90    897)  total   236  fetch  123  scan        0 B  10 rows  [reused]
+  T2a    T2  A  tti med    868 ms  (p90    908)  total   247  fetch  121  scan        0 B  4 rows  [reused]
+  T2b    T2  A  tti med    866 ms  (p90    908)  total   241  fetch  123  scan        0 B  9 rows  [reused]
+  T3a    T3  A  tti med    866 ms  (p90    904)  total   241  fetch  123  scan        0 B  3 rows  [reused]
+  T3b    T3  A  tti med    868 ms  (p90    905)  total   240  fetch  125  scan        0 B  1 rows  [reused]
+  T3c    T3  A  tti med    899 ms  (p90    956)  total   240  fetch  155  scan        0 B  999 rows  [reused]
+  T4a    T4  A  tti med    864 ms  (p90    895)  total   240  fetch  123  scan        0 B  4 rows  [reused]
+  T4b    T4  A  tti med    873 ms  (p90    909)  total   248  fetch  123  scan        0 B  4 rows  [reused]
+  T4c    T4  A  tti med    862 ms  (p90    900)  total   239  fetch  122  scan        0 B  17 rows  [reused]
+Traceback (most recent call last):
+  File "C:\MIMICIV\gitmimic\mimic_lakehouse_repo\measure_time_to_insight.py", line 463, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\MIMICIV\gitmimic\mimic_lakehouse_repo\measure_time_to_insight.py", line 307, in main
+    m = measure_query(ath, qid, sql, output, args.workgroup, reuse, args.repeats, args.render_budget_ms)
+  File "C:\MIMICIV\gitmimic\mimic_lakehouse_repo\measure_time_to_insight.py", line 222, in measure_query
+    r = run_once(ath, sql, output, workgroup, reuse)
+  File "C:\MIMICIV\gitmimic\mimic_lakehouse_repo\measure_time_to_insight.py", line 189, in run_once
+    ex = ath.get_query_execution(QueryExecutionId=qid)["QueryExecution"]
+         ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Lib\site-packages\botocore\client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Lib\site-packages\botocore\context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+  File "C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Lib\site-packages\botocore\client.py", line 1094, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (InvalidSignatureException) when calling the GetQueryExecution operation: Signature expired: 20260922T071826Z is now earlier than 20260922T085619Z (20260922T090119Z - 5 min.)

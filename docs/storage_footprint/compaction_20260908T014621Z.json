@@ -1,0 +1,1279 @@
+{
+  "generated_utc": "2026-09-08T01:55:41.325208+00:00",
+  "gold_database": "mimic4_db_business",
+  "region": "us-east-2",
+  "vacuum": true,
+  "vacuum_max_age": 300,
+  "unsupported_format_v3": [
+    "fact_radiology_note_nlp_v"
+  ],
+  "optimize_complete": [
+    "agg_admission_daily",
+    "agg_admission_monthly",
+    "agg_icu_fluid_balance_daily",
+    "dim_caregiver",
+    "dim_chart_item",
+    "dim_date",
+    "dim_diagnosis",
+    "dim_hcpcs",
+    "dim_lab_item",
+    "dim_patient",
+    "dim_procedure",
+    "dim_provider",
+    "etl_control",
+    "fact_admission",
+    "fact_chart_observation",
+    "fact_datetime_event",
+    "fact_diagnosis",
+    "fact_drg_assignment",
+    "fact_hcpcs_event",
+    "fact_icu_stay_accumulating",
+    "fact_ingredient_event",
+    "fact_input_event",
+    "fact_lab_result",
+    "fact_medication_administration",
+    "fact_medication_administration_mini_detail",
+    "fact_microbiology_result",
+    "fact_note_nlp",
+    "fact_note_nlp_medspacy",
+    "fact_outpatient_measurement",
+    "fact_output_event",
+    "fact_pharmacy_order",
+    "fact_prescription",
+    "fact_procedure",
+    "fact_procedure_event",
+    "fact_provider_order",
+    "fact_provider_order_mini_detail",
+    "fact_radiology_note_nlp",
+    "fact_service_assignment",
+    "fact_transfer",
+    "obt_admission_features",
+    "obt_icu_stay_features",
+    "obt_patient_360"
+  ],
+  "optimize_incomplete": [],
+  "optimize_failed": [],
+  "total_optimize_rounds": 42,
+  "total_data_scanned_bytes": 0,
+  "total_wall_ms": 272025,
+  "tables": [
+    {
+      "table": "agg_admission_daily",
+      "optimize": {
+        "query_id": "3bda9510-f894-4b3b-8be8-26dba49fd90e",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 709,
+        "wall_ms": 3504,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3504
+        }
+      ],
+      "vacuum": {
+        "query_id": "21a16db1-588b-45ff-8aa2-d3c1a13269f9",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 877,
+        "wall_ms": 3205,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "agg_admission_monthly",
+      "optimize": {
+        "query_id": "69a47d11-f260-44ab-aa57-e0b514b1d1ce",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 740,
+        "wall_ms": 3199,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3199
+        }
+      ],
+      "vacuum": {
+        "query_id": "c9d4601c-b89e-4684-9514-5b75819f5ba0",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 593,
+        "wall_ms": 3199,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "agg_icu_fluid_balance_daily",
+      "optimize": {
+        "query_id": "4e0dbf31-16c9-46b8-916e-66897c472f19",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 854,
+        "wall_ms": 3201,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3201
+        }
+      ],
+      "vacuum": {
+        "query_id": "60de31d8-fe1a-436f-add9-9db85a43f1c4",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 644,
+        "wall_ms": 3225,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "dim_caregiver",
+      "optimize": {
+        "query_id": "800b9eea-b2a9-4d89-8a97-58111a75802e",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 520,
+        "wall_ms": 3289,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3289
+        }
+      ],
+      "vacuum": {
+        "query_id": "a25ae177-1da9-4f69-8c91-833db947b1a4",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1056,
+        "wall_ms": 3260,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "dim_chart_item",
+      "optimize": {
+        "query_id": "fefe21ac-4da8-421b-bd94-d495f2c03f94",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 660,
+        "wall_ms": 3254,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3254
+        }
+      ],
+      "vacuum": {
+        "query_id": "82de51d6-7bad-4e6c-8aad-059a91ab3d73",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1164,
+        "wall_ms": 3261,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "dim_date",
+      "optimize": {
+        "query_id": "fa8ed9be-09f7-4071-83ba-820601bb15f5",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 450,
+        "wall_ms": 3356,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3356
+        }
+      ],
+      "vacuum": {
+        "query_id": "30a796ba-c1d3-47f6-b11f-0081a5a2657b",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1033,
+        "wall_ms": 3257,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "dim_diagnosis",
+      "optimize": {
+        "query_id": "b8733a51-950b-4ae9-921b-253efc80429e",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 616,
+        "wall_ms": 3206,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3206
+        }
+      ],
+      "vacuum": {
+        "query_id": "644c2ff6-9b34-439b-9357-0075bbc21c87",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 2548,
+        "wall_ms": 3248,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "dim_hcpcs",
+      "optimize": {
+        "query_id": "ff061374-1b47-40e3-8c43-fbb62e045512",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 537,
+        "wall_ms": 3318,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3318
+        }
+      ],
+      "vacuum": {
+        "query_id": "6074029c-7dd0-4b21-9a4c-9198545fab24",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1209,
+        "wall_ms": 3234,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "dim_lab_item",
+      "optimize": {
+        "query_id": "47833834-f43e-4973-b28a-60aad2c54960",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 473,
+        "wall_ms": 3260,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3260
+        }
+      ],
+      "vacuum": {
+        "query_id": "44788900-2848-4c03-a677-f65797457fc8",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1225,
+        "wall_ms": 3336,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "dim_patient",
+      "optimize": {
+        "query_id": "86b49f1c-c82d-4537-85f3-a9e2139d4b9c",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1389,
+        "wall_ms": 3324,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3324
+        }
+      ],
+      "vacuum": {
+        "query_id": "902ebd76-0161-4dc8-97c5-282c3403c93a",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1210,
+        "wall_ms": 3283,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "dim_procedure",
+      "optimize": {
+        "query_id": "d6881fc5-17a3-4ad6-be74-c72ee8269f82",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 452,
+        "wall_ms": 3223,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3223
+        }
+      ],
+      "vacuum": {
+        "query_id": "69882953-0a7a-4a3c-899a-354918bd79f8",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1799,
+        "wall_ms": 3416,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "dim_provider",
+      "optimize": {
+        "query_id": "3767c926-3302-4ee8-94e4-d5d8907caf85",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 439,
+        "wall_ms": 3210,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3210
+        }
+      ],
+      "vacuum": {
+        "query_id": "f93d6e5b-9bd6-4794-b5eb-17d083ab8bce",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 934,
+        "wall_ms": 3263,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "etl_control",
+      "optimize": {
+        "query_id": "282b8d3e-dbb0-4c45-8844-b7ce9e4c7b3f",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 515,
+        "wall_ms": 3212,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3212
+        }
+      ],
+      "vacuum": {
+        "query_id": "5ef5abdf-1de2-4de0-b9ba-78ddcee4b427",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 2394,
+        "wall_ms": 3192,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_admission",
+      "optimize": {
+        "query_id": "e4cd77b8-071a-4323-a978-9a4f718f601a",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 399,
+        "wall_ms": 3249,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3249
+        }
+      ],
+      "vacuum": {
+        "query_id": "27ae1f24-92ee-4427-96f9-a54c24f7057d",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 989,
+        "wall_ms": 3216,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_chart_observation",
+      "optimize": {
+        "query_id": "dc68cfc7-45ea-4362-bcd5-1cf73f3c6e8f",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 624,
+        "wall_ms": 3231,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3231
+        }
+      ],
+      "vacuum": {
+        "query_id": "85144102-ee93-4139-ae62-39867ddb354d",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1761,
+        "wall_ms": 3217,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_datetime_event",
+      "optimize": {
+        "query_id": "925bf699-b34e-4cd9-9977-ec900a47bf83",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1226,
+        "wall_ms": 3235,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3235
+        }
+      ],
+      "vacuum": {
+        "query_id": "a4f1a295-2264-4ad6-b7a1-0bc1fdf7a6e9",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1680,
+        "wall_ms": 3245,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_diagnosis",
+      "optimize": {
+        "query_id": "70f9209b-c236-49a9-a2ff-87be79a7d8e7",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 941,
+        "wall_ms": 3219,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3219
+        }
+      ],
+      "vacuum": {
+        "query_id": "6b9b6dfe-3bdc-44f6-b0df-af0fb414ac25",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 967,
+        "wall_ms": 3206,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_drg_assignment",
+      "optimize": {
+        "query_id": "749fa734-66ce-47b7-b062-d26ba7e3f1a6",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 497,
+        "wall_ms": 3198,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3198
+        }
+      ],
+      "vacuum": {
+        "query_id": "99102512-1a39-40f3-9f40-00f15a488850",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1103,
+        "wall_ms": 3210,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_hcpcs_event",
+      "optimize": {
+        "query_id": "6ffc1aa2-d104-495f-8d77-4308adc66fa1",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 444,
+        "wall_ms": 3217,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3217
+        }
+      ],
+      "vacuum": {
+        "query_id": "a0bc84b0-6b73-41e0-bf84-a9df10fd7621",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1091,
+        "wall_ms": 3416,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_icu_stay_accumulating",
+      "optimize": {
+        "query_id": "13e20c7c-851a-4e80-bbca-3a108927d2e5",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 443,
+        "wall_ms": 3220,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3220
+        }
+      ],
+      "vacuum": {
+        "query_id": "873a1526-bc00-4780-bb86-5ff3e56195c4",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 881,
+        "wall_ms": 3214,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_ingredient_event",
+      "optimize": {
+        "query_id": "19852bfe-8bbb-4c8f-8008-d0be808ab6bd",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 462,
+        "wall_ms": 3226,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3226
+        }
+      ],
+      "vacuum": {
+        "query_id": "7f10fcd1-f557-4eaa-83b6-073b9106a3a3",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1781,
+        "wall_ms": 3212,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_input_event",
+      "optimize": {
+        "query_id": "83f7a232-e80e-4ee1-a0dc-dd734e672e05",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 611,
+        "wall_ms": 3210,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3210
+        }
+      ],
+      "vacuum": {
+        "query_id": "4699b929-66bf-4387-9c00-a8a687d82787",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1873,
+        "wall_ms": 3195,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_lab_result",
+      "optimize": {
+        "query_id": "c076068a-0d64-4f63-a967-e9bdf789c7ac",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 420,
+        "wall_ms": 3265,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3265
+        }
+      ],
+      "vacuum": {
+        "query_id": "ae41fe2f-d47a-4567-a339-7530fec98c0d",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1089,
+        "wall_ms": 3196,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_medication_administration",
+      "optimize": {
+        "query_id": "aaec6ffa-4010-4a1d-842e-bffab5975f30",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 654,
+        "wall_ms": 3222,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3222
+        }
+      ],
+      "vacuum": {
+        "query_id": "da7ee858-dd61-4759-8c7d-5d6c09a9c9f0",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 2337,
+        "wall_ms": 3424,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_medication_administration_mini_detail",
+      "optimize": {
+        "query_id": "f8da448a-3d8a-4fb1-ae7f-a613ea79d501",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 539,
+        "wall_ms": 3271,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3271
+        }
+      ],
+      "vacuum": {
+        "query_id": "a0cfee65-6ac0-4214-93ec-6857b9be6481",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1177,
+        "wall_ms": 3199,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_microbiology_result",
+      "optimize": {
+        "query_id": "2e465d2c-dd11-4585-9730-8e9e78959707",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 537,
+        "wall_ms": 3215,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3215
+        }
+      ],
+      "vacuum": {
+        "query_id": "1a73805d-c342-41d9-b987-8c62feffecb5",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1583,
+        "wall_ms": 3202,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_note_nlp",
+      "optimize": {
+        "query_id": "1653b57f-177b-40cb-9875-b3bb8302f867",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 392,
+        "wall_ms": 3194,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3194
+        }
+      ],
+      "vacuum": {
+        "query_id": "85b33238-8ccc-488e-9348-4a9e993fb16d",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1026,
+        "wall_ms": 3223,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_note_nlp_medspacy",
+      "optimize": {
+        "query_id": "528a5acf-179a-4a2e-abf8-d2e89d6c3528",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1066,
+        "wall_ms": 3257,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3257
+        }
+      ],
+      "vacuum": {
+        "query_id": "6acb30de-65d3-4e50-8d67-751824ce96c1",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1109,
+        "wall_ms": 3239,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_outpatient_measurement",
+      "optimize": {
+        "query_id": "c84cac8c-50d6-401d-b5c0-cfbf1990e057",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 529,
+        "wall_ms": 3238,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3238
+        }
+      ],
+      "vacuum": {
+        "query_id": "e3e814c0-c3a1-459f-988a-cdb06dff7be2",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1784,
+        "wall_ms": 3277,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_output_event",
+      "optimize": {
+        "query_id": "1b7414fa-d691-4b95-a660-3fda2e90f3ea",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 611,
+        "wall_ms": 3206,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3206
+        }
+      ],
+      "vacuum": {
+        "query_id": "e77187a1-a9cc-4a02-8607-ae0741e947f1",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1504,
+        "wall_ms": 3211,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_pharmacy_order",
+      "optimize": {
+        "query_id": "232926da-1a8d-4eec-af43-62a75a7786b1",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 498,
+        "wall_ms": 3223,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3223
+        }
+      ],
+      "vacuum": {
+        "query_id": "a8152c54-e04b-4d89-a47b-b23a1c34bf9f",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 2832,
+        "wall_ms": 3178,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_prescription",
+      "optimize": {
+        "query_id": "2a6becc2-2abe-44ad-a899-46dcd987f79b",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 2135,
+        "wall_ms": 3253,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3253
+        }
+      ],
+      "vacuum": {
+        "query_id": "e8a735be-d6e9-406c-9e46-3b95a12daeb1",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 2712,
+        "wall_ms": 3202,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_procedure",
+      "optimize": {
+        "query_id": "f65b4746-b459-446a-bcab-aeb51eaf1e2d",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 437,
+        "wall_ms": 3229,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3229
+        }
+      ],
+      "vacuum": {
+        "query_id": "bff54090-01f4-4e44-87da-a1fdd10efba8",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1882,
+        "wall_ms": 3195,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_procedure_event",
+      "optimize": {
+        "query_id": "51218152-2aab-4376-893b-81013438edca",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 495,
+        "wall_ms": 3232,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3232
+        }
+      ],
+      "vacuum": {
+        "query_id": "039e54bc-25b5-4b73-9ed1-a84169022958",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1284,
+        "wall_ms": 3215,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_provider_order",
+      "optimize": {
+        "query_id": "fdda3130-990b-4ccd-a06d-df18578f2dc8",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 415,
+        "wall_ms": 3206,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3206
+        }
+      ],
+      "vacuum": {
+        "query_id": "e0a9ac98-74f7-4e2b-9efe-0c57189dd97b",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1593,
+        "wall_ms": 3224,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_provider_order_mini_detail",
+      "optimize": {
+        "query_id": "7782ecbd-0487-48c6-a41e-6d856ad5a3b1",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 461,
+        "wall_ms": 3198,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3198
+        }
+      ],
+      "vacuum": {
+        "query_id": "2cd2cdd2-ceb5-4ae4-8c43-8116530d4aed",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 987,
+        "wall_ms": 3202,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_radiology_note_nlp",
+      "optimize": {
+        "query_id": "de6bf992-c78b-441c-9759-776a4b6d51e7",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 412,
+        "wall_ms": 3205,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3205
+        }
+      ],
+      "vacuum": {
+        "query_id": "4c22bf5d-a73b-4aab-ad3a-4d177edd3bf7",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 910,
+        "wall_ms": 3195,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_service_assignment",
+      "optimize": {
+        "query_id": "7ca928f3-249c-4313-bc47-c05548d84d89",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 488,
+        "wall_ms": 3200,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3200
+        }
+      ],
+      "vacuum": {
+        "query_id": "cb91b041-5e1f-429c-98df-1139fb11356a",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1193,
+        "wall_ms": 3202,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "fact_transfer",
+      "optimize": {
+        "query_id": "c06c7e17-f0f9-4da6-b17f-deaa62e33ada",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 584,
+        "wall_ms": 3195,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3195
+        }
+      ],
+      "vacuum": {
+        "query_id": "427649a1-b029-427d-99fe-7f45b70f3f3f",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1178,
+        "wall_ms": 3198,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "obt_admission_features",
+      "optimize": {
+        "query_id": "6e9d2821-0f43-468f-8ed8-11c47e050c62",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 589,
+        "wall_ms": 3208,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3208
+        }
+      ],
+      "vacuum": {
+        "query_id": "e68f1207-fc00-400a-8b1d-80be2063be79",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 1032,
+        "wall_ms": 3201,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "obt_icu_stay_features",
+      "optimize": {
+        "query_id": "beb0b37a-7636-4074-b42b-1298e9d9d4a3",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 651,
+        "wall_ms": 3227,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3227
+        }
+      ],
+      "vacuum": {
+        "query_id": "8d790265-5e7c-49af-862d-098306aea66d",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 894,
+        "wall_ms": 3213,
+        "reason": null,
+        "rows": []
+      }
+    },
+    {
+      "table": "obt_patient_360",
+      "optimize": {
+        "query_id": "f4135d32-b5d3-4b1b-b17f-cb15278bf28a",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 487,
+        "wall_ms": 3228,
+        "reason": null,
+        "rows": []
+      },
+      "optimize_rounds": [
+        {
+          "round": 1,
+          "state": "SUCCEEDED",
+          "scanned_bytes": 0,
+          "wall_ms": 3228
+        }
+      ],
+      "vacuum": {
+        "query_id": "e066def6-4629-498e-b698-fc4cb26103ca",
+        "state": "SUCCEEDED",
+        "scanned_bytes": 0,
+        "engine_ms": 874,
+        "wall_ms": 3286,
+        "reason": null,
+        "rows": []
+      }
+    }
+  ]
+}

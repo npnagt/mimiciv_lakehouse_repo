@@ -1,0 +1,512 @@
+[2026-09-20 00:17:38] Dataset      : fulldataset  (resources *-full)
+[2026-09-20 00:17:38] Raw / Gold DB: mimic4_db_raw_full / mimic4_db_business_full
+[2026-09-20 00:17:38] Region       : us-east-2
+[2026-09-20 00:17:38] Plan:
+[2026-09-20 00:17:38]   0. setup_mimic4_s3_glue.py --create-role  (buckets, upload, crawler, Gold DDL) + --fresh-reload (drop & recreate every Gold table except etl_process_log)
+[2026-09-20 00:17:38]   1. create Glue job definitions (dim_date, dims, facts, aggregates, notes, NLP)
+[2026-09-20 00:17:38]      workers: default G.1X x2; big (15 jobs) G.2X x10; medium agg (3 jobs) G.1X x4
+[2026-09-20 00:17:38]      row cap: 1,000,000 per fact table
+[2026-09-20 00:17:38]      NLP note cap: 10,000
+[2026-09-20 00:17:38]   A. dim_date seed: dim-date-seed-job-full
+[2026-09-20 00:17:38]   B. dimensions: dim-load-dim_hcpcs-full, dim-load-dim_diagnosis-full, dim-load-dim_procedure-full, dim-load-dim_lab_item-full, dim-load-dim_patient-full, dim-load-dim_provider-full, dim-load-dim_caregiver-full, dim-load-dim_chart_item-full
+[2026-09-20 00:17:38]   C. facts (bulk): fact-load-fact_diagnosis-full, fact-load-fact_drg_assignment-full, fact-load-fact_medication_administration-full, fact-load-fact_medication_administration_mini_detail-full, fact-load-fact_hcpcs_event-full, fact-load-fact_microbiology_result-full, fact-load-fact_outpatient_measurement-full, fact-load-fact_pharmacy_order-full, fact-load-fact_provider_order-full, fact-load-fact_provider_order_mini_detail-full, fact-load-fact_prescription-full, fact-load-fact_procedure-full, fact-load-fact_service_assignment-full, fact-load-fact_transfer-full, fact-load-fact_datetime_event-full, fact-load-fact_input_event-full, fact-load-fact_ingredient_event-full, fact-load-fact_output_event-full, fact-load-fact_procedure_event-full, fact-load-fact_lab_result-full, fact-load-fact_chart_observation-full, fact-load-fact_admission-full
+[2026-09-20 00:17:38]   D. fact_icu_stay_accumulating: fact-load-fact_icu_stay_accumulating-full
+[2026-09-20 00:17:38]   E. aggregates: daily: agg-refresh-agg_admission_daily-full, agg-refresh-agg_icu_fluid_balance_daily-full
+[2026-09-20 00:17:38]   F. aggregates: monthly + admission OBT: agg-refresh-agg_admission_monthly-full, agg-refresh-obt_admission_features-full
+[2026-09-20 00:17:38]   G. OBTs: patient_360 + icu_stay: agg-refresh-obt_patient_360-full, agg-refresh-obt_icu_stay_features-full
+[2026-09-20 00:17:38]   H. notes ingest: notes-ingest-job-full
+[2026-09-20 00:17:38]   I. NLP: medSpaCy + radiology: medspacy-nlp-job-full, radiology-nlp-job-full
+[2026-09-20 00:17:38]   J. NLP: radiology VARIANT: radiology-nlp-variant-job-full
+
+[2026-09-20 00:17:38] $ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe setup_mimic4_s3_glue.py --dataset fulldataset --create-role --fresh-reload
+[2026-09-20 00:17:38] [1/3] Bucket 'mimic4-glue-scripts-v3-2-bucket' already exists -- skipping creation.
+[2026-09-20 00:17:39] [1/3] Bucket 'mimic4-datalake-v3-2-full' already exists -- skipping creation.
+[2026-09-20 00:17:39] [2/3] Uploading up to 33 file(s) to s3://mimic4-datalake-v3-2-full/ (skipping any that already exist with the same size) ...
+[2026-09-20 00:17:40]       uploaded 0, skipped 33 already present.
+[2026-09-20 00:17:41]       IAM role 'MimicGlueCrawlerRole-full' already exists -- reusing it.
+[2026-09-20 00:17:41]       Glue database 'mimic4_db_raw_full' already exists -- reusing it.
+[2026-09-20 00:17:41]       Glue classifier 'mimic4_csv_classifier' already exists -- reusing it.
+[2026-09-20 00:17:42]       Crawler 'mimic4-data-v3-2-crawler-full' already exists -- updating its configuration.
+[2026-09-20 00:17:42] [3/3] Starting crawler 'mimic4-data-v3-2-crawler-full'...
+[2026-09-20 00:17:42]       Crawler state: RUNNING
+[2026-09-20 00:17:57]       Crawler state: RUNNING
+[2026-09-20 00:18:12]       Crawler state: RUNNING
+[2026-09-20 00:18:27]       Crawler state: READY
+[2026-09-20 00:18:27]       Crawler finished with last-run status: SUCCEEDED
+[2026-09-20 00:18:27]       Replacing Glue table 'caregiver_raw' with the requested external-table definition.
+[2026-09-20 00:18:28]       Replacing Glue table 'provider_raw' with the requested external-table definition.
+[2026-09-20 00:18:29]       Replacing Glue table 'demo_subject_raw' with the requested external-table definition.
+[2026-09-20 00:18:29]       Table 'd_icd_procedures_raw': icd_code is already non-numeric -- nothing to patch.
+[2026-09-20 00:18:30] [1/3] Bucket 'mimic4-lakehouse-v3-2-full' already exists -- skipping creation.
+[2026-09-20 00:18:30] [4/4] --fresh-reload: dropping 41 existing Gold-zone table(s) in 'mimic4_db_business_full' (keeping etl_process_log)...
+[2026-09-20 00:18:30]       (1/41) DROP TABLE IF EXISTS mimic4_db_business_full.dim_hcpcs
+[2026-09-20 00:18:32]       (2/41) DROP TABLE IF EXISTS mimic4_db_business_full.dim_diagnosis
+[2026-09-20 00:18:35]       (3/41) DROP TABLE IF EXISTS mimic4_db_business_full.dim_procedure
+[2026-09-20 00:18:37]       (4/41) DROP TABLE IF EXISTS mimic4_db_business_full.dim_lab_item
+[2026-09-20 00:18:39]       (5/41) DROP TABLE IF EXISTS mimic4_db_business_full.dim_patient
+[2026-09-20 00:18:41]       (6/41) DROP TABLE IF EXISTS mimic4_db_business_full.dim_provider
+[2026-09-20 00:18:44]       (7/41) DROP TABLE IF EXISTS mimic4_db_business_full.dim_caregiver
+[2026-09-20 00:18:48]       (8/41) DROP TABLE IF EXISTS mimic4_db_business_full.dim_chart_item
+[2026-09-20 00:18:50]       (9/41) DROP TABLE IF EXISTS mimic4_db_business_full.dim_date
+[2026-09-20 00:18:52]       (10/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_admission
+[2026-09-20 00:18:55]       (11/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_diagnosis
+[2026-09-20 00:19:17]       (12/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_drg_assignment
+[2026-09-20 00:19:30]       (13/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_medication_administration
+[2026-09-20 00:20:07]       (14/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_medication_administration_mini_detail
+[2026-09-20 00:20:47]       (15/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_hcpcs_event
+[2026-09-20 00:20:55]       (16/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_lab_result
+[2026-09-20 00:22:14]       (17/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_microbiology_result
+[2026-09-20 00:22:26]       (18/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_outpatient_measurement
+[2026-09-20 00:22:39]       (19/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_pharmacy_order
+[2026-09-20 00:23:00]       (20/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_provider_order
+[2026-09-20 00:23:04]       (21/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_provider_order_mini_detail
+[2026-09-20 00:23:25]       (22/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_prescription
+[2026-09-20 00:23:48]       (23/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_procedure
+[2026-09-20 00:23:56]       (24/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_service_assignment
+[2026-09-20 00:24:04]       (25/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_transfer
+[2026-09-20 00:24:17]       (26/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_icu_stay_accumulating
+[2026-09-20 00:24:19]       (27/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_chart_observation
+[2026-09-20 00:24:32]       (28/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_datetime_event
+[2026-09-20 00:24:44]       (29/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_input_event
+[2026-09-20 00:24:57]       (30/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_ingredient_event
+[2026-09-20 00:25:18]       (31/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_output_event
+[2026-09-20 00:25:30]       (32/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_procedure_event
+[2026-09-20 00:25:39]       (33/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_discharge_note_nlp
+[2026-09-20 00:25:53]       (34/41) DROP TABLE IF EXISTS mimic4_db_business_full.fact_radiology_note_nlp
+[2026-09-20 00:26:16]       (35/41) DROP TABLE IF EXISTS mimic4_db_business_full.etl_control
+[2026-09-20 00:26:20]       (36/41) DROP TABLE IF EXISTS mimic4_db_business_full.agg_admission_daily
+[2026-09-20 00:26:24]       (37/41) DROP TABLE IF EXISTS mimic4_db_business_full.agg_icu_fluid_balance_daily
+[2026-09-20 00:26:29]       (38/41) DROP TABLE IF EXISTS mimic4_db_business_full.agg_admission_monthly
+[2026-09-20 00:26:39]       (39/41) DROP TABLE IF EXISTS mimic4_db_business_full.obt_admission_features
+[2026-09-20 00:26:50]       (40/41) DROP TABLE IF EXISTS mimic4_db_business_full.obt_patient_360
+[2026-09-20 00:26:52]       (41/41) DROP TABLE IF EXISTS mimic4_db_business_full.obt_icu_stay_features
+[2026-09-20 00:27:02] [4/4] Applying 85 Gold-zone DDL statement(s) from 'C:\MIMICIV\gitmimic\mimic_lakehouse_repo\ddl\gold\mimic_iv_ddl_gold_combined_v4.sql' via Athena workgroup 'primary'...
+[2026-09-20 00:27:02]       (1/85) CREATE SCHEMA IF NOT EXISTS mimic4_db_business_full...
+[2026-09-20 00:27:05]       (2/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.dim_hcpcs (...
+[2026-09-20 00:27:07]       (3/85) ALTER TABLE mimic4_db_business_full.dim_hcpcs SET TBLPROPERTIES (...
+[2026-09-20 00:27:09]       (4/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.dim_diagnosis (...
+[2026-09-20 00:27:11]       (5/85) ALTER TABLE mimic4_db_business_full.dim_diagnosis SET TBLPROPERTIES (...
+[2026-09-20 00:27:14]       (6/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.dim_procedure (...
+[2026-09-20 00:27:16]       (7/85) ALTER TABLE mimic4_db_business_full.dim_procedure SET TBLPROPERTIES (...
+[2026-09-20 00:27:18]       (8/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.dim_lab_item (...
+[2026-09-20 00:27:20]       (9/85) ALTER TABLE mimic4_db_business_full.dim_lab_item SET TBLPROPERTIES (...
+[2026-09-20 00:27:22]       (10/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.dim_patient (...
+[2026-09-20 00:27:25]       (11/85) ALTER TABLE mimic4_db_business_full.dim_patient SET TBLPROPERTIES (...
+[2026-09-20 00:27:27]       (12/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.dim_provider (...
+[2026-09-20 00:27:29]       (13/85) ALTER TABLE mimic4_db_business_full.dim_provider SET TBLPROPERTIES (...
+[2026-09-20 00:27:31]       (14/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.dim_caregiver (...
+[2026-09-20 00:27:34]       (15/85) ALTER TABLE mimic4_db_business_full.dim_caregiver SET TBLPROPERTIES (...
+[2026-09-20 00:27:36]       (16/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.dim_chart_item (...
+[2026-09-20 00:27:38]       (17/85) ALTER TABLE mimic4_db_business_full.dim_chart_item SET TBLPROPERTIES (...
+[2026-09-20 00:27:40]       (18/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.dim_date (...
+[2026-09-20 00:27:42]       (19/85) ALTER TABLE mimic4_db_business_full.dim_date SET TBLPROPERTIES (...
+[2026-09-20 00:27:45]       (20/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_admission (...
+[2026-09-20 00:27:47]       (21/85) ALTER TABLE mimic4_db_business_full.fact_admission SET TBLPROPERTIES (...
+[2026-09-20 00:27:49]       (22/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_diagnosis (...
+[2026-09-20 00:27:51]       (23/85) ALTER TABLE mimic4_db_business_full.fact_diagnosis SET TBLPROPERTIES (...
+[2026-09-20 00:27:54]       (24/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_drg_assignment (...
+[2026-09-20 00:27:56]       (25/85) ALTER TABLE mimic4_db_business_full.fact_drg_assignment SET TBLPROPERTIES (...
+[2026-09-20 00:27:58]       (26/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_medication_administration (...
+[2026-09-20 00:28:00]       (27/85) ALTER TABLE mimic4_db_business_full.fact_medication_administration SET TBLPROPERTIES (...
+[2026-09-20 00:28:02]       (28/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_medication_administration_mini_detail (...
+[2026-09-20 00:28:05]       (29/85) ALTER TABLE mimic4_db_business_full.fact_medication_administration_mini_detail SET TBLPROPERTIES (...
+[2026-09-20 00:28:07]       (30/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_hcpcs_event (...
+[2026-09-20 00:28:09]       (31/85) ALTER TABLE mimic4_db_business_full.fact_hcpcs_event SET TBLPROPERTIES (...
+[2026-09-20 00:28:11]       (32/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_lab_result (...
+[2026-09-20 00:28:14]       (33/85) ALTER TABLE mimic4_db_business_full.fact_lab_result SET TBLPROPERTIES (...
+[2026-09-20 00:28:16]       (34/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_microbiology_result (...
+[2026-09-20 00:28:18]       (35/85) ALTER TABLE mimic4_db_business_full.fact_microbiology_result SET TBLPROPERTIES (...
+[2026-09-20 00:28:20]       (36/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_outpatient_measurement (...
+[2026-09-20 00:28:23]       (37/85) ALTER TABLE mimic4_db_business_full.fact_outpatient_measurement SET TBLPROPERTIES (...
+[2026-09-20 00:28:25]       (38/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_pharmacy_order (...
+[2026-09-20 00:28:27]       (39/85) ALTER TABLE mimic4_db_business_full.fact_pharmacy_order SET TBLPROPERTIES (...
+[2026-09-20 00:28:29]       (40/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_provider_order (...
+[2026-09-20 00:28:31]       (41/85) ALTER TABLE mimic4_db_business_full.fact_provider_order SET TBLPROPERTIES (...
+[2026-09-20 00:28:34]       (42/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_provider_order_mini_detail (...
+[2026-09-20 00:28:36]       (43/85) ALTER TABLE mimic4_db_business_full.fact_provider_order_mini_detail SET TBLPROPERTIES (...
+[2026-09-20 00:28:38]       (44/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_prescription (...
+[2026-09-20 00:28:40]       (45/85) ALTER TABLE mimic4_db_business_full.fact_prescription SET TBLPROPERTIES (...
+[2026-09-20 00:28:43]       (46/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_procedure (...
+[2026-09-20 00:28:45]       (47/85) ALTER TABLE mimic4_db_business_full.fact_procedure SET TBLPROPERTIES (...
+[2026-09-20 00:28:47]       (48/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_service_assignment (...
+[2026-09-20 00:28:49]       (49/85) ALTER TABLE mimic4_db_business_full.fact_service_assignment SET TBLPROPERTIES (...
+[2026-09-20 00:28:51]       (50/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_transfer (...
+[2026-09-20 00:28:54]       (51/85) ALTER TABLE mimic4_db_business_full.fact_transfer SET TBLPROPERTIES (...
+[2026-09-20 00:28:56]       (52/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_icu_stay_accumulating (...
+[2026-09-20 00:28:58]       (53/85) ALTER TABLE mimic4_db_business_full.fact_icu_stay_accumulating SET TBLPROPERTIES (...
+[2026-09-20 00:29:00]       (54/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_chart_observation (...
+[2026-09-20 00:29:03]       (55/85) ALTER TABLE mimic4_db_business_full.fact_chart_observation SET TBLPROPERTIES (...
+[2026-09-20 00:29:05]       (56/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_datetime_event (...
+[2026-09-20 00:29:07]       (57/85) ALTER TABLE mimic4_db_business_full.fact_datetime_event SET TBLPROPERTIES (...
+[2026-09-20 00:29:09]       (58/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_input_event (...
+[2026-09-20 00:29:11]       (59/85) ALTER TABLE mimic4_db_business_full.fact_input_event SET TBLPROPERTIES (...
+[2026-09-20 00:29:14]       (60/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_ingredient_event (...
+[2026-09-20 00:29:16]       (61/85) ALTER TABLE mimic4_db_business_full.fact_ingredient_event SET TBLPROPERTIES (...
+[2026-09-20 00:29:18]       (62/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_output_event (...
+[2026-09-20 00:29:20]       (63/85) ALTER TABLE mimic4_db_business_full.fact_output_event SET TBLPROPERTIES (...
+[2026-09-20 00:29:23]       (64/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_procedure_event (...
+[2026-09-20 00:29:25]       (65/85) ALTER TABLE mimic4_db_business_full.fact_procedure_event SET TBLPROPERTIES (...
+[2026-09-20 00:29:27]       (66/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_discharge_note_nlp (...
+[2026-09-20 00:29:29]       (67/85) ALTER TABLE mimic4_db_business_full.fact_discharge_note_nlp SET TBLPROPERTIES (...
+[2026-09-20 00:29:32]       (68/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.fact_radiology_note_nlp (...
+[2026-09-20 00:29:34]       (69/85) ALTER TABLE mimic4_db_business_full.fact_radiology_note_nlp SET TBLPROPERTIES (...
+[2026-09-20 00:29:36]       (70/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.etl_control (...
+[2026-09-20 00:29:38]       (71/85) ALTER TABLE mimic4_db_business_full.etl_control SET TBLPROPERTIES (...
+[2026-09-20 00:29:40]       (72/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.etl_process_log (...
+[2026-09-20 00:29:43]       (73/85) ALTER TABLE mimic4_db_business_full.etl_process_log SET TBLPROPERTIES (...
+[2026-09-20 00:29:45]       (74/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.agg_admission_daily (...
+[2026-09-20 00:29:47]       (75/85) ALTER TABLE mimic4_db_business_full.agg_admission_daily SET TBLPROPERTIES (...
+[2026-09-20 00:29:49]       (76/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.agg_icu_fluid_balance_daily (...
+[2026-09-20 00:29:52]       (77/85) ALTER TABLE mimic4_db_business_full.agg_icu_fluid_balance_daily SET TBLPROPERTIES (...
+[2026-09-20 00:29:54]       (78/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.agg_admission_monthly (...
+[2026-09-20 00:29:56]       (79/85) ALTER TABLE mimic4_db_business_full.agg_admission_monthly SET TBLPROPERTIES (...
+[2026-09-20 00:29:58]       (80/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.obt_admission_features (...
+[2026-09-20 00:30:00]       (81/85) ALTER TABLE mimic4_db_business_full.obt_admission_features SET TBLPROPERTIES (...
+[2026-09-20 00:30:03]       (82/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.obt_patient_360 (...
+[2026-09-20 00:30:05]       (83/85) ALTER TABLE mimic4_db_business_full.obt_patient_360 SET TBLPROPERTIES (...
+[2026-09-20 00:30:07]       (84/85) CREATE TABLE IF NOT EXISTS mimic4_db_business_full.obt_icu_stay_features (...
+[2026-09-20 00:30:09]       (85/85) ALTER TABLE mimic4_db_business_full.obt_icu_stay_features SET TBLPROPERTIES (...
+[2026-09-20 00:30:12]       Gold-zone DDL applied successfully.
+
+[2026-09-20 00:30:12] Done (fulldataset). Check the Glue Data Catalog:
+[2026-09-20 00:30:12]   Raw database:  mimic4_db_raw_full
+[2026-09-20 00:30:12]   aws glue get-tables --database-name mimic4_db_raw_full --region us-east-2
+[2026-09-20 00:30:12]   Gold database: mimic4_db_business_full
+[2026-09-20 00:30:12]   aws glue get-tables --database-name mimic4_db_business_full --region us-east-2
+
+[2026-09-20 00:30:12] [workers] big jobs -> G.2X x10: fact_chart_observation, fact_datetime_event, fact_ingredient_event, fact_input_event, fact_lab_result, fact_medication_administration, fact_medication_administration_mini_detail, fact_output_event, fact_prescription, fact_procedure_event, fact_provider_order, fact_provider_order_mini_detail, obt_admission_features, obt_icu_stay_features, obt_patient_360
+[2026-09-20 00:30:12] [workers] medium aggregate jobs -> G.1X x4: agg_admission_daily, agg_admission_monthly, agg_icu_fluid_balance_daily
+
+[2026-09-20 00:30:12] $ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe etl/create_dim_date_seed_job.py --dataset fulldataset --create-role
+[2026-09-20 00:30:12]       IAM role 'MimicGlueDimDateSeedRole-full' already exists -- reusing it.
+[2026-09-20 00:30:12] Using Glue ETL role ARN: arn:aws:iam::605785396773:role/MimicGlueDimDateSeedRole-full
+[2026-09-20 00:30:12]       Uploading seed script to s3://mimic4-glue-scripts-v3-2-bucket/scripts/dim-date-seed-job-full/dim_date_seed.py
+[2026-09-20 00:30:13]       Job 'dim-date-seed-job-full' already exists -- updating it.
+[2026-09-20 00:30:13] Glue job 'dim-date-seed-job-full' created/updated successfully.
+[2026-09-20 00:30:13] Script location: s3://mimic4-glue-scripts-v3-2-bucket/scripts/dim-date-seed-job-full/dim_date_seed.py
+
+[2026-09-20 00:30:13] $ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe etl/create_dim_visual_etl_jobs.py --dataset fulldataset --create-role
+[2026-09-20 00:30:14]       IAM role 'MimicGlueDimLoadRole-full' already exists -- reusing it.
+[2026-09-20 00:30:14] Using Glue ETL role ARN: arn:aws:iam::605785396773:role/MimicGlueDimLoadRole-full
+[2026-09-20 00:30:14] [dim_hcpcs] raw:mimic4_db_raw_full.d_hcpcs_raw -> gold:mimic4_db_business_full.dim_hcpcs
+[2026-09-20 00:30:14]       Job 'dim-load-dim_hcpcs-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:15] [dim_diagnosis] raw:mimic4_db_raw_full.d_icd_diagnoses_raw -> gold:mimic4_db_business_full.dim_diagnosis
+[2026-09-20 00:30:15]       Job 'dim-load-dim_diagnosis-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:15] [dim_procedure] raw:mimic4_db_raw_full.d_icd_procedures_raw -> gold:mimic4_db_business_full.dim_procedure
+[2026-09-20 00:30:15]       Job 'dim-load-dim_procedure-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:15] [dim_lab_item] raw:mimic4_db_raw_full.d_labitems_raw -> gold:mimic4_db_business_full.dim_lab_item
+[2026-09-20 00:30:15]       Job 'dim-load-dim_lab_item-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:15] [dim_patient] raw:mimic4_db_raw_full.patients_raw -> gold:mimic4_db_business_full.dim_patient
+[2026-09-20 00:30:16]       Job 'dim-load-dim_patient-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:16] [dim_provider] raw:mimic4_db_raw_full.provider_raw -> gold:mimic4_db_business_full.dim_provider
+[2026-09-20 00:30:16]       Job 'dim-load-dim_provider-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:16] [dim_caregiver] raw:mimic4_db_raw_full.caregiver_raw -> gold:mimic4_db_business_full.dim_caregiver
+[2026-09-20 00:30:16]       Job 'dim-load-dim_caregiver-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:16] [dim_chart_item] raw:mimic4_db_raw_full.d_items_raw -> gold:mimic4_db_business_full.dim_chart_item
+[2026-09-20 00:30:16]       Job 'dim-load-dim_chart_item-full' already exists -- updating its DAG/config.
+
+[2026-09-20 00:30:17] Done. Jobs created/updated:
+[2026-09-20 00:30:17]   - dim-load-dim_hcpcs-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> dim-load-dim_hcpcs-full)
+[2026-09-20 00:30:17]   - dim-load-dim_diagnosis-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> dim-load-dim_diagnosis-full)
+[2026-09-20 00:30:17]   - dim-load-dim_procedure-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> dim-load-dim_procedure-full)
+[2026-09-20 00:30:17]   - dim-load-dim_lab_item-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> dim-load-dim_lab_item-full)
+[2026-09-20 00:30:17]   - dim-load-dim_patient-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> dim-load-dim_patient-full)
+[2026-09-20 00:30:17]   - dim-load-dim_provider-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> dim-load-dim_provider-full)
+[2026-09-20 00:30:17]   - dim-load-dim_caregiver-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> dim-load-dim_caregiver-full)
+[2026-09-20 00:30:17]   - dim-load-dim_chart_item-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> dim-load-dim_chart_item-full)
+
+[2026-09-20 00:30:17] NOTE: dim_date was intentionally NOT generated here -- it's a calendar spine with no raw CSV source; see run_dim_date_seed.py instead.
+
+[2026-09-20 00:30:17] $ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe etl/create_fact_visual_etl_jobs.py --dataset fulldataset --create-role --only fact_diagnosis,fact_drg_assignment,fact_hcpcs_event,fact_microbiology_result,fact_outpatient_measurement,fact_pharmacy_order,fact_procedure,fact_service_assignment,fact_transfer,fact_admission,fact_icu_stay_accumulating --row-limit 1000000
+[2026-09-20 00:30:17]       IAM role 'MimicGlueFactLoadRole-full' already exists -- reusing it.
+[2026-09-20 00:30:17] Using Glue ETL role ARN: arn:aws:iam::605785396773:role/MimicGlueFactLoadRole-full
+[2026-09-20 00:30:17] [fact_diagnosis] raw:mimic4_db_raw_full.diagnoses_icd_raw -> gold:mimic4_db_business_full.fact_diagnosis
+[2026-09-20 00:30:17]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:18]       Job 'fact-load-fact_diagnosis-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:18] [fact_drg_assignment] raw:mimic4_db_raw_full.drgcodes_raw -> gold:mimic4_db_business_full.fact_drg_assignment
+[2026-09-20 00:30:18]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:18]       Job 'fact-load-fact_drg_assignment-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:18] [fact_hcpcs_event] raw:mimic4_db_raw_full.hcpcsevents_raw -> gold:mimic4_db_business_full.fact_hcpcs_event
+[2026-09-20 00:30:18]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:18]       Job 'fact-load-fact_hcpcs_event-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:19] [fact_microbiology_result] raw:mimic4_db_raw_full.microbiologyevents_raw -> gold:mimic4_db_business_full.fact_microbiology_result
+[2026-09-20 00:30:19]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:19]       Job 'fact-load-fact_microbiology_result-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:19] [fact_outpatient_measurement] raw:mimic4_db_raw_full.omr_raw -> gold:mimic4_db_business_full.fact_outpatient_measurement
+[2026-09-20 00:30:19]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:19]       Job 'fact-load-fact_outpatient_measurement-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:19] [fact_pharmacy_order] raw:mimic4_db_raw_full.pharmacy_raw -> gold:mimic4_db_business_full.fact_pharmacy_order
+[2026-09-20 00:30:19]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:19]       Job 'fact-load-fact_pharmacy_order-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:20] [fact_procedure] raw:mimic4_db_raw_full.procedures_icd_raw -> gold:mimic4_db_business_full.fact_procedure
+[2026-09-20 00:30:20]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:20]       Job 'fact-load-fact_procedure-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:20] [fact_service_assignment] raw:mimic4_db_raw_full.services_raw -> gold:mimic4_db_business_full.fact_service_assignment
+[2026-09-20 00:30:20]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:20]       Job 'fact-load-fact_service_assignment-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:20] [fact_transfer] raw:mimic4_db_raw_full.transfers_raw -> gold:mimic4_db_business_full.fact_transfer
+[2026-09-20 00:30:20]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:20]       Job 'fact-load-fact_transfer-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:20] [fact_admission] raw:mimic4_db_raw_full.admissions_raw -> gold:mimic4_db_business_full.fact_admission
+[2026-09-20 00:30:20]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:21]       Job 'fact-load-fact_admission-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:21] [fact_icu_stay_accumulating] raw:mimic4_db_raw_full.icustays_raw -> gold:mimic4_db_business_full.fact_icu_stay_accumulating
+[2026-09-20 00:30:21]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:21]       Job 'fact-load-fact_icu_stay_accumulating-full' already exists -- updating its DAG/config.
+
+[2026-09-20 00:30:21] Done. Jobs created/updated:
+[2026-09-20 00:30:21]   - fact-load-fact_diagnosis-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_diagnosis-full)
+[2026-09-20 00:30:21]   - fact-load-fact_drg_assignment-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_drg_assignment-full)
+[2026-09-20 00:30:21]   - fact-load-fact_hcpcs_event-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_hcpcs_event-full)
+[2026-09-20 00:30:21]   - fact-load-fact_microbiology_result-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_microbiology_result-full)
+[2026-09-20 00:30:21]   - fact-load-fact_outpatient_measurement-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_outpatient_measurement-full)
+[2026-09-20 00:30:21]   - fact-load-fact_pharmacy_order-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_pharmacy_order-full)
+[2026-09-20 00:30:21]   - fact-load-fact_procedure-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_procedure-full)
+[2026-09-20 00:30:21]   - fact-load-fact_service_assignment-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_service_assignment-full)
+[2026-09-20 00:30:21]   - fact-load-fact_transfer-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_transfer-full)
+[2026-09-20 00:30:21]   - fact-load-fact_admission-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_admission-full)
+[2026-09-20 00:30:21]   - fact-load-fact_icu_stay_accumulating-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_icu_stay_accumulating-full)
+
+[2026-09-20 00:30:21] NOTE: fact_icu_stay_accumulating joins against fact_admission (via hadm_id) for time_to_icu_hours -- make sure fact_admission has already been loaded with current data before (re-)running fact_icu_stay_accumulating, not run in parallel with it.
+
+[2026-09-20 00:30:21] $ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe etl/create_fact_visual_etl_jobs.py --dataset fulldataset --create-role --only fact_medication_administration,fact_medication_administration_mini_detail,fact_provider_order,fact_provider_order_mini_detail,fact_prescription,fact_datetime_event,fact_input_event,fact_ingredient_event,fact_output_event,fact_procedure_event,fact_lab_result,fact_chart_observation --num-workers 10 --worker-type G.2X --row-limit 1000000
+[2026-09-20 00:30:22]       IAM role 'MimicGlueFactLoadRole-full' already exists -- reusing it.
+[2026-09-20 00:30:22] Using Glue ETL role ARN: arn:aws:iam::605785396773:role/MimicGlueFactLoadRole-full
+[2026-09-20 00:30:22] [fact_medication_administration] raw:mimic4_db_raw_full.emar_raw -> gold:mimic4_db_business_full.fact_medication_administration
+[2026-09-20 00:30:22]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:22]       Job 'fact-load-fact_medication_administration-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:22] [fact_medication_administration_mini_detail] raw:mimic4_db_raw_full.emar_detail_raw -> gold:mimic4_db_business_full.fact_medication_administration_mini_detail
+[2026-09-20 00:30:22]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:22]       Job 'fact-load-fact_medication_administration_mini_detail-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:23] [fact_provider_order] raw:mimic4_db_raw_full.poe_raw -> gold:mimic4_db_business_full.fact_provider_order
+[2026-09-20 00:30:23]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:23]       Job 'fact-load-fact_provider_order-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:23] [fact_provider_order_mini_detail] raw:mimic4_db_raw_full.poe_detail_raw -> gold:mimic4_db_business_full.fact_provider_order_mini_detail
+[2026-09-20 00:30:23]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:23]       Job 'fact-load-fact_provider_order_mini_detail-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:23] [fact_prescription] raw:mimic4_db_raw_full.prescriptions_raw -> gold:mimic4_db_business_full.fact_prescription
+[2026-09-20 00:30:23]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:23]       Job 'fact-load-fact_prescription-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:23] [fact_datetime_event] raw:mimic4_db_raw_full.datetimeevents_raw -> gold:mimic4_db_business_full.fact_datetime_event
+[2026-09-20 00:30:23]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:23]       Job 'fact-load-fact_datetime_event-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:23] [fact_input_event] raw:mimic4_db_raw_full.inputevents_raw -> gold:mimic4_db_business_full.fact_input_event
+[2026-09-20 00:30:23]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:24]       Job 'fact-load-fact_input_event-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:24] [fact_ingredient_event] raw:mimic4_db_raw_full.ingredientevents_raw -> gold:mimic4_db_business_full.fact_ingredient_event
+[2026-09-20 00:30:24]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:24]       Job 'fact-load-fact_ingredient_event-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:24] [fact_output_event] raw:mimic4_db_raw_full.outputevents_raw -> gold:mimic4_db_business_full.fact_output_event
+[2026-09-20 00:30:24]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:24]       Job 'fact-load-fact_output_event-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:24] [fact_procedure_event] raw:mimic4_db_raw_full.procedureevents_raw -> gold:mimic4_db_business_full.fact_procedure_event
+[2026-09-20 00:30:24]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:24]       Job 'fact-load-fact_procedure_event-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:24] [fact_lab_result] raw:mimic4_db_raw_full.labevents_raw -> gold:mimic4_db_business_full.fact_lab_result
+[2026-09-20 00:30:24]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:25]       Job 'fact-load-fact_lab_result-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:25] [fact_chart_observation] raw:mimic4_db_raw_full.chartevents_raw -> gold:mimic4_db_business_full.fact_chart_observation
+[2026-09-20 00:30:25]     (--row-limit 1000000: job will load only a 1000000-row sample)
+[2026-09-20 00:30:25]       Job 'fact-load-fact_chart_observation-full' already exists -- updating its DAG/config.
+
+[2026-09-20 00:30:25] Done. Jobs created/updated:
+[2026-09-20 00:30:25]   - fact-load-fact_medication_administration-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_medication_administration-full)
+[2026-09-20 00:30:25]   - fact-load-fact_medication_administration_mini_detail-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_medication_administration_mini_detail-full)
+[2026-09-20 00:30:25]   - fact-load-fact_provider_order-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_provider_order-full)
+[2026-09-20 00:30:25]   - fact-load-fact_provider_order_mini_detail-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_provider_order_mini_detail-full)
+[2026-09-20 00:30:25]   - fact-load-fact_prescription-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_prescription-full)
+[2026-09-20 00:30:25]   - fact-load-fact_datetime_event-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_datetime_event-full)
+[2026-09-20 00:30:25]   - fact-load-fact_input_event-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_input_event-full)
+[2026-09-20 00:30:25]   - fact-load-fact_ingredient_event-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_ingredient_event-full)
+[2026-09-20 00:30:25]   - fact-load-fact_output_event-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_output_event-full)
+[2026-09-20 00:30:25]   - fact-load-fact_procedure_event-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_procedure_event-full)
+[2026-09-20 00:30:25]   - fact-load-fact_lab_result-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_lab_result-full)
+[2026-09-20 00:30:25]   - fact-load-fact_chart_observation-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> fact-load-fact_chart_observation-full)
+
+[2026-09-20 00:30:25] $ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe etl/create_agg_visual_etl_jobs.py --dataset fulldataset --create-role --only agg_admission_daily,agg_icu_fluid_balance_daily,agg_admission_monthly --num-workers 4 --worker-type G.1X
+[2026-09-20 00:30:26]       IAM role 'MimicGlueAggRefreshRole-full' already exists -- reusing it.
+[2026-09-20 00:30:26] Using Glue ETL role ARN: arn:aws:iam::605785396773:role/MimicGlueAggRefreshRole-full
+[2026-09-20 00:30:26] [agg_admission_daily] -> gold:mimic4_db_business_full.agg_admission_daily (incremental)
+[2026-09-20 00:30:26]       Job 'agg-refresh-agg_admission_daily-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:26] [agg_icu_fluid_balance_daily] -> gold:mimic4_db_business_full.agg_icu_fluid_balance_daily (incremental)
+[2026-09-20 00:30:26]       Job 'agg-refresh-agg_icu_fluid_balance_daily-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:27] [agg_admission_monthly] -> gold:mimic4_db_business_full.agg_admission_monthly (incremental)
+[2026-09-20 00:30:27]       Job 'agg-refresh-agg_admission_monthly-full' already exists -- updating its DAG/config.
+
+[2026-09-20 00:30:27] Done. Jobs created/updated:
+[2026-09-20 00:30:27]   - agg-refresh-agg_admission_daily-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> agg-refresh-agg_admission_daily-full)
+[2026-09-20 00:30:27]   - agg-refresh-agg_icu_fluid_balance_daily-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> agg-refresh-agg_icu_fluid_balance_daily-full)
+[2026-09-20 00:30:27]   - agg-refresh-agg_admission_monthly-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> agg-refresh-agg_admission_monthly-full)
+
+[2026-09-20 00:30:27] $ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe etl/create_agg_visual_etl_jobs.py --dataset fulldataset --create-role --only obt_admission_features,obt_patient_360,obt_icu_stay_features --num-workers 10 --worker-type G.2X
+[2026-09-20 00:30:27]       IAM role 'MimicGlueAggRefreshRole-full' already exists -- reusing it.
+[2026-09-20 00:30:28] Using Glue ETL role ARN: arn:aws:iam::605785396773:role/MimicGlueAggRefreshRole-full
+[2026-09-20 00:30:28] [obt_admission_features] -> gold:mimic4_db_business_full.obt_admission_features (incremental)
+[2026-09-20 00:30:28]       Job 'agg-refresh-obt_admission_features-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:28] [obt_patient_360] -> gold:mimic4_db_business_full.obt_patient_360 (incremental)
+[2026-09-20 00:30:28]       Job 'agg-refresh-obt_patient_360-full' already exists -- updating its DAG/config.
+[2026-09-20 00:30:28] [obt_icu_stay_features] -> gold:mimic4_db_business_full.obt_icu_stay_features (incremental)
+[2026-09-20 00:30:29]       Job 'agg-refresh-obt_icu_stay_features-full' already exists -- updating its DAG/config.
+
+[2026-09-20 00:30:29] Done. Jobs created/updated:
+[2026-09-20 00:30:29]   - agg-refresh-obt_admission_features-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> agg-refresh-obt_admission_features-full)
+[2026-09-20 00:30:29]   - agg-refresh-obt_patient_360-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> agg-refresh-obt_patient_360-full)
+[2026-09-20 00:30:29]   - agg-refresh-obt_icu_stay_features-full  (view/edit the DAG in AWS Glue Studio -> Jobs -> agg-refresh-obt_icu_stay_features-full)
+
+[2026-09-20 00:30:29] $ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe etl/create_notes_ingest_job.py --dataset fulldataset --create-role
+[2026-09-20 00:30:30]       IAM role 'MimicGlueNotesIngestRole-full' already exists -- reusing it.
+[2026-09-20 00:30:30] Using Glue ETL role ARN: arn:aws:iam::605785396773:role/MimicGlueNotesIngestRole-full
+[2026-09-20 00:30:30]       Uploading script to s3://mimic4-glue-scripts-v3-2-bucket/scripts/notes-ingest-job-full/notes_ingest.py
+[2026-09-20 00:30:30]       Job 'notes-ingest-job-full' already exists -- updating it.
+[2026-09-20 00:30:31] Glue job 'notes-ingest-job-full' created/updated successfully.
+[2026-09-20 00:30:31] Script location: s3://mimic4-glue-scripts-v3-2-bucket/scripts/notes-ingest-job-full/notes_ingest.py
+
+[2026-09-20 00:30:31] $ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe etl/create_medspacy_nlp_job.py --dataset fulldataset --create-role --note-limit 10000
+[2026-09-20 00:30:31] [1/3] Ensuring NLP bucket and medSpaCy results folder...
+[2026-09-20 00:30:31]       Bucket 'mimic4-nlp-v3-2-full' already exists -- using it.
+[2026-09-20 00:30:31]       Folder 's3://mimic4-nlp-v3-2-full/medspacy-results/' already exists -- using it.
+[2026-09-20 00:30:31] [2/3] Ensuring IAM role...
+[2026-09-20 00:30:32]       IAM role 'MimicGlueMedspacyNlpRole-full' already exists -- reusing it.
+[2026-09-20 00:30:32]       Glue job role: arn:aws:iam::605785396773:role/MimicGlueMedspacyNlpRole-full
+[2026-09-20 00:30:32] [3/3] Uploading script and creating/updating the Glue job...
+[2026-09-20 00:30:32]       Uploading script to s3://mimic4-glue-scripts-v3-2-bucket/scripts/medspacy-nlp-job-full/medspacy_nlp.py
+[2026-09-20 00:30:32]       Job 'medspacy-nlp-job-full' already exists -- updating it.
+[2026-09-20 00:30:32] Glue job 'medspacy-nlp-job-full' ready (scope: 10000 note(s)). Script: s3://mimic4-glue-scripts-v3-2-bucket/scripts/medspacy-nlp-job-full/medspacy_nlp.py
+
+[2026-09-20 00:30:33] $ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe etl/create_radiology_nlp_job.py --dataset fulldataset --create-role --note-limit 10000
+[2026-09-20 00:30:33] [1/3] Ensuring NLP bucket and radiology results folder...
+[2026-09-20 00:30:33]       Bucket 'mimic4-nlp-v3-2-full' already exists -- using it.
+[2026-09-20 00:30:33]       Folder 's3://mimic4-nlp-v3-2-full/radiology-nlp-results/' already exists -- using it.
+[2026-09-20 00:30:33] [2/3] Ensuring IAM role...
+[2026-09-20 00:30:34]       IAM role 'MimicGlueRadiologyNlpRole-full' already exists -- reusing it.
+[2026-09-20 00:30:34]       Glue job role: arn:aws:iam::605785396773:role/MimicGlueRadiologyNlpRole-full
+[2026-09-20 00:30:34] [3/3] Uploading script and creating/updating the Glue job...
+[2026-09-20 00:30:34]       Uploading script to s3://mimic4-glue-scripts-v3-2-bucket/scripts/radiology-nlp-job-full/radiology_nlp.py
+[2026-09-20 00:30:34]       Job 'radiology-nlp-job-full' already exists -- updating it.
+[2026-09-20 00:30:34] Glue job 'radiology-nlp-job-full' ready (scope: 10000 note(s)). Script: s3://mimic4-glue-scripts-v3-2-bucket/scripts/radiology-nlp-job-full/radiology_nlp.py
+
+[2026-09-20 00:30:35] $ C:\MIMICIV\gitmimic\mimic_lakehouse_repo\.venv\Scripts\python.exe etl/create_radiology_variant_job.py --dataset fulldataset --create-role
+[2026-09-20 00:30:35] [1/2] Ensuring IAM role...
+[2026-09-20 00:30:35]       IAM role 'MimicGlueRadiologyNlpRole-full' already exists -- reusing it.
+[2026-09-20 00:30:35]       Glue job role: arn:aws:iam::605785396773:role/MimicGlueRadiologyNlpRole-full
+[2026-09-20 00:30:35] [2/2] Uploading script and creating/updating the Glue job...
+[2026-09-20 00:30:35]       Uploading script to s3://mimic4-glue-scripts-v3-2-bucket/scripts/radiology-nlp-variant-job-full/radiology_nlp_variant.py
+[2026-09-20 00:30:36]       Job 'radiology-nlp-variant-job-full' already exists -- updating it.
+[2026-09-20 00:30:36] Glue job 'radiology-nlp-variant-job-full' ready (Glue 6.0 -> fact_radiology_note_nlp_v, VARIANT / format-v3).
+[2026-09-20 00:30:38] [process-log] logging job timings to mimic4_db_business_full.etl_process_log (full_run_id 8)
+
+[2026-09-20 00:30:38] === Phase A: dim_date seed  (1 job(s), <= 90 DPU in flight) ===
+[2026-09-20 00:30:38]   started dim-date-seed-job-full  (2 DPU; 2/90 in flight)
+[2026-09-20 00:31:58]   OK   dim-date-seed-job-full
+[2026-09-20 00:32:02] === Phase A complete ===
+
+[2026-09-20 00:32:02] === Phase B: dimensions  (8 job(s), <= 90 DPU in flight) ===
+[2026-09-20 00:32:03]   started dim-load-dim_hcpcs-full  (2 DPU; 2/90 in flight)
+[2026-09-20 00:32:03]   started dim-load-dim_diagnosis-full  (2 DPU; 4/90 in flight)
+[2026-09-20 00:32:03]   started dim-load-dim_procedure-full  (2 DPU; 6/90 in flight)
+[2026-09-20 00:32:03]   started dim-load-dim_lab_item-full  (2 DPU; 8/90 in flight)
+[2026-09-20 00:32:03]   started dim-load-dim_patient-full  (2 DPU; 10/90 in flight)
+[2026-09-20 00:32:03]   started dim-load-dim_provider-full  (2 DPU; 12/90 in flight)
+[2026-09-20 00:32:03]   started dim-load-dim_caregiver-full  (2 DPU; 14/90 in flight)
+[2026-09-20 00:32:04]   started dim-load-dim_chart_item-full  (2 DPU; 16/90 in flight)
+[2026-09-20 00:33:26]   OK   dim-load-dim_lab_item-full
+[2026-09-20 00:33:31]   OK   dim-load-dim_provider-full
+[2026-09-20 00:33:36]   OK   dim-load-dim_caregiver-full
+[2026-09-20 00:33:40]   OK   dim-load-dim_chart_item-full
+[2026-09-20 00:34:05]   OK   dim-load-dim_hcpcs-full
+[2026-09-20 00:34:09]   OK   dim-load-dim_diagnosis-full
+[2026-09-20 00:34:13]   OK   dim-load-dim_procedure-full
+[2026-09-20 00:34:18]   OK   dim-load-dim_patient-full
+[2026-09-20 00:34:22] === Phase B complete ===
+
+[2026-09-20 00:34:22] === Phase C: facts (bulk)  (22 job(s), <= 90 DPU in flight) ===
+[2026-09-20 00:34:22]   started fact-load-fact_diagnosis-full  (2 DPU; 2/90 in flight)
+[2026-09-20 00:34:22]   started fact-load-fact_drg_assignment-full  (2 DPU; 4/90 in flight)
+[2026-09-20 00:34:23]   started fact-load-fact_medication_administration-full  (20 DPU; 24/90 in flight)
+[2026-09-20 00:34:23]   started fact-load-fact_medication_administration_mini_detail-full  (20 DPU; 44/90 in flight)
+[2026-09-20 00:34:23]   started fact-load-fact_hcpcs_event-full  (2 DPU; 46/90 in flight)
+[2026-09-20 00:34:23]   started fact-load-fact_microbiology_result-full  (2 DPU; 48/90 in flight)
+[2026-09-20 00:34:23]   started fact-load-fact_outpatient_measurement-full  (2 DPU; 50/90 in flight)
+[2026-09-20 00:34:23]   started fact-load-fact_pharmacy_order-full  (2 DPU; 52/90 in flight)
+[2026-09-20 00:34:23]   started fact-load-fact_provider_order-full  (20 DPU; 72/90 in flight)
+[2026-09-20 00:34:24]   started fact-load-fact_procedure-full  (2 DPU; 74/90 in flight)
+[2026-09-20 00:34:24]   started fact-load-fact_service_assignment-full  (2 DPU; 76/90 in flight)
+[2026-09-20 00:34:24]   started fact-load-fact_transfer-full  (2 DPU; 78/90 in flight)
+[2026-09-20 00:34:24]   started fact-load-fact_admission-full  (2 DPU; 80/90 in flight)
+[2026-09-20 00:35:47]   OK   fact-load-fact_medication_administration-full
+[2026-09-20 00:36:16]   OK   fact-load-fact_medication_administration_mini_detail-full
+[2026-09-20 00:36:50]   OK   fact-load-fact_hcpcs_event-full
+[2026-09-20 00:36:57]   OK   fact-load-fact_microbiology_result-full
+[2026-09-20 00:37:05]   OK   fact-load-fact_outpatient_measurement-full
+[2026-09-20 00:37:13]   OK   fact-load-fact_pharmacy_order-full
+[2026-09-20 00:37:33]   OK   fact-load-fact_provider_order-full
+[2026-09-20 00:37:53]   OK   fact-load-fact_procedure-full
+[2026-09-20 00:37:59]   OK   fact-load-fact_service_assignment-full
+[2026-09-20 00:38:03]   OK   fact-load-fact_transfer-full
+[2026-09-20 00:38:09]   OK   fact-load-fact_admission-full
+[2026-09-20 00:38:13]   started fact-load-fact_provider_order_mini_detail-full  (20 DPU; 24/90 in flight)
+[2026-09-20 00:38:13]   started fact-load-fact_prescription-full  (20 DPU; 44/90 in flight)
+[2026-09-20 00:38:13]   started fact-load-fact_datetime_event-full  (20 DPU; 64/90 in flight)
+[2026-09-20 00:38:13]   started fact-load-fact_input_event-full  (20 DPU; 84/90 in flight)
+[2026-09-20 00:38:33]   OK   fact-load-fact_diagnosis-full
+[2026-09-20 00:38:40]   OK   fact-load-fact_drg_assignment-full
+[2026-09-20 00:39:50]   OK   fact-load-fact_provider_order_mini_detail-full
+[2026-09-20 00:39:58]   OK   fact-load-fact_prescription-full
+[2026-09-20 00:40:19]   OK   fact-load-fact_datetime_event-full
+[2026-09-20 00:40:26]   OK   fact-load-fact_input_event-full
+[2026-09-20 00:40:45]   started fact-load-fact_ingredient_event-full  (20 DPU; 20/90 in flight)
+[2026-09-20 00:40:45]   started fact-load-fact_output_event-full  (20 DPU; 40/90 in flight)
+[2026-09-20 00:40:45]   started fact-load-fact_procedure_event-full  (20 DPU; 60/90 in flight)
+[2026-09-20 00:40:46]   started fact-load-fact_lab_result-full  (20 DPU; 80/90 in flight)
+[2026-09-20 00:42:07]   OK   fact-load-fact_ingredient_event-full
+[2026-09-20 00:42:24]   OK   fact-load-fact_procedure_event-full
+[2026-09-20 00:42:29]   OK   fact-load-fact_lab_result-full
+[2026-09-20 00:44:01]   started fact-load-fact_chart_observation-full  (20 DPU; 40/90 in flight)
+[2026-09-20 00:44:21]   OK   fact-load-fact_output_event-full
+[2026-09-20 00:45:29]   OK   fact-load-fact_chart_observation-full
+[2026-09-20 00:48:05] === Phase C complete ===
+
+[2026-09-20 00:48:05] === Phase D: fact_icu_stay_accumulating  (1 job(s), <= 90 DPU in flight) ===
+[2026-09-20 00:48:05]   started fact-load-fact_icu_stay_accumulating-full  (2 DPU; 2/90 in flight)
+[2026-09-20 00:49:45]   OK   fact-load-fact_icu_stay_accumulating-full
+[2026-09-20 00:49:50] === Phase D complete ===
+
+[2026-09-20 00:49:50] === Phase E: aggregates: daily  (2 job(s), <= 90 DPU in flight) ===
+[2026-09-20 00:49:50]   started agg-refresh-agg_admission_daily-full  (2 DPU; 2/90 in flight)
+[2026-09-20 00:49:50]   started agg-refresh-agg_icu_fluid_balance_daily-full  (2 DPU; 4/90 in flight)
+[2026-09-20 01:01:36]   OK   agg-refresh-agg_icu_fluid_balance_daily-full
+[2026-09-20 01:15:03]   OK   agg-refresh-agg_admission_daily-full
+[2026-09-20 01:15:06] === Phase E complete ===
+
+[2026-09-20 01:15:06] === Phase F: aggregates: monthly + admission OBT  (2 job(s), <= 90 DPU in flight) ===
+[2026-09-20 01:15:07]   started agg-refresh-agg_admission_monthly-full  (2 DPU; 2/90 in flight)
+[2026-09-20 01:15:07]   started agg-refresh-obt_admission_features-full  (20 DPU; 22/90 in flight)
+[2026-09-20 01:17:28]   OK   agg-refresh-agg_admission_monthly-full
+[2026-09-20 01:20:13]   OK   agg-refresh-obt_admission_features-full
+[2026-09-20 01:20:18] === Phase F complete ===
+
+[2026-09-20 01:20:18] === Phase G: OBTs: patient_360 + icu_stay  (2 job(s), <= 90 DPU in flight) ===
+[2026-09-20 01:20:18]   started agg-refresh-obt_patient_360-full  (20 DPU; 20/90 in flight)
+[2026-09-20 01:20:18]   started agg-refresh-obt_icu_stay_features-full  (20 DPU; 40/90 in flight)
+[2026-09-20 01:22:19]   OK   agg-refresh-obt_patient_360-full
+[2026-09-20 01:23:03]   OK   agg-refresh-obt_icu_stay_features-full
+[2026-09-20 01:23:07] === Phase G complete ===
+
+[2026-09-20 01:23:07] === Phase H: notes ingest  (1 job(s), <= 90 DPU in flight) ===
+[2026-09-20 01:23:07]   started notes-ingest-job-full  (2 DPU; 2/90 in flight)
+[2026-09-20 01:28:29]   OK   notes-ingest-job-full
+[2026-09-20 01:28:34] === Phase H complete ===
+
+[2026-09-20 01:28:34] === Phase I: NLP: medSpaCy + radiology  (2 job(s), <= 90 DPU in flight) ===
+[2026-09-20 01:28:34]   started medspacy-nlp-job-full  (2 DPU; 2/90 in flight)
+[2026-09-20 01:28:34]   started radiology-nlp-job-full  (2 DPU; 4/90 in flight)
+[2026-09-20 04:09:58]   OK   medspacy-nlp-job-full
+[2026-09-20 04:10:05]   OK   radiology-nlp-job-full
+[2026-09-20 04:10:13] === Phase I complete ===
+
+[2026-09-20 04:10:13] === Phase J: NLP: radiology VARIANT  (1 job(s), <= 90 DPU in flight) ===
+[2026-09-20 04:10:13]   started radiology-nlp-variant-job-full  (2 DPU; 2/90 in flight)
+[2026-09-20 04:12:54]   OK   radiology-nlp-variant-job-full
+[2026-09-20 04:13:01] === Phase J complete ===
+
+[2026-09-20 04:13:01] Pipeline complete for fulldataset in 13343s. Gold tables are in mimic4_db_business_full.

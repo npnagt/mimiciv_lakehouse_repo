@@ -1,0 +1,19 @@
+[dataset] fulldataset -> jobs *-full, catalog mimic4_db_raw_full/mimic4_db_business_full
+[by-run] querying mimic4_db_business_full.etl_process_log ...
+[by-run] --since 2026-09-20 02:21:50.915000 -> excluding 4 run(s) started before it (11 eligible)
+[by-run] 15 total run(s) found; reporting the last 11 since 2026-09-20 02:21:50.915000.
+[by-run] current resource footprint (storage, catalog, CloudWatch, crawlers) ...
+
+11 full run(s) found.
+  full_run_id 7: 42 jobs, 1h52m wall clock, $10.0880 Glue
+  full_run_id 8: 42 jobs, 3h42m wall clock, $10.4031 Glue
+  full_run_id 9: 42 jobs, 1h45m wall clock, $10.2658 Glue
+  full_run_id 10: 42 jobs, 1h50m wall clock, $10.5667 Glue
+  full_run_id 11: 42 jobs, 1h46m wall clock, $10.4471 Glue
+  full_run_id 12: 42 jobs, 1h48m wall clock, $10.6941 Glue
+  full_run_id 13: 44 jobs, 1h45m wall clock, $10.2882 Glue
+  full_run_id 14: 47 jobs, 4h02m wall clock, $11.3285 Glue
+  full_run_id 15: 47 jobs, 2h00m wall clock, $12.0060 Glue
+  full_run_id 16: 47 jobs, 2h01m wall clock, $12.1105 Glue
+  full_run_id 17: 44 jobs, 1h55m wall clock, $12.0367 Glue
+report: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\cost\full\latest_runs.md

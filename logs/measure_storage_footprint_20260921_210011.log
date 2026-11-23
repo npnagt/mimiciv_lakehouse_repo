@@ -1,0 +1,18 @@
+[1/4] S3 inventory: mimic4-datalake-v3-2-full
+      35 objects
+[2/4] S3 inventory: mimic4-lakehouse-v3-2-full
+      88,683 objects
+[3/4] Athena live-snapshot: 43 tables via "$files"
+      Aurora baseline: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\storage_footprint\aurora_baseline.json
+[4/4] wrote storage_footprint_20260922T010301Z.json, latest.json, storage_footprint_20260922T010301Z.md, latest.md to C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\storage_footprint\full
+total lakehouse physical  : 16.87 GiB
+  structured (RDS-equiv)  : 11.26 GiB physical  / 11.16 GiB live   (66.7693%)
+  unstructured / NLP      : 5.61 GiB physical  (33.2295%)  -- no warehouse equivalent
+    note text .csv.gz     : 1.79 GiB
+    NLP Gold tables       : 329.27 MiB phys / 68.53 MiB live
+gold physical / live      : 1.66 GiB / 1.31 GiB  (1.27x)
+AI-inference layer        : 329.27 MiB physical  (19.3627% of gold)
+P3 comparable (structured): 11.16 GiB live
+DW vs LH (processed str.) : warehouse 578.39 MiB phys / 553.24 MiB live  vs  lakehouse 1.34 GiB phys / 1.24 GiB live
+redundancy ratio (str.)   : warehouse 2.0x  |  lakehouse 1.08x as-deployed, 1.0x compacted
+report                    : C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\storage_footprint\full\latest.md

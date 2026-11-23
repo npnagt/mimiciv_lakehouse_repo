@@ -1,0 +1,35 @@
+log: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\logs\validate_rq2_queries_execute_20261001_050327.log
+$ python.exe validate_rq2_queries.py --dataset fulldataset --execute
+30 queries :: execute :: mimic4_db_business_full
+  W01 SUCCEEDED   1.2s 16444 rows 
+  W02 SUCCEEDED   1.0s 10 rows 
+  W03 SUCCEEDED   2.1s 20 rows 
+  W04 SUCCEEDED   2.2s 20 rows 
+  W05 SUCCEEDED   1.8s 25 rows 
+  W06 SUCCEEDED   3.9s 3 rows 
+  W07 SUCCEEDED   1.4s 16 rows 
+  W08 SUCCEEDED   2.2s 25 rows 
+  W09 SUCCEEDED   2.2s 4 rows 
+  W10 SUCCEEDED   2.6s 25 rows 
+  W11 SUCCEEDED   4.7s 4 rows 
+  W12 SUCCEEDED   1.6s 4 rows 
+  W13 SUCCEEDED   2.6s 5 rows 
+  W14 SUCCEEDED   2.6s 5 rows 
+  W15 SUCCEEDED   1.3s 50 rows 
+  W16 SUCCEEDED   2.6s 4 rows 
+  W17 SUCCEEDED   4.0s 4 rows 
+  W18 SUCCEEDED   3.3s 25 rows 
+  W19 SUCCEEDED   4.0s 4 rows 
+  W20 SUCCEEDED   1.8s 4 rows 
+  W21 SUCCEEDED   2.3s 5 rows 
+  W22 SUCCEEDED   1.6s 17 rows 
+  W23 SUCCEEDED   2.0s 4 rows 
+  W24 SUCCEEDED   2.3s 4 rows 
+  W25 SUCCEEDED   2.8s 4 rows 
+  W26 SUCCEEDED   2.7s 4 rows 
+  W27 SUCCEEDED   1.7s 20 rows 
+  W28 SUCCEEDED   2.4s 7 rows 
+  W29 SUCCEEDED   2.8s 26 rows 
+  W30 SUCCEEDED   2.3s 50 rows 
+30/30 passed -> C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\query_coverage\full\latest_execute.md
+log: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\logs\validate_rq2_queries_execute_20261001_050327.log

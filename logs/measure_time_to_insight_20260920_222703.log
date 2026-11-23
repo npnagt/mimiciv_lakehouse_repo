@@ -1,0 +1,53 @@
+time-to-insight :: mimic4_db_business_full via Athena/primary :: 20 queries x 200 repeats x 2 pass(es) :: render budget 500 ms
+Nielsen bands   :: A < 1000 ms (flow)  |  B 1000-10000 ms (sustained attention)  |  C >= 10000 ms (attention lost)
+P6 acceptance   :: queries land in A or B (<=10 s) -- standalone test, no baseline comparison
+
+=== cold pass (result reuse OFF) ===
+  floor  T0  A  tti med    940 ms  (p90    995)  total   320  fetch  119  scan        0 B  1 rows
+  T1a    T1  B  tti med   1882 ms  (p90   2864)  total  1222  fetch  147  scan   90.8 KiB  999 rows
+  T1b    T1  B  tti med   1386 ms  (p90   2019)  total   761  fetch  123  scan  183.3 KiB  10 rows
+  T2a    T2  B  tti med   2065 ms  (p90   3144)  total  1436  fetch  124  scan    4.5 MiB  4 rows
+  T2b    T2  B  tti med   3010 ms  (p90   4239)  total  2384  fetch  125  scan    5.5 MiB  9 rows
+  T3a    T3  B  tti med   2620 ms  (p90   4243)  total  2000  fetch  125  scan  721.2 KiB  3 rows
+  T3b    T3  B  tti med   2157 ms  (p90   3372)  total  1533  fetch  123  scan    3.3 MiB  1 rows
+  T3c    T3  B  tti med   2040 ms  (p90   3310)  total  1386  fetch  151  scan    3.4 MiB  999 rows
+  T4a    T4  B  tti med   2002 ms  (p90   3301)  total  1380  fetch  124  scan  984.3 KiB  4 rows
+  T4b    T4  B  tti med   2001 ms  (p90   3221)  total  1373  fetch  123  scan  420.5 KiB  4 rows
+  T4c    T4  B  tti med   1908 ms  (p90   2890)  total  1282  fetch  124  scan    1.1 MiB  17 rows
+  T5a    T5  B  tti med   2242 ms  (p90   3370)  total  1617  fetch  124  scan    3.9 MiB  4 rows
+  T5b    T5  B  tti med   2500 ms  (p90   3718)  total  1879  fetch  123  scan    3.8 MiB  3 rows
+  T5c    T5  B  tti med   2240 ms  (p90   3741)  total  1614  fetch  124  scan    2.3 MiB  16 rows
+  T6a    T6  B  tti med   2143 ms  (p90   3281)  total  1514  fetch  124  scan  485.0 KiB  25 rows
+  T6b    T6  B  tti med   2308 ms  (p90   3261)  total  1678  fetch  124  scan    2.3 MiB  7 rows
+  T6c    T6  B  tti med   2841 ms  (p90   4197)  total  2205  fetch  126  scan    7.7 MiB  25 rows
+  T7a    T7  B  tti med   1844 ms  (p90   2847)  total  1215  fetch  124  scan    1.7 MiB  1 rows
+  T7b    T7  B  tti med   1915 ms  (p90   3004)  total  1280  fetch  132  scan    1.6 MiB  191 rows
+  T7c    T7  B  tti med   1794 ms  (p90   2815)  total  1171  fetch  125  scan    2.4 MiB  25 rows
+
+=== warm pass (result reuse ON) ===
+  floor  T0  A  tti med    941 ms  (p90    991)  total   319  fetch  123  scan        0 B  1 rows
+  T1a    T1  A  tti med    885 ms  (p90    923)  total   236  fetch  147  scan        0 B  999 rows  [reused]
+  T1b    T1  A  tti med    866 ms  (p90    901)  total   242  fetch  123  scan        0 B  10 rows  [reused]
+  T2a    T2  A  tti med    873 ms  (p90    914)  total   249  fetch  124  scan        0 B  4 rows  [reused]
+  T2b    T2  A  tti med    869 ms  (p90    905)  total   244  fetch  123  scan        0 B  9 rows  [reused]
+  T3a    T3  A  tti med    859 ms  (p90    902)  total   235  fetch  124  scan        0 B  3 rows  [reused]
+  T3b    T3  FAILED  ICEBERG_CANNOT_OPEN_SPLIT: Error opening Iceberg split s3://mimic4-lakehouse-v3-2-full/mimic_bus/fact_medication_administration/32724a52/emar_id_bucket=31/00024-26-b9138cdd-e46d-40c0-9b1a-7f6fee60197c-00027.parquet (offset=4, length=17189): s3://mimic4-lakehouse-v3-2-full/mimic_bus/fact_medication_administration/32724a52/emar_id_bucket=31/00024-26-b9138cdd-e46d-40c0-9b1a-7f6fee60197c-00027.parquet
+  T3c    T3  A  tti med    894 ms  (p90    922)  total   239  fetch  152  scan        0 B  999 rows  [reused]
+  T4a    T4  A  tti med    864 ms  (p90    900)  total   240  fetch  125  scan        0 B  4 rows  [reused]
+  T4b    T4  A  tti med    863 ms  (p90    895)  total   239  fetch  125  scan        0 B  4 rows  [reused]
+  T4c    T4  FAILED  TABLE_NOT_FOUND: line 1:124: Table 'awsdatacatalog.mimic4_db_business_full.obt_icu_stay_features' does not exist
+  T5a    T5  FAILED  TABLE_NOT_FOUND: line 1:106: Table 'awsdatacatalog.mimic4_db_business_full.fact_discharge_note_nlp' does not exist
+  T5b    T5  FAILED  TABLE_NOT_FOUND: line 1:95: Table 'awsdatacatalog.mimic4_db_business_full.fact_discharge_note_nlp' does not exist
+  T5c    T5  FAILED  TABLE_NOT_FOUND: line 1:54: Table 'awsdatacatalog.mimic4_db_business_full.fact_discharge_note_nlp' does not exist
+  T6a    T6  FAILED  TABLE_NOT_FOUND: line 1:114: Table 'awsdatacatalog.mimic4_db_business_full.fact_radiology_note_nlp' does not exist
+  T6b    T6  FAILED  TABLE_NOT_FOUND: line 1:110: Table 'awsdatacatalog.mimic4_db_business_full.fact_radiology_note_nlp' does not exist
+  T6c    T6  FAILED  TABLE_NOT_FOUND: line 1:133: Table 'awsdatacatalog.mimic4_db_business_full.fact_radiology_note_nlp' does not exist
+  T7a    T7  FAILED  TABLE_NOT_FOUND: line 1:100: Table 'awsdatacatalog.mimic4_db_business_full.fact_chart_observation' does not exist
+  T7b    T7  FAILED  TABLE_NOT_FOUND: line 1:112: Table 'awsdatacatalog.mimic4_db_business_full.fact_chart_observation' does not exist
+  T7c    T7  FAILED  TABLE_NOT_FOUND: line 1:43: Table 'awsdatacatalog.mimic4_db_business_full.fact_chart_observation' does not exist
+
+================================================================
+cold pass: 100.0% within Nielsen's sustained-attention band (<=10 s), 0.0% within flow (<1 s); overall p90 2620 ms
+Athena floor (SELECT 1): 940 ms
+P6 acceptance test: PASS (0 of 19 queries lost the attention band, >10 s)
+report: C:\MIMICIV\gitmimic\mimic_lakehouse_repo\docs\tti\full\latest.md

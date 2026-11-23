@@ -1,0 +1,239 @@
+{
+  "generated_utc": "2026-10-01T07:52:12.395180+00:00",
+  "sources": {
+    "lakehouse_cost": "2026-10-01T07:50:46.780637+00:00",
+    "lakehouse_storage": "2026-10-01T01:02:50.192021+00:00",
+    "lakehouse_tti": "2026-10-01T07:44:04.299342+00:00",
+    "lakehouse_p5": "2026-10-01T01:18:24.801093+00:00",
+    "lakehouse_iceberg_vs_raw": "2026-10-01T01:21:20.597153+00:00",
+    "aurora_baseline": "2026-09-22",
+    "warehouse_by_run": "2026-10-01T07:52:07.705726+00:00"
+  },
+  "cost": {
+    "lakehouse": {
+      "one_time_build_debug_usd": 424.4168,
+      "one_clean_rebuild_usd": 4.6793,
+      "steady_state_monthly_usd": 0.5473,
+      "steady_state_monthly_after_cleanup_usd": 0.4693,
+      "annual_cost_estimate": {
+        "load_cost_usd": 4.6793,
+        "annual_steady_state_usd_as_deployed": 6.5676,
+        "annual_steady_state_usd_after_cleanup": 5.6316,
+        "first_year_total_usd_as_deployed": 11.2469,
+        "first_year_total_usd_after_cleanup": 10.3109,
+        "notes": [
+          "load_cost_usd = one_clean_pipeline_run.total_min (one successful Glue ETL run per job + one crawler run) -- the cost to populate an empty environment once.",
+          "annual_steady_state = 12 x steady_state_monthly -- assumes no further pipeline runs during the year (build once, query many); add load_cost_usd again per additional full reload during the year."
+        ]
+      }
+    },
+    "warehouse": {
+      "one_time_build_debug_usd": 27.1383,
+      "one_time_components": "LIVE (measured 2026-10-01T07:52:06.946641+00:00): Aurora compute+I/O $19.7415 + Glue $6.44 + CloudWatch ingest $0.9590",
+      "steady_state_monthly_usd": 1.0055,
+      "one_clean_rebuild_usd_approx": 0.5333,
+      "annual_cost_estimate": {
+        "load_cost_usd": 0.5333,
+        "annual_steady_state_usd": 12.066,
+        "first_year_total_usd": 12.5993,
+        "notes": [
+          "load_cost_usd = one_clean_pipeline_run.total_min (Glue-only; see its note).",
+          "annual_steady_state = 12 x steady_state_monthly -- assumes the Aurora cluster genuinely scales to its configured min ACU (0 if set, otherwise a sustained floor cost applies that this estimate does not include) and no further pipeline runs during the year."
+        ]
+      },
+      "live": true
+    }
+  },
+  "propositions": [
+    {
+      "id": "P1",
+      "claim": "Layered architecture supports more end-to-end workflows",
+      "metric": "workflow coverage (Supported + \u00bd\u00b7Partial) / 45",
+      "lakehouse": "88.9%  (35 S / 10 P / 0 U)",
+      "warehouse": "72.2%  (26 S / 13 P / 6 U)",
+      "verdict": "holds \u2014 the gap is entirely in the 18 cross-modal workflows",
+      "evidence": "analysis \u2014 atlas_P1_workflow_taxonomy.docx (lakehouse repo-verified; decoupled baseline scored as-designed, not built)"
+    },
+    {
+      "id": "P2",
+      "claim": "Fewer integration points for cross-modal queries",
+      "metric": "mean onboarding integration points, cross-modal rows",
+      "lakehouse": "\u2248 3.3",
+      "warehouse": "\u2248 6.1",
+      "verdict": "holds \u2014 mechanism is the shared Glue catalog",
+      "evidence": "analysis \u2014 counted from Glue job DAGs + Athena joins in both repos"
+    },
+    {
+      "id": "P3",
+      "claim": "Less physical data duplication (redundancy ratio)",
+      "metric": "structured layer: live bytes / physical bytes / redundancy ratio",
+      "lakehouse": "12197.0 MiB live / 14875.0 MiB phys / 1.0\u00d7 compacted (gold is the only copy)",
+      "warehouse": "8334.41 MiB live / 8856.23 MiB phys / 2.0\u00d7 (staging + warehouse)",
+      "verdict": "holds architecturally \u2014 lakehouse eliminates the staging materialization (external tables = 0 bytes); on information content it is ~0.15\u00d7 the warehouse",
+      "evidence": "\u2705 measured both sides \u2014 measure_storage_footprint.py + measure_warehouse_size.py"
+    },
+    {
+      "id": "P4",
+      "claim": "More ad-hoc queries combining structured data with AI outputs",
+      "metric": "45-query catalogue coverage",
+      "lakehouse": "97.8%  (43 answerable, 2 partial, 0 no)",
+      "warehouse": "7.8%  (0 answerable, 7 structured proxy, 38 no path)",
+      "verdict": "holds decisively \u2014 NLP tables are in the shared catalog vs absent from Postgres",
+      "evidence": "analysis \u2014 atlas_P4_adhoc_query_catalog.docx (2 queries verified live in Athena)"
+    },
+    {
+      "id": "P5",
+      "claim": "Native in-lake join beats externalized two-stage pipeline",
+      "metric": "wall-clock + throughput for a 3-way join + aggregate",
+      "lakehouse": "native (Athena/Iceberg): 1,938 ms, 798,548 rows/s",
+      "warehouse": "external (Athena UNLOAD + DuckDB): 4,820 ms (321,108 rows/s); DuckDB join alone 120 ms",
+      "verdict": "holds \u2014 native ~2.5\u00d7 faster end to end; the whole penalty is the extract hop, not the engine",
+      "evidence": "\u2705 measured \u2014 measure_native_vs_external_join.py (12 reps)"
+    },
+    {
+      "id": "P6",
+      "claim": "Unified abstraction layer renders results inside Nielsen's sustained-attention band (1-10 s), not the >10 s attention-lost band",
+      "metric": "19-query battery; % within 10 s (sustained attention or faster), p90",
+      "lakehouse": "cold 0 A / 19 B / 0 C  (p90 2104 ms); 100.0% within 10 s; warm 100% band A (~0.8 s)",
+      "warehouse": "n/a \u2014 proposition has no baseline comparison",
+      "verdict": "PASS -- every query lands at or under 10 s",
+      "evidence": "\u2705 measured \u2014 measure_time_to_insight.py (standalone; no baseline required)"
+    },
+    {
+      "id": "P7",
+      "claim": "Less effort to re-execute models when new data arrives",
+      "metric": "incremental refresh vs full reload, re-run wall time",
+      "lakehouse": "agg/OBT + NLP jobs incremental via etl_control \u2014 re-run 100\u2013125 s (platform floor) vs 183\u20131,846 s backfill; 2\u201316\u00d7 faster",
+      "warehouse": "no incremental mechanism \u2014 every refresh is a full TRUNCATE+reload (~954 DPU-s, README: \u201cthat mechanism isn\u2019t implemented here\u201d)",
+      "verdict": "holds \u2014 lakehouse cost scales with what changed, warehouse with total volume",
+      "evidence": "\u2705 lakehouse verified via Glue run stats; warehouse from its manifest + README"
+    },
+    {
+      "id": "P8",
+      "claim": "Engineers complete tasks faster + lower NASA-TLX with multimodal schemas",
+      "metric": "task completion time + raw NASA-TLX, within-subject",
+      "lakehouse": "\u2014",
+      "warehouse": "\u2014",
+      "verdict": "not tested \u2014 human study",
+      "evidence": "needs a 5-task battery, a digital NASA-TLX form, counterbalanced design, paired t-tests + Cohen's d"
+    },
+    {
+      "id": "P9",
+      "claim": "Practitioners perceive gains outweigh complexity (TAM), high intent to adopt",
+      "metric": "Davis TAM instrument (PU / PEOU / BI) + net-benefit item",
+      "lakehouse": "\u2014",
+      "warehouse": "\u2014",
+      "verdict": "not tested \u2014 human study",
+      "evidence": "needs the validated TAM survey; ~N=34 per condition for d=0.5 at power 0.8"
+    }
+  ],
+  "iceberg_vs_raw": {
+    "facts": {
+      "tables": 23,
+      "tables_per_row_comparable": 23,
+      "tables_iceberg_smaller_per_row": 1,
+      "raw_csv_gz_bytes": 10651237833,
+      "raw_rows": 885324698,
+      "gold_rows": 19849855,
+      "iceberg_live_bytes_as_loaded": 616798386,
+      "iceberg_physical_bytes_as_loaded": 1907081510,
+      "iceberg_full_row_equivalent_bytes": 21370537258,
+      "raw_csv_gz_bytes_comparable": 10651237833,
+      "full_row_ratio_iceberg_over_raw": 2.006,
+      "full_row_change_pct": 100.6,
+      "as_loaded_ratio_iceberg_over_raw": 0.058
+    },
+    "dimensions": {
+      "tables": 8,
+      "tables_per_row_comparable": 8,
+      "tables_iceberg_smaller_per_row": 3,
+      "raw_csv_gz_bytes": 4969492,
+      "raw_rows": 718340,
+      "gold_rows": 718340,
+      "iceberg_live_bytes_as_loaded": 5056972,
+      "iceberg_physical_bytes_as_loaded": 11231206,
+      "iceberg_full_row_equivalent_bytes": 5056972,
+      "raw_csv_gz_bytes_comparable": 4969492,
+      "full_row_ratio_iceberg_over_raw": 1.018,
+      "full_row_change_pct": 1.8,
+      "as_loaded_ratio_iceberg_over_raw": 1.018
+    },
+    "all_source_loaded": {
+      "tables": 31,
+      "tables_per_row_comparable": 31,
+      "tables_iceberg_smaller_per_row": 4,
+      "raw_csv_gz_bytes": 10656207325,
+      "raw_rows": 886043038,
+      "gold_rows": 20568195,
+      "iceberg_live_bytes_as_loaded": 621855358,
+      "iceberg_physical_bytes_as_loaded": 1918312716,
+      "iceberg_full_row_equivalent_bytes": 21375594230,
+      "raw_csv_gz_bytes_comparable": 10656207325,
+      "full_row_ratio_iceberg_over_raw": 2.006,
+      "full_row_change_pct": 100.6,
+      "as_loaded_ratio_iceberg_over_raw": 0.058
+    },
+    "note_text": {
+      "raw_csv_gz_bytes": 1921034145,
+      "iceberg_live_bytes": 1443671810,
+      "as_loaded_ratio_iceberg_over_raw": 0.752
+    },
+    "derived": {
+      "tables": 12,
+      "iceberg_live_bytes": 75909061,
+      "iceberg_physical_bytes": 157898481
+    },
+    "gold_layer": {
+      "tables": 45,
+      "iceberg_live_bytes": 2141436229,
+      "iceberg_physical_bytes": 4967446079,
+      "raw_structured_csv_gz_bytes": 10656207325,
+      "live_over_raw_structured": 0.201
+    },
+    "row_mismatches": [
+      {
+        "table": "fact_drg_assignment",
+        "raw_rows": 761856,
+        "gold_rows": 761857,
+        "row_delta": 1
+      },
+      {
+        "table": "fact_hcpcs_event",
+        "raw_rows": 186074,
+        "gold_rows": 186075,
+        "row_delta": 1
+      },
+      {
+        "table": "fact_procedure",
+        "raw_rows": 859655,
+        "gold_rows": 859656,
+        "row_delta": 1
+      },
+      {
+        "table": "fact_service_assignment",
+        "raw_rows": 593071,
+        "gold_rows": 593072,
+        "row_delta": 1
+      },
+      {
+        "table": "fact_procedure_event",
+        "raw_rows": 808706,
+        "gold_rows": 808707,
+        "row_delta": 1
+      },
+      {
+        "table": "fact_admission",
+        "raw_rows": 546028,
+        "gold_rows": 546029,
+        "row_delta": 1
+      },
+      {
+        "table": "fact_icu_stay_accumulating",
+        "raw_rows": 94458,
+        "gold_rows": 94459,
+        "row_delta": 1
+      }
+    ]
+  },
+  "dataset": "fulldataset"
+}

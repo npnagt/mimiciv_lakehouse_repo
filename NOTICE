@@ -1,0 +1,10 @@
+mimiciv_lakehouse_repo
+ATLAS multimodal lakehouse reference implementation on MIMIC-IV
+Copyright 2026 Narendra P Nagtode
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+The license covers the code, SQL, configuration, and documentation in this repository only.
+MIMIC-IV and MIMIC-IV-Note data are NOT included and are NOT covered by this license; they are
+credentialed-access datasets distributed by PhysioNet under their own data use agreement and
+must be obtained from https://physionet.org/ by each user.

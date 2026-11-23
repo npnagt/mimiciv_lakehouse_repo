@@ -1,0 +1,68 @@
+# ---------------------------------------------------------------------------
+# Data: never committed
+# ---------------------------------------------------------------------------
+# MIMIC-IV is credentialed-access data (PhysioNet data use agreement). All local raw data lives
+# under data/: the demo dataset (data/raw/mimic-iv-clinical-database-demo-2.2/) and the full
+# MIMIC-IV 3.1 download (data/raw/mimic-iv-3.1-fulldataset/, ~12 GB).
+data/
+
+# Raw and intermediate data files anywhere else in the tree
+*.csv.gz
+*.gz
+*.parquet
+*.avro
+*.orc
+*.feather
+*.arrow
+*.dcm
+*.zip
+*.7z
+*.tar
+p5_export/
+
+# RQ2 query-execution outputs (validate_rq2_queries.py --execute) hold actual query result rows:
+# patient and admission IDs, shifted dates, and note text. That is MIMIC data under the PhysioNet
+# data use agreement -- never commit. The --explain outputs (query plans only) are safe and stay.
+docs/query_coverage/*/latest_execute.*
+docs/query_coverage/*/rq2_queries_execute_*
+
+# Survey analysis: real responses and outputs are human-subject data -- never commit
+survey_analysis/data/
+survey_analysis/output/
+
+# ---------------------------------------------------------------------------
+# Secrets and local configuration (see .env.example)
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# ---------------------------------------------------------------------------
+# Python environments, caches, and build artifacts
+# ---------------------------------------------------------------------------
+.venv/
+venv/
+survey_analysis/.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# ---------------------------------------------------------------------------
+# Editor and OS files
+# ---------------------------------------------------------------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+~$*
+
+# ---------------------------------------------------------------------------
+# Book companion examples: files the demos generate (recreated by running them)
+# ---------------------------------------------------------------------------
+book_companion/**/*.duckdb
+book_companion/**/*.duckdb.wal
+book_companion/**/agent_inference.jsonl
+book_companion/**/scorecard_*.csv

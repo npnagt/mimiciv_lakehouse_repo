@@ -1,0 +1,821 @@
+{
+  "generated_utc": "2026-09-21T00:57:43.360059+00:00",
+  "mode": "full",
+  "sources": {
+    "lakehouse_by_run_generated": "2026-09-21T00:56:30.303946+00:00",
+    "lakehouse_n_runs_reported": 5,
+    "lakehouse_n_runs_available": 9,
+    "warehouse_by_run_generated": "2026-09-21T00:57:38.972098+00:00",
+    "warehouse_n_runs_reported": 5,
+    "warehouse_n_runs_available": 5
+  },
+  "lakehouse_current_footprint": {
+    "measured_at": "2026-09-21T00:56:30.303822+00:00",
+    "s3_physical_bytes": 18067043792,
+    "s3_raw_bytes": 15763592751,
+    "s3_gold_live_bytes": 1401659604,
+    "s3_gold_objects": 73208,
+    "storage_footprint_ref": "docs/storage_footprint/full/latest.json",
+    "cloudwatch_log_groups": [
+      {
+        "log_group": "/aws-glue/jobs/error",
+        "stored_bytes": 2389285570
+      },
+      {
+        "log_group": "/aws-glue/jobs/logs-v2",
+        "stored_bytes": 53112004
+      },
+      {
+        "log_group": "/aws-glue/sessions/error",
+        "stored_bytes": 617431
+      },
+      {
+        "log_group": "/aws-glue/jobs/output",
+        "stored_bytes": 322941
+      },
+      {
+        "log_group": "/aws-glue/python-jobs/output",
+        "stored_bytes": 18715
+      },
+      {
+        "log_group": "/aws-glue/crawlers",
+        "stored_bytes": 13518
+      },
+      {
+        "log_group": "/aws-glue/python-jobs/error",
+        "stored_bytes": 3817
+      }
+    ],
+    "cloudwatch_log_bytes_total": 2443373996,
+    "glue_data_catalog": [
+      {
+        "database": "mimic4_db_business_full",
+        "tables": 43
+      },
+      {
+        "database": "mimic4_db_raw_full",
+        "tables": 34
+      }
+    ],
+    "glue_data_catalog_objects": 77,
+    "glue_crawlers": [
+      {
+        "crawler": "mimic4-data-v3-2-crawler-full",
+        "runs": 14,
+        "last_runtime_seconds": 39.936,
+        "median_runtime_seconds": 39.885999999999996,
+        "tables_in_catalog": 0,
+        "total_elapsed_seconds": 555.1
+      }
+    ],
+    "iam_roles": [
+      "MimicGlueCrawlerRole-full",
+      "MimicGlueDimDateSeedRole-full",
+      "MimicGlueDimLoadRole-full",
+      "MimicGlueFactLoadRole-full",
+      "MimicGlueAggRefreshRole-full",
+      "MimicGlueNotesIngestRole-full",
+      "MimicGlueMedspacyNlpRole-full",
+      "MimicGlueRadiologyNlpRole-full"
+    ],
+    "iam_role_count": 8,
+    "cost_estimate_usd": {
+      "one_time_build_and_debug": {
+        "glue_etl_all_runs": 336.1712,
+        "athena_all_queries": 0.0,
+        "cloudwatch_log_ingestion": 1.2217,
+        "total": 337.3929
+      },
+      "one_clean_pipeline_run": {
+        "glue_etl_min_successful_run_per_job": 4.6255,
+        "glue_etl_all_successful_runs": 298.7607,
+        "glue_crawler_one_run": 0.1467,
+        "total_min": 4.7722
+      },
+      "steady_state_monthly": {
+        "s3_storage_as_deployed": 0.4155,
+        "s3_storage_after_orphan_cleanup": 0.3948,
+        "cloudwatch_log_storage": 0.0733,
+        "glue_data_catalog": 0.0,
+        "total_as_deployed": 0.4888,
+        "total_after_cleanup": 0.4681
+      },
+      "annual_cost_estimate": {
+        "load_cost_usd": 4.7722,
+        "annual_steady_state_usd_as_deployed": 5.8656,
+        "annual_steady_state_usd_after_cleanup": 5.6172,
+        "first_year_total_usd_as_deployed": 10.6378,
+        "first_year_total_usd_after_cleanup": 10.3894,
+        "notes": [
+          "load_cost_usd = one_clean_pipeline_run.total_min (one successful Glue ETL run per job + one crawler run) -- the cost to populate an empty environment once.",
+          "annual_steady_state = 12 x steady_state_monthly -- assumes no further pipeline runs during the year (build once, query many); add load_cost_usd again per additional full reload during the year."
+        ]
+      },
+      "notes": [
+        "Glue Data Catalog: 77 objects < 1,000,000 free tier -> $0/month.",
+        "IAM roles (8), Lake Formation, SSE-S3 encryption: no charge.",
+        "CloudWatch /aws-glue/jobs/* groups are account-wide, shared with the 5 warehouse Glue jobs -- attributed in full here as an upper bound.",
+        "Athena figure is ALL query history in the region (compaction + measurement + NLP dev); a steady-state month scans ~0 ($files reads are metadata, not data).",
+        "S3 'after cleanup' = raw bucket + Gold live snapshot, i.e. once a Spark remove_orphan_files pass removes the superseded pre-compaction files."
+      ]
+    }
+  },
+  "warehouse_current_footprint": {
+    "measured_at": "2026-09-21T00:57:37.990729+00:00",
+    "aurora": {
+      "cluster_id": "mimic4rds",
+      "engine": "aurora-postgresql 17.9",
+      "min_acu": 0.0,
+      "max_acu": 4.0,
+      "backup_retention_days": 1,
+      "created": "2026-09-19T01:44:14.347000+00:00",
+      "window_start": "2026-09-19T01:44:14.347000+00:00",
+      "current_volume_bytes": 9431457792.0,
+      "acu_hours_in_window": 52.53673821813533,
+      "max_acu_observed_in_window": 4.0,
+      "io_operations_in_window": 35463743.0,
+      "acu_cost_usd_in_window": 6.3044,
+      "io_cost_usd_in_window": 7.0927,
+      "compute_and_io_cost_usd_in_window": 13.3972,
+      "storage_cost_usd_per_month": 0.9431
+    },
+    "glue": {
+      "jobs": [
+        {
+          "step": "bootstrap",
+          "name": "mimic4-dw-etl-full-schema-bootstrap",
+          "worker_type": null,
+          "number_of_workers": null,
+          "max_capacity": 1.0,
+          "glue_version": "4.0",
+          "run_count": 10,
+          "run_states": {
+            "SUCCEEDED": 10
+          },
+          "total_execution_seconds": 135,
+          "total_dpu_seconds": 0.0,
+          "dpu_seconds_one_clean_run": 0.0,
+          "runs": [
+            {
+              "id": "jr_7ba75d4d97b5a0e65c5d9ef1aae8f4954590c42fe942280b14353fb50f59e00b",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T19:25:55.727000-04:00",
+              "execution_seconds": 14,
+              "dpu_seconds": 0.0
+            },
+            {
+              "id": "jr_f2a1cf9633dd9d477a22b30ba8d0d77becde7ec323f06b983079176dbf568571",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T18:10:56.839000-04:00",
+              "execution_seconds": 13,
+              "dpu_seconds": 0.0
+            },
+            {
+              "id": "jr_66d38a7e05731b08e1a30d55233e732418aeca77688edd465b426fff837eeaa9",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T16:40:38.845000-04:00",
+              "execution_seconds": 13,
+              "dpu_seconds": 0.0
+            },
+            {
+              "id": "jr_9c8199cee9f706420330539f3e6dcc88b9b8fa1a8c20f008174a50d71825cd73",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T15:55:30.112000-04:00",
+              "execution_seconds": 13,
+              "dpu_seconds": 0.0
+            },
+            {
+              "id": "jr_d00500f02a1fddeef32cc9429b9aa164e863bcf245b0db0452da706cf3b80cae",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T13:39:31.137000-04:00",
+              "execution_seconds": 13,
+              "dpu_seconds": 0.0
+            },
+            {
+              "id": "jr_49ffdb3bf5994f2793ccf8275f435b8a9d426fc7c242dc4b5bd5c148ceb57229",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T12:48:25.201000-04:00",
+              "execution_seconds": 13,
+              "dpu_seconds": 0.0
+            },
+            {
+              "id": "jr_892476dfd25f8340e70ab7368e401cfacab8fe7ff2c80f9af2d8011693acfb0a",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T10:04:48.696000-04:00",
+              "execution_seconds": 14,
+              "dpu_seconds": 0.0
+            },
+            {
+              "id": "jr_ab5ac0c1540572584182dca027cdf9df60c1aec78283918e1194eca44e37373e",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T06:07:04.484000-04:00",
+              "execution_seconds": 13,
+              "dpu_seconds": 0.0
+            },
+            {
+              "id": "jr_621dd8fbaa495df3c0d7c7ece8206bc6b4f2b6a1d3b8c2a8d97d7039fb13f5f5",
+              "state": "SUCCEEDED",
+              "started": "2026-09-18T22:55:41.468000-04:00",
+              "execution_seconds": 15,
+              "dpu_seconds": 0.0
+            },
+            {
+              "id": "jr_676012528ec5ecf68b35b01c947aa440a934b0c3ff55d4f2f286b07c3d990e65",
+              "state": "SUCCEEDED",
+              "started": "2026-09-18T21:45:07.529000-04:00",
+              "execution_seconds": 14,
+              "dpu_seconds": 0.0
+            }
+          ]
+        },
+        {
+          "step": "staging",
+          "name": "mimic4-dw-etl-full-stg-load",
+          "worker_type": "G.1X",
+          "number_of_workers": 2,
+          "max_capacity": 2.0,
+          "glue_version": "4.0",
+          "run_count": 9,
+          "run_states": {
+            "SUCCEEDED": 8,
+            "FAILED": 1
+          },
+          "total_execution_seconds": 6466,
+          "total_dpu_seconds": 12936.0,
+          "dpu_seconds_one_clean_run": 1562.0,
+          "runs": [
+            {
+              "id": "jr_14271a32a969dcb2dfce53b94979a1b071fb62b4e108f21fa3a88b0c13721600",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T19:26:55.163000-04:00",
+              "execution_seconds": 781,
+              "dpu_seconds": 1562.0
+            },
+            {
+              "id": "jr_9dc9dfe5d0a14accabccc5fef52aa57524441c4566abbe5d4fc9ad09218b590f",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T18:11:57.459000-04:00",
+              "execution_seconds": 781,
+              "dpu_seconds": 1562.0
+            },
+            {
+              "id": "jr_fcaa105d9fece76d99cf7b6100b991697690443b97547c4af9689c9198ed2ed6",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T16:41:36.002000-04:00",
+              "execution_seconds": 805,
+              "dpu_seconds": 1610.0
+            },
+            {
+              "id": "jr_b92165071a545eb003921b7a6ab586a6ee35b8e4ffeaad879f4e2a25cba5c46f",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T15:56:29.882000-04:00",
+              "execution_seconds": 797,
+              "dpu_seconds": 1595.0
+            },
+            {
+              "id": "jr_950cad74981b632c2147add12978840e1822b8c52eb969223d2733a479400df7",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T13:40:23.586000-04:00",
+              "execution_seconds": 790,
+              "dpu_seconds": 1581.0
+            },
+            {
+              "id": "jr_9d6b74a9c3897b25e866eeaafb913322ed43f15c84b8491357d7cfb9a9a79301",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T12:49:26.071000-04:00",
+              "execution_seconds": 804,
+              "dpu_seconds": 1608.0
+            },
+            {
+              "id": "jr_755e08d2febc1d11b0e93ef33132d8274f4f97b9ceebb0fba0694365dfe00823",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T10:05:55.587000-04:00",
+              "execution_seconds": 865,
+              "dpu_seconds": 1731.0
+            },
+            {
+              "id": "jr_1b86ad862aed04902df771678a7beb2f8c1a50cb21695de261b7007daa21ef61",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T06:07:59.792000-04:00",
+              "execution_seconds": 792,
+              "dpu_seconds": 1585.0
+            },
+            {
+              "id": "jr_079f358bbe2591caeea75c3f54074d37eb6ca76725b36839bc3d88e873b59bbf",
+              "state": "FAILED",
+              "started": "2026-09-18T23:29:49.767000-04:00",
+              "execution_seconds": 51,
+              "dpu_seconds": 102.0
+            }
+          ]
+        },
+        {
+          "step": "dimensions",
+          "name": "mimic4-dw-etl-full-wh-dimensions",
+          "worker_type": "G.1X",
+          "number_of_workers": 2,
+          "max_capacity": 2.0,
+          "glue_version": "4.0",
+          "run_count": 8,
+          "run_states": {
+            "SUCCEEDED": 8
+          },
+          "total_execution_seconds": 793,
+          "total_dpu_seconds": 1589.0,
+          "dpu_seconds_one_clean_run": 147.0,
+          "runs": [
+            {
+              "id": "jr_8f443b02719c2270b62f375bfb3b2eafff7dbda878c651496330acf0c997d2cf",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T19:40:16.767000-04:00",
+              "execution_seconds": 110,
+              "dpu_seconds": 221.0
+            },
+            {
+              "id": "jr_a4ab11b136eb5ded890e1e8e91be5f0a0f137f3b7144eea7ce7751ff387c6b27",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T18:25:10.554000-04:00",
+              "execution_seconds": 113,
+              "dpu_seconds": 226.0
+            },
+            {
+              "id": "jr_b84a4276a2b0a51add1e200c0cdc1071d5da5f9eaee5b17f5a1065c5d441ebd8",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T16:55:28.119000-04:00",
+              "execution_seconds": 107,
+              "dpu_seconds": 215.0
+            },
+            {
+              "id": "jr_28f8c66895fa2ea04d072d6f206d6095e91295bf4c0651387f2dee4cbe56850f",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T16:10:06.897000-04:00",
+              "execution_seconds": 104,
+              "dpu_seconds": 208.0
+            },
+            {
+              "id": "jr_5b4559887ff218ec26a2339a26775cbdfec2bbbd10e9f519d82b0ab40c077aee",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T13:53:45.681000-04:00",
+              "execution_seconds": 75,
+              "dpu_seconds": 150.0
+            },
+            {
+              "id": "jr_e200d3c2f5fc1f823b901a269d5408634e58316c6052557d193d7ca066cbf469",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T13:03:03.272000-04:00",
+              "execution_seconds": 110,
+              "dpu_seconds": 220.0
+            },
+            {
+              "id": "jr_72c34a02911cf45c8d6d24d3aed2d5272bea25c2fc9feea241bad9665762e676",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T10:20:33.316000-04:00",
+              "execution_seconds": 101,
+              "dpu_seconds": 202.0
+            },
+            {
+              "id": "jr_6706c29feefa146f0e3e977119e94e89631527a75a418f6a1bb7a9402688d092",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T06:21:24.497000-04:00",
+              "execution_seconds": 73,
+              "dpu_seconds": 147.0
+            }
+          ]
+        },
+        {
+          "step": "facts",
+          "name": "mimic4-dw-etl-full-wh-facts",
+          "worker_type": "G.1X",
+          "number_of_workers": 2,
+          "max_capacity": 2.0,
+          "glue_version": "4.0",
+          "run_count": 10,
+          "run_states": {
+            "SUCCEEDED": 7,
+            "FAILED": 3
+          },
+          "total_execution_seconds": 11498,
+          "total_dpu_seconds": 23002.0,
+          "dpu_seconds_one_clean_run": 2507.0,
+          "runs": [
+            {
+              "id": "jr_19b57c74dae837608c4ca55d7297ceaa762fdf1d44f90e9a4bf44db6538fa4d4",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T19:42:22.325000-04:00",
+              "execution_seconds": 1260,
+              "dpu_seconds": 2520.0
+            },
+            {
+              "id": "jr_2682afa1f74822fcbf3d091fb4d937b41ee6428260d6239a7b5036bade22e0a8",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T18:27:16.022000-04:00",
+              "execution_seconds": 1253,
+              "dpu_seconds": 2507.0
+            },
+            {
+              "id": "jr_fd823792eb1d5ac6d9cc36e23dd492d642c306e7cfef42762e9e2fd3d5a41049",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T16:57:33.656000-04:00",
+              "execution_seconds": 1285,
+              "dpu_seconds": 2571.0
+            },
+            {
+              "id": "jr_b62048d57cc81712f63cb7aa44509900ef496549d174276d35510a32f46fc97a",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T16:11:57.106000-04:00",
+              "execution_seconds": 1352,
+              "dpu_seconds": 2704.0
+            },
+            {
+              "id": "jr_375c6a624794308e800685ad9e535a3011aa3f796efb0c7c493629f98c695e9d",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T13:55:20.883000-04:00",
+              "execution_seconds": 1743,
+              "dpu_seconds": 3486.0
+            },
+            {
+              "id": "jr_842b3ce7d813427c184c638d806846f97ecd6679399d1c04df40830286dd91bc",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T13:05:08.962000-04:00",
+              "execution_seconds": 1258,
+              "dpu_seconds": 2517.0
+            },
+            {
+              "id": "jr_4ef2422aab356689fc0bce0996b556b8b4d88b9a37a2c3e22964076d61d2c907",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T11:47:56.908000-04:00",
+              "execution_seconds": 1659,
+              "dpu_seconds": 3319.0
+            },
+            {
+              "id": "jr_3791f11f6bf990ac7170545de6759d0ba85efa40d312eda2c47f569df62c7bd7",
+              "state": "FAILED",
+              "started": "2026-09-19T10:39:57.711000-04:00",
+              "execution_seconds": 566,
+              "dpu_seconds": 1132.0
+            },
+            {
+              "id": "jr_08abbeac3d5c1a3cea5cd241501a1251b7bc842009044d8316fce51f7eb32ffc",
+              "state": "FAILED",
+              "started": "2026-09-19T10:22:23.669000-04:00",
+              "execution_seconds": 484,
+              "dpu_seconds": 969.0
+            },
+            {
+              "id": "jr_ef3c2e11250d554712d5ff2100b7e6f883fa690be39e98df32b6ff41a2b5b1c0",
+              "state": "FAILED",
+              "started": "2026-09-19T06:22:59.959000-04:00",
+              "execution_seconds": 638,
+              "dpu_seconds": 1277.0
+            }
+          ]
+        },
+        {
+          "step": "aggregates",
+          "name": "mimic4-dw-etl-full-wh-aggregates",
+          "worker_type": "G.1X",
+          "number_of_workers": 2,
+          "max_capacity": 2.0,
+          "glue_version": "4.0",
+          "run_count": 7,
+          "run_states": {
+            "SUCCEEDED": 7
+          },
+          "total_execution_seconds": 573,
+          "total_dpu_seconds": 1149.0,
+          "dpu_seconds_one_clean_run": 147.0,
+          "runs": [
+            {
+              "id": "jr_324df8826a44af0dd6a9fbf4b3a6b451cf8aa634c0b57993c146a2bd06dfffbc",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T20:03:39.712000-04:00",
+              "execution_seconds": 78,
+              "dpu_seconds": 156.0
+            },
+            {
+              "id": "jr_dd3ac296d18278c26b8a0b2b7acfa710e8304b61cb34bd2ceb0f8014927d4c50",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T18:48:19.113000-04:00",
+              "execution_seconds": 75,
+              "dpu_seconds": 151.0
+            },
+            {
+              "id": "jr_6041a6fad82eabf9a5fa934b670ea24e2c88cf241f87ac24617adb3337610b5a",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T17:19:06.316000-04:00",
+              "execution_seconds": 77,
+              "dpu_seconds": 154.0
+            },
+            {
+              "id": "jr_99ea135b590038ac6cb23c15e872a0491c87ef6ccebb8809c42fbdc311fb3bca",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T16:34:48.251000-04:00",
+              "execution_seconds": 75,
+              "dpu_seconds": 150.0
+            },
+            {
+              "id": "jr_6242cd4984aba34786145f582065bd9e299f8f7147d40b1feb0b0728103532d5",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T14:24:35.271000-04:00",
+              "execution_seconds": 73,
+              "dpu_seconds": 147.0
+            },
+            {
+              "id": "jr_d42d2204403982d861df86200799023a8fd49585cd9d3d4025ed60e0e20026d2",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T13:26:26.272000-04:00",
+              "execution_seconds": 74,
+              "dpu_seconds": 149.0
+            },
+            {
+              "id": "jr_150d508135c7bb85ee0ad4ba193f2377b593e1f4ddcd319b69ad144dec634ad9",
+              "state": "SUCCEEDED",
+              "started": "2026-09-19T12:23:39.942000-04:00",
+              "execution_seconds": 121,
+              "dpu_seconds": 242.0
+            }
+          ]
+        }
+      ],
+      "total_dpu_hours": 10.743333333333334,
+      "total_dpu_hours_one_clean_pipeline": 1.2119444444444445
+    },
+    "s3": {
+      "bucket": "mimic4-dw-sourcefiles-full",
+      "total_bytes": 10891535009,
+      "total_objects": 171,
+      "prefixes": {
+        "glue-scripts": {
+          "bytes": 110147,
+          "objects": 6
+        },
+        "glue-sql": {
+          "bytes": 55355,
+          "objects": 2
+        },
+        "hosp": {
+          "bytes": 6300755975,
+          "objects": 22
+        },
+        "icu": {
+          "bytes": 4355451350,
+          "objects": 9
+        },
+        "spark-logs": {
+          "bytes": 235162182,
+          "objects": 132
+        }
+      }
+    },
+    "cloudwatch_logs": {
+      "log_groups": [
+        {
+          "name": "/aws-glue/jobs/output",
+          "stored_bytes": 322941
+        },
+        {
+          "name": "/aws-glue/jobs/error",
+          "stored_bytes": 2389285570
+        },
+        {
+          "name": "/aws-glue/jobs/logs-v2",
+          "stored_bytes": 53112004
+        }
+      ],
+      "total_bytes": 2442720515
+    },
+    "iam": {
+      "roles": [
+        {
+          "name": "mimic4-aurora-s3-import-role-full",
+          "arn": "arn:aws:iam::605785396773:role/mimic4-aurora-s3-import-role-full",
+          "created": "2026-09-19T02:52:18+00:00"
+        },
+        {
+          "name": "mimic4-dw-etl-glue-role-full",
+          "arn": "arn:aws:iam::605785396773:role/mimic4-dw-etl-glue-role-full",
+          "created": "2026-09-19T01:45:01+00:00"
+        }
+      ]
+    },
+    "cost_estimate_usd": {
+      "one_time_cumulative": {
+        "aurora_compute_and_io": 13.3972,
+        "glue_etl_all_runs": 4.7271,
+        "cloudwatch_log_ingestion": 1.2214,
+        "total": 19.3457
+      },
+      "one_clean_pipeline_run": {
+        "glue_etl_min_successful_run_per_job": 0.5333,
+        "total_min": 0.5333,
+        "note": "Aurora ACU/I/O cost is not separable per-run from the account-wide CloudWatch window -- this figure is Glue-only."
+      },
+      "steady_state_monthly": {
+        "aurora_storage": 0.9431,
+        "cloudwatch_log_storage": 0.0733,
+        "total": 1.0164
+      },
+      "annual_cost_estimate": {
+        "load_cost_usd": 0.5333,
+        "annual_steady_state_usd": 12.1968,
+        "first_year_total_usd": 12.7301,
+        "notes": [
+          "load_cost_usd = one_clean_pipeline_run.total_min (Glue-only; see its note).",
+          "annual_steady_state = 12 x steady_state_monthly -- assumes the Aurora cluster genuinely scales to its configured min ACU (0 if set, otherwise a sustained floor cost applies that this estimate does not include) and no further pipeline runs during the year."
+        ]
+      }
+    }
+  },
+  "metrics": [
+    {
+      "metric": "wall_clock_seconds",
+      "label": "Wall clock per run (s)",
+      "propositions": "P5",
+      "lakehouse": {
+        "n": 5,
+        "mean": 7880.111,
+        "median": 6610.968,
+        "stdev": 3052.252,
+        "min": 6303.437,
+        "max": 13330.234
+      },
+      "warehouse": {
+        "n": 5,
+        "mean": 2350.5435832,
+        "median": 2277.884546,
+        "stdev": 188.42201155828704,
+        "min": 2219.945633,
+        "max": 2679.574992
+      }
+    },
+    {
+      "metric": "total_dpu_seconds",
+      "label": "Total Glue DPU-seconds per run",
+      "propositions": "P5, P7",
+      "lakehouse": {
+        "n": 5,
+        "mean": 84715.6,
+        "median": 85116.0,
+        "stdev": 1502.343,
+        "min": 82538.0,
+        "max": 86455.0
+      },
+      "warehouse": {
+        "n": 5,
+        "mean": 4695.2,
+        "median": 4550.0,
+        "stdev": 383.31670978448096,
+        "min": 4446.0,
+        "max": 5364.0
+      }
+    },
+    {
+      "metric": "total_dpu_hours",
+      "label": "Total Glue DPU-hours per run",
+      "propositions": "P5, P7",
+      "lakehouse": {
+        "n": 5,
+        "mean": 23.532,
+        "median": 23.643,
+        "stdev": 0.417,
+        "min": 22.927,
+        "max": 24.015
+      },
+      "warehouse": {
+        "n": 5,
+        "mean": 1.3042222222222222,
+        "median": 1.2638888888888888,
+        "stdev": 0.10647686382902248,
+        "min": 1.235,
+        "max": 1.49
+      }
+    },
+    {
+      "metric": "glue_cost_usd",
+      "label": "Glue compute cost per run (USD)",
+      "propositions": "P5, P7",
+      "lakehouse": {
+        "n": 5,
+        "mean": 10.354,
+        "median": 10.403,
+        "stdev": 0.184,
+        "min": 10.088,
+        "max": 10.567
+      },
+      "warehouse": {
+        "n": 5,
+        "mean": 0.5738577777777778,
+        "median": 0.5561111111111111,
+        "stdev": 0.046849820084769886,
+        "min": 0.5434,
+        "max": 0.6556
+      }
+    },
+    {
+      "metric": "cloudwatch_bytes_ingested",
+      "label": "CloudWatch bytes ingested per run",
+      "propositions": "P3, P5",
+      "lakehouse": {
+        "n": 5,
+        "mean": 1721449719.8,
+        "median": 1719426497.0,
+        "stdev": 5504619.149,
+        "min": 1718221022.0,
+        "max": 1731244051.0
+      },
+      "warehouse": {
+        "n": 5,
+        "mean": 250610304.2,
+        "median": 14004396.0,
+        "stdev": 537187810.5135908,
+        "min": 2189168.0,
+        "max": 1211518853.0
+      }
+    },
+    {
+      "metric": "job_count",
+      "label": "Jobs / tables loaded per run",
+      "propositions": "P1, P2",
+      "lakehouse": {
+        "n": 5,
+        "mean": 42,
+        "median": 42,
+        "stdev": 0.0,
+        "min": 42,
+        "max": 42
+      },
+      "warehouse": {
+        "n": 5,
+        "mean": 65,
+        "median": 65,
+        "stdev": 0.0,
+        "min": 65,
+        "max": 65
+      }
+    },
+    {
+      "metric": "failed_count",
+      "label": "Failed jobs per run",
+      "propositions": "P5, P7",
+      "lakehouse": {
+        "n": 5,
+        "mean": 0,
+        "median": 0,
+        "stdev": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "warehouse": {
+        "n": 5,
+        "mean": 0,
+        "median": 0,
+        "stdev": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    {
+      "metric": "total_raw_rows",
+      "label": "Total raw rows processed per run",
+      "propositions": "P5",
+      "lakehouse": {
+        "n": 5,
+        "mean": 893670689,
+        "median": 893670689,
+        "stdev": 0.0,
+        "min": 893670689,
+        "max": 893670689
+      },
+      "warehouse": {
+        "n": 5,
+        "mean": 20568186,
+        "median": 20568186,
+        "stdev": 0.0,
+        "min": 20568186,
+        "max": 20568186
+      }
+    },
+    {
+      "metric": "total_gold_rows",
+      "label": "Total gold rows produced per run",
+      "propositions": "P3, P4",
+      "lakehouse": {
+        "n": 5,
+        "mean": 21964590,
+        "median": 21964590,
+        "stdev": 0.0,
+        "min": 21964590,
+        "max": 21964590
+      },
+      "warehouse": {
+        "n": 5,
+        "mean": 40629396,
+        "median": 40629396,
+        "stdev": 2553.5392105859664,
+        "min": 40626166,
+        "max": 40632626
+      }
+    }
+  ],
+  "dataset": "fulldataset"
+}
